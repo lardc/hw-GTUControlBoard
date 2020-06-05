@@ -30,6 +30,7 @@
 //
 DeviceStateCodes Codes = { WARNING_NONE, PROBLEM_NONE, FAULT_NONE };
 volatile Int64U CONTROL_TimeCounter = 0;
+volatile Int64U FanTurnOff_Counter = 0;
 volatile DeviceState CONTROL_State = DS_None;
 Boolean CycleActive = FALSE;
 //
@@ -228,16 +229,9 @@ void CONTROL_HaltExecution()
 	CycleActive = FALSE;
 	CONTROL_SetDeviceState(DS_None);
 
-	ZbGPIO_DirectEnableSelfTest(FALSE);
 	ZbGPIO_DirectEnableOutput(FALSE);
-	ZbGPIO_DirectLockFeedback(FALSE);
-
-	ZbGPIO_GateEnableSelfTest(FALSE);
 	ZbGPIO_GateEnableOutput(FALSE);
-	ZbGPIO_GateLockFeedback(FALSE);
-
 	ZbDAC_ForceOutputsToZero();
-
 	ZbGPIO_LED1(FALSE);
 }
 // ----------------------------------------
@@ -351,5 +345,18 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 	}
 
 	return TRUE;
+}
+// ----------------------------------------
+
+void FAN_Control()
+{
+	if (CONTROL_State == DS_Vgnt)
+	{
+		ZbGPIO_FAN(TRUE);
+		FanTurnOff_Counter = CONTROL_TimeCounter + DataTable[REG_FAN_OFF_DELAY];
+	}
+	else
+		if (CONTROL_TimeCounter >= FanTurnOff_Counter)
+			ZbGPIO_FAN(FALSE);
 }
 // ----------------------------------------

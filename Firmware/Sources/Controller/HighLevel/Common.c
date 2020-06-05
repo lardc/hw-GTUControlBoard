@@ -34,8 +34,10 @@ void COMMON_PrepareStart()
 
 	// Активация системы
 	ZbGPIO_GateEnableOutput(TRUE);
-	//
 	ZbGPIO_DirectEnableOutput(TRUE);
+
+	// Синхросигнал для осциллографа
+	ZbGPIO_SyncOSC(TRUE);
 }
 // ----------------------------------------
 
@@ -77,6 +79,8 @@ void COMMON_PrepareFinish()
 {
 	REGULATOR_DisableAll();
 	ZbDAC_ForceOutputsToZero();
+	ZbGPIO_GatePSTune(FALSE);
+	ZbGPIO_SyncOSC(FALSE);
 }
 // ----------------------------------------
 

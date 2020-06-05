@@ -12,33 +12,22 @@
 //
 void ZbGPIO_Init()
 {
-	// Управление анодной цепью
-	ZwGPIO_WritePin(PIN_POWER_ST, FALSE);
-	ZwGPIO_WritePin(PIN_POWER_EN_LGC, FALSE);
-	ZwGPIO_WritePin(PIN_POWER_IFB_LGC, FALSE);
-
-	// Управление цепью управления
-	ZwGPIO_WritePin(PIN_GATE_ST, FALSE);
-	ZwGPIO_WritePin(PIN_GATE_EN_LGC, FALSE);
-	ZwGPIO_WritePin(PIN_GATE_IFB_LGC, FALSE);
-
-	// Линии индикации
+	// Настройка в режиме выхода
+	ZwGPIO_WritePin(PIN_MP_ENABLE_LGC, FALSE);
+	ZwGPIO_WritePin(PIN_GATE_ENABLE_LGC, FALSE);
 	ZwGPIO_WritePin(PIN_LED_1, FALSE);
 	ZwGPIO_WritePin(PIN_LED_2, FALSE);
+	ZwGPIO_WritePin(PIN_GATE_PS_TUNE_EN_LGC, FALSE);
+	ZwGPIO_WritePin(PIN_SYNC_OSC, FALSE);
+	ZwGPIO_WritePin(PIN_FAN, FALSE);
 
-
-	// Настройка в режиме выхода
-	ZwGPIO_PinToOutput(PIN_POWER_ST);
-	ZwGPIO_PinToOutput(PIN_POWER_EN_LGC);
-	ZwGPIO_PinToOutput(PIN_POWER_IFB_LGC);
-
-	ZwGPIO_PinToOutput(PIN_GATE_ST);
-	ZwGPIO_PinToOutput(PIN_GATE_EN_LGC);
-	ZwGPIO_PinToOutput(PIN_GATE_IFB_LGC);
-
+	ZwGPIO_PinToOutput(PIN_MP_ENABLE_LGC);
+	ZwGPIO_PinToOutput(PIN_GATE_ENABLE_LGC);
 	ZwGPIO_PinToOutput(PIN_LED_1);
 	ZwGPIO_PinToOutput(PIN_LED_2);
-
+	ZwGPIO_PinToOutput(PIN_GATE_PS_TUNE_EN_LGC);
+	ZwGPIO_PinToOutput(PIN_SYNC_OSC);
+	ZwGPIO_PinToOutput(PIN_FAN);
 
    	// Настройка в режиме входа
    	ZwGPIO_PinToInput(PIN_VRF_SENSE, TRUE, GPIO_NSAMPLE);
@@ -52,39 +41,33 @@ Boolean ZbGPIO_ExtSyncReadState()
 }
 // ----------------------------------------
 
-void ZbGPIO_DirectEnableSelfTest(Boolean State)
+void ZbGPIO_SyncOSC(Boolean State)
 {
-	ZwGPIO_WritePin(PIN_POWER_ST, State);
+	ZwGPIO_WritePin(PIN_SYNC_OSC, State);
+}
+// ----------------------------------------
+
+void ZbGPIO_GatePSTune(Boolean State)
+{
+	ZwGPIO_WritePin(PIN_GATE_PS_TUNE_EN_LGC, State);
+}
+// ----------------------------------------
+
+void ZbGPIO_FAN(Boolean State)
+{
+	ZwGPIO_WritePin(PIN_FAN, State);
 }
 // ----------------------------------------
 
 void ZbGPIO_DirectEnableOutput(Boolean State)
 {
-	ZwGPIO_WritePin(PIN_POWER_EN_LGC, State);
-}
-// ----------------------------------------
-
-void ZbGPIO_DirectLockFeedback(Boolean State)
-{
-	ZwGPIO_WritePin(PIN_POWER_IFB_LGC, State);
-}
-// ----------------------------------------
-
-void ZbGPIO_GateEnableSelfTest(Boolean State)
-{
-	ZwGPIO_WritePin(PIN_GATE_ST, State);
+	ZwGPIO_WritePin(PIN_MP_ENABLE_LGC, State);
 }
 // ----------------------------------------
 
 void ZbGPIO_GateEnableOutput(Boolean State)
 {
-	ZwGPIO_WritePin(PIN_GATE_EN_LGC, State);
-}
-// ----------------------------------------
-
-void ZbGPIO_GateLockFeedback(Boolean State)
-{
-	ZwGPIO_WritePin(PIN_GATE_IFB_LGC, State);
+	ZwGPIO_WritePin(PIN_GATE_ENABLE_LGC, State);
 }
 // ----------------------------------------
 

@@ -245,6 +245,8 @@ ISRCALL Timer2_ISR(void)
 		dbgCounter = 0;
 	}
 
+	FAN_Control();
+
 	// no PIE
 	TIMER2_ISR_DONE;
 }

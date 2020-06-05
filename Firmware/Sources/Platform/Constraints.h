@@ -44,7 +44,7 @@ typedef struct __TableItemConstraint
 #define IG_LIM_DEF					1000
 
 
-// in mV/ms or mA/ms
+// in mV/ms or mA/ms or mV/s
 #define RISE_FALL_RATE_MIN			1
 #define RISE_FALL_RATE_MAX			1000
 #define RISE_FALL_RATE_DEF			10
@@ -84,6 +84,9 @@ typedef struct __TableItemConstraint
 #define RG_CURRENT_MIN				1
 #define RG_CURRENT_MAX				200
 #define RG_CURRENT_DEF				50
+
+// in ms
+#define FAN_OFF_DELAY_DEF			60000
 
 
 // Variables

@@ -59,6 +59,8 @@ void CONTROL_Idle();
 void CONTROL_UpdateHigh();
 // Notify that CAN system fault occurs
 void CONTROL_NotifyCANFault(ZwCAN_SysFlags Flag);
+//
+void FAN_Control();
 
 
 #endif // __CONTROLLER_H

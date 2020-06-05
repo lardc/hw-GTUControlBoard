@@ -26,49 +26,48 @@
 #define HWUSE_SCI_B
 
 // IO placement
-#define SPI_A_QSEL		    GPAQSEL2
-#define SPI_A_MUX			GPAMUX2
-#define SPI_A_SIMO			GPIO16	
-#define SPI_A_SOMI			GPIO17		
-#define SPI_A_CLK			GPIO18
-#define SPI_A_CS			GPIO19
+#define SPI_A_QSEL		    	GPAQSEL2
+#define SPI_A_MUX				GPAMUX2
+#define SPI_A_SIMO				GPIO16
+#define SPI_A_SOMI				GPIO17
+#define SPI_A_CLK				GPIO18
+#define SPI_A_CS				GPIO19
 //
-#define SPI_B_QSEL			GPAQSEL2
-#define SPI_B_MUX			GPAMUX2
-#define SPI_B_SIMO			GPIO24	
-#define SPI_B_SOMI			GPIO25		
-#define SPI_B_CLK			GPIO26
-#define SPI_B_CS			GPIO27
+#define SPI_B_QSEL				GPAQSEL2
+#define SPI_B_MUX				GPAMUX2
+#define SPI_B_SIMO				GPIO24
+#define SPI_B_SOMI				GPIO25
+#define SPI_B_CLK				GPIO26
+#define SPI_B_CS				GPIO27
 //
-#define SPI_D_QSEL			GPAQSEL1
-#define SPI_D_MUX			GPAMUX1
-#define SPI_D_SIMO			GPIO1	
-#define SPI_D_SOMI			GPIO3		
-#define SPI_D_CLK			GPIO5
-#define SPI_D_CS			GPIO7
+#define SPI_D_QSEL				GPAQSEL1
+#define SPI_D_MUX				GPAMUX1
+#define SPI_D_SIMO				GPIO1
+#define SPI_D_SOMI				GPIO3
+#define SPI_D_CLK				GPIO5
+#define SPI_D_CS				GPIO7
 //
-#define SCI_B_QSEL			GPAQSEL1
-#define SCI_B_MUX			GPAMUX1
-#define SCI_B_TX			GPIO9
-#define SCI_B_RX			GPIO11
-#define SCI_B_MUX_SELECTOR	2
+#define SCI_B_QSEL				GPAQSEL1
+#define SCI_B_MUX				GPAMUX1
+#define SCI_B_TX				GPIO9
+#define SCI_B_RX				GPIO11
+#define SCI_B_MUX_SELECTOR		2
 //
-#define PIN_PDAC_LDAC		0
-#define PIN_VRF_SENSE		4
-#define PIN_LED_2			6
-#define PIN_GDAC_LDAC		12
-#define PIN_GATE_IFB_LGC	13
-#define PIN_DAC_W2			14
-#define PIN_KREG_OE			17
-#define PIN_POWER_ST		20
-#define PIN_GATE_ST			21
-#define PIN_LED_1			22
-#define PIN_EXT_SYNC		23
-#define PIN_POWER_IFB_LGC	25
-#define PIN_GATE_EN_LGC		28
-#define PIN_DAC_W1			29
-#define PIN_POWER_EN_LGC	32
-#define PIN_SPI_W1			33
+#define PIN_PDAC_LDAC			12
+#define PIN_VRF_SENSE			13
+#define PIN_LED_2				6
+#define PIN_GDAC_LDAC			15
+#define PIN_DAC_W2				21
+#define PIN_KREG_OE				17
+#define PIN_LED_1				14
+#define PIN_EXT_SYNC			25
+#define PIN_GATE_ENABLE_LGC		28
+#define PIN_DAC_W1				8
+#define PIN_MP_ENABLE_LGC		32
+#define PIN_SPI_W1				20
+#define PIN_GATE_PS_TUNE_EN_LGC	23
+#define PIN_SYNC_OSC			4
+#define PIN_FAN					0
 
 
 // ADC placement in sequential mode

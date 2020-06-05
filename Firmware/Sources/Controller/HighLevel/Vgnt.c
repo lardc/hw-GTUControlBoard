@@ -54,7 +54,11 @@ void VGNT_Prepare()
 	REGULATOR_Enable(SelectIg, TRUE);
 
 	// Выставление начальных значений
+	REGULATOR_Update(SelectVg, 0);
 	REGULATOR_Update(SelectIg, Ig.Limit);
+
+	// Включение подстройки напряжения питания для снижения нагрева ОУ
+	ZbGPIO_GatePSTune(TRUE);
 
 	State = GATE_STATE_V_RISE;
 	ZwTimer_StartT0();
@@ -83,14 +87,13 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					if (Vg.Setpoint > Vg.Limit)
 						Vg.Setpoint = Vg.Limit;
 
-					if((Vg.Setpoint == Vg.Limit) || (ErrIg <= LogicSettings.AllowedError))
+					if((Vg.Setpoint == Vg.Limit) || (MeasureSample.Ig >= Ig.Limit))
 					{
 						Codes->Problem = PROBLEM_DUT_NO_TRIG;
 						Delay = LogicSettings.StabCounter;
 						State = GATE_STATE_FINISH_PREPARE;
 					}
 
-					REGULATOR_Update(SelectVd, Vd.Setpoint);
 					REGULATOR_Update(SelectVg, Vg.Setpoint);
 				}
 			}
@@ -127,8 +130,11 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 
 void VGNT_CacheVariables()
 {
+	_iq VRate_mV_s;
+
 	COMMON_CacheVariables(&Vd, &Id, &Vg, &Ig, &LogicSettings);
 
-	Vg.ChangeStep = _IQmpy(_FPtoIQ2(TIMER0_PERIOD, 1000), _IQI(DataTable[REG_VGNT_VG_RATE]));
+	VRate_mV_s = _FPtoIQ2(DataTable[REG_VGNT_VG_RATE], 1000);
+	Vg.ChangeStep = _IQmpy(_FPtoIQ2(TIMER0_PERIOD, 1000), VRate_mV_s);
 }
 // ----------------------------------------

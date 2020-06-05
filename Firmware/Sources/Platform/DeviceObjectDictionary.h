@@ -17,10 +17,9 @@
 #define ACT_DBG_DAC_VOLT_DIRECT		15	// Write value to direct voltage DAC
 #define ACT_DBG_OUTPUT_CTRL_GATE	16	// Enable/disable gate voltage output
 #define ACT_DBG_OUTPUT_CTRL_DIRECT	17	// Enable/disable direct voltage output
-#define ACT_DBG_FEEDB_CTRL_GATE		18	// Enable/disable gate current feedback
-#define ACT_DBG_FEEDB_CTRL_DIRECT	19	// Enable/disable direct current feedback
-#define ACT_DBG_SELFT_CTRL_GATE		20	// Enable/disable gate selftest circuit
-#define ACT_DBG_SELFT_CTRL_DIRECT	21	// Enable/disable direct selftest circuit
+#define ACT_DBG_SYNC_OSC			18	// Test output of oscilloscope synchronization
+#define ACT_DBG_FAN					19	// Test FAN
+#define ACT_DBG_GATE_PS_TUNE		20	// Test tune of gate power supply
 //
 #define ACT_START_KELVIN			100	// Start Kelvin measurement
 #define ACT_START_GATE				101	// Start gate measurement
@@ -50,7 +49,8 @@
 #define REG_COMM_ID_LEAK_MAX		1	// Allowed direct current leakage (in mA)
 #define REG_COMM_STAB_TIME			2	// Transient stabilizatioon time (in ms)
 #define REG_COMM_STAB_ERROR			3	// Transient stabilizatioon error (in %)
-// 4 - 9
+#define REG_FAN_OFF_DELAY			4	// Fan turn off delay
+// 5 - 9
 #define REG_PI_CTRL_VG_Kp			10	// Gate voltage PI Kp x1000
 #define REG_PI_CTRL_VG_Ki			11	// Gate voltage PI Ki x1000
 #define REG_PI_CTRL_IG_Kp			12	// Gate current PI Kp x1000
@@ -105,7 +105,7 @@
 #define REG_KELVIN_PROBE_TIME		55	// Time for probing (in ms)
 // 51 - 59
 #define REG_GATE_VG_RATE			60	// Vg rise rate for gate measurement (in mV / ms)
-#define REG_VGNT_VG_RATE			61	// Vg rise rate for vgnt measurement (in mV / ms)
+#define REG_VGNT_VG_RATE			61	// Vg rise rate for vgnt measurement (in mV / s)
 // 62 - 69
 #define REG_HOLD_END_CURRENT		70	// Minimum available current for Ih (in mA)
 #define REG_HOLD_CURRENT_FALL_RATE	71	// Current rate (mA / ms)

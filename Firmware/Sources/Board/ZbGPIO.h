@@ -13,19 +13,18 @@
 //
 void ZbGPIO_Init();
 //
-void ZbGPIO_DirectEnableSelfTest(Boolean State);
 void ZbGPIO_DirectEnableOutput(Boolean State);
-void ZbGPIO_DirectLockFeedback(Boolean State);
 //
-void ZbGPIO_GateEnableSelfTest(Boolean State);
 void ZbGPIO_GateEnableOutput(Boolean State);
-void ZbGPIO_GateLockFeedback(Boolean State);
 //
 Boolean ZbGPIO_KelvinProbe();
 //
 void ZbGPIO_LED1(Boolean State);
 void ZbGPIO_LED2(Boolean State);
 void ZbGPIO_ToggleLED2();
+void ZbGPIO_SyncOSC(Boolean State);
+void ZbGPIO_GatePSTune(Boolean State);
+void ZbGPIO_FAN(Boolean State);
 //
 Boolean ZbGPIO_ExtSyncReadState();
 

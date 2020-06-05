@@ -53,24 +53,19 @@ Boolean DIAG_Process(Int16U Command)
 				ZbGPIO_DirectEnableOutput(DataTable[REG_DBG]);
 			break;
 
-		case ACT_DBG_FEEDB_CTRL_GATE:
+		case ACT_DBG_SYNC_OSC:
 			if(CONTROL_State == DS_None)
-				ZbGPIO_GateLockFeedback(DataTable[REG_DBG]);
+				ZbGPIO_SyncOSC(DataTable[REG_DBG]);
 			break;
 
-		case ACT_DBG_FEEDB_CTRL_DIRECT:
+		case ACT_DBG_FAN:
 			if(CONTROL_State == DS_None)
-				ZbGPIO_DirectLockFeedback(DataTable[REG_DBG]);
+				ZbGPIO_FAN(DataTable[REG_DBG]);
 			break;
 
-		case ACT_DBG_SELFT_CTRL_GATE:
+		case ACT_DBG_GATE_PS_TUNE:
 			if(CONTROL_State == DS_None)
-				ZbGPIO_GateEnableSelfTest(DataTable[REG_DBG]);
-			break;
-
-		case ACT_DBG_SELFT_CTRL_DIRECT:
-			if(CONTROL_State == DS_None)
-				ZbGPIO_DirectEnableSelfTest(DataTable[REG_DBG]);
+				ZbGPIO_GatePSTune(DataTable[REG_DBG]);
 			break;
 
 		default:

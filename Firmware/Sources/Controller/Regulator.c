@@ -107,8 +107,6 @@ void REGULATOR_CycleX(RegulatorSelector Selector, CombinedData MeasureSample)
 
 		}
 
-		DataTable[REG_DBG] = _IQint(Regulator->ErrorI);
-
 		ControlI = _IQmpy(Regulator->ErrorI, Regulator->Ki);
 
 		// Корректировка управления
