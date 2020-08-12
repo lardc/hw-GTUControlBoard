@@ -105,8 +105,10 @@
 #define REG_KELVIN_PROBE_TIME		55	// Time for probing (in ms)
 // 51 - 59
 #define REG_GATE_VG_RATE			60	// Vg rise rate for gate measurement (in mV / ms)
-#define REG_VGNT_VG_RATE			61	// Vg rise rate for vgnt measurement (in mV / s)
-// 62 - 69
+#define REG_VGNT_VG_RATE			61	// Vg rise rate for Vgnt measurement (in mV / s)
+#define REG_VGNT_CONF_VG_RATE		62	// Vg rise rate for Vgnt confirmation (in mV / s)
+#define REG_VGNT_CONF_TIME			63	// Vgnt confirmation time (in ms)
+// 64 - 69
 #define REG_HOLD_END_CURRENT		70	// Minimum available current for Ih (in mA)
 #define REG_HOLD_CURRENT_FALL_RATE	71	// Current rate (mA / ms)
 // 72 - 79
@@ -128,6 +130,7 @@
 #define REG_V_GATE_LIMIT			130	// Gate voltage limit, Vg (in mV)
 #define REG_I_GATE_LIMIT			131	// Gate current limit, Ig (in mA)
 #define REG_GATE_KEEP_ANODE_CURR	132 // Keep anode current for Vg/Ig measurement
+#define REG_VGNT_CONF_MODE			133 // Confirmation mode for Vgnt measurement
 //
 #define REG_SCOPE_STEP				150	// Save sample data with configured step
 //
@@ -206,6 +209,7 @@
 #define PROBLEM_DUT_NO_TRIG			7	// DUT not switched on
 #define PROBLEM_DUT_NO_CLOSE		8	// DUT not switched off
 #define PROBLEM_DUT_NO_LATCHING		9	// DUT not latched
+#define PROBLEM_VGNT_CONF_TRIG		10	// DUT trigged during Vgnt confirmation
 
 // FAULT CODES
 //

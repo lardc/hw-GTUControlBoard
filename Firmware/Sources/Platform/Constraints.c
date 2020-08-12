@@ -75,8 +75,8 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
                                     		   {0, 0, 0},																// 59
                                     		   {RISE_FALL_RATE_MIN, RISE_FALL_RATE_MAX, RISE_FALL_RATE_DEF},			// 60
                                     		   {RISE_FALL_RATE_MIN, RISE_FALL_RATE_MAX, RISE_FALL_RATE_DEF},			// 61
-                                    		   {0, 0, 0},																// 62
-                                    		   {0, 0, 0},																// 63
+                                    		   {RISE_FALL_RATE_MIN, RISE_FALL_RATE_MAX, RISE_FALL_RATE_DEF},			// 62
+                                    		   {TIME_MIN, TIME_MAX, TIME_DEF},											// 63
                                     		   {0, 0, 0},																// 64
                                     		   {0, 0, 0},																// 65
                                     		   {0, 0, 0},																// 66
@@ -150,7 +150,7 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 											   {VG_LIM_MIN, VG_LIM_MAX, VG_LIM_DEF},									// 130
 											   {IG_LIM_MIN, IG_LIM_MAX, IG_LIM_DEF},									// 131
 											   {FALSE, TRUE, TRUE},														// 132
-											   {0, 0, 0},																// 133
+											   {NO, YES, NO},															// 133
 											   {0, 0, 0},																// 134
 											   {0, 0, 0},																// 135
 											   {0, 0, 0},																// 136
