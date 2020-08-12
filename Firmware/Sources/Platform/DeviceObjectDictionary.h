@@ -154,6 +154,7 @@
 #define REG_RESULT_RG				203	// R   (in Ohm * 10)
 #define REG_RESULT_CAL				204	// Calibration result
 #define REG_RESULT_VGNT				205	// Vgnt (in mV)
+#define REG_RESULT_IGNT				206	// Ignt (in mA)
 //
 #define REG_KELVIN_1_2				211	// MUST BE 1
 #define REG_KELVIN_4_1				212	// MUST BE 0

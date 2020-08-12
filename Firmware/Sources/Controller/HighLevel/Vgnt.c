@@ -79,6 +79,7 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				if(!ZbGPIO_ExtSyncReadState())
 				{
 					DataTable[REG_RESULT_VGNT] = _IQint(MeasureSample.Vg);
+					DataTable[REG_RESULT_IGNT] = _IQint(MeasureSample.Ig);
 					State = GATE_STATE_FINISH_PREPARE;
 				}
 				else
