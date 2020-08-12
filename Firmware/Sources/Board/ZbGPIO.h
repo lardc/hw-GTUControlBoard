@@ -26,6 +26,6 @@ void ZbGPIO_SyncOSC(Boolean State);
 void ZbGPIO_GatePSTune(Boolean State);
 void ZbGPIO_FAN(Boolean State);
 //
-Boolean ZbGPIO_ExtSyncReadState();
+Boolean ZbGPIO_ExtSyncTrig();
 
 #endif // __ZBGPIO_H

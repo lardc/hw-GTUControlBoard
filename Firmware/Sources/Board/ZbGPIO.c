@@ -35,9 +35,9 @@ void ZbGPIO_Init()
 }
 // ----------------------------------------
 
-Boolean ZbGPIO_ExtSyncReadState()
+Boolean ZbGPIO_ExtSyncTrig()
 {
-	return ZwGPIO_ReadPin(PIN_EXT_SYNC);
+	return !ZwGPIO_ReadPin(PIN_EXT_SYNC);
 }
 // ----------------------------------------
 
