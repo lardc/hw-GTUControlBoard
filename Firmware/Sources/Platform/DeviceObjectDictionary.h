@@ -209,7 +209,8 @@
 #define PROBLEM_DUT_NO_TRIG			7	// DUT not switched on
 #define PROBLEM_DUT_NO_CLOSE		8	// DUT not switched off
 #define PROBLEM_DUT_NO_LATCHING		9	// DUT not latched
-#define PROBLEM_VGNT_CONF_TRIG		10	// DUT trigged during Vgnt confirmation
+#define PROBLEM_DUT_NO_VG_SENSING	10	// No potential signal from DUT Vg
+#define PROBLEM_VGNT_CONF_TRIG		11	// DUT trigged during Vgnt confirmation
 
 // FAULT CODES
 //

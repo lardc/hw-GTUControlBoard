@@ -65,6 +65,18 @@ void VGNT_Prepare()
 
 Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 {
+	// Detect Vg sensing disconnection
+	if(State == GATE_STATE_V_RISE || State == GATE_STATE_V_CONFIRM)
+	{
+		_iq ErrIg = _IQdiv(_IQabs(MeasureSample.Ig - Ig.Limit), Ig.Limit);
+
+		if(ErrIg > LogicSettings.AllowedError && REGULATOR_IsIErrorSaturated(SelectVg))
+		{
+			Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
+			State = GATE_STATE_FINISH_PREPARE;
+		}
+	}
+
 	++LogicSettings.CycleCounter;
 	
 	switch (State)
@@ -72,8 +84,6 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 		// Процесс нарастания напряжения Vg
 		case GATE_STATE_V_RISE:
 			{
-				_iq ErrIg = _IQdiv(_IQabs(MeasureSample.Ig - Ig.Limit), Ig.Limit);
-				
 				Vg.Setpoint += Vg.ChangeStep;
 				if(Vg.Setpoint > Vg.Limit)
 					Vg.Setpoint = Vg.Limit;
