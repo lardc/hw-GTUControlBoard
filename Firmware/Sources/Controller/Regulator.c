@@ -60,7 +60,7 @@ void REGULATOR_Cycle(CombinedData MeasureSample)
 
 void REGULATOR_CycleX(RegulatorSelector Selector, CombinedData MeasureSample)
 {
-	_iq SampleValue, error, error_range, ControlI = 0;
+	_iq SampleValue, Error, RelativeError, ControlI = 0;
 	pRegulatorSettings Regulator;
 
 	switch (Selector)
@@ -86,37 +86,42 @@ void REGULATOR_CycleX(RegulatorSelector Selector, CombinedData MeasureSample)
 			break;
 	}
 
-	if (Regulator->Enabled)
+	if(Regulator->Enabled)
 	{
-		// Расчёт ошибки
-		error = Regulator->TargetValuePrev - SampleValue;
-		error_range = _IQabs(_IQdiv(error, Regulator->TargetValuePrev));
+		Error = Regulator->TargetValuePrev - SampleValue;
 
-		if (error_range < REGLTR_KI_THR_ERROR)
+		// Расчёт интегральной ошибки
+		if(Regulator->Ki)
 		{
-			if((Regulator->ErrorI + error) < REGULATOR_ERROR_I_SAT_H)
-				Regulator->ErrorI += error;
-		}
+			RelativeError = _IQabs(_IQdiv(Error, Regulator->TargetValuePrev));
 
-		if (error_range > REGLTR_KI_H_THR_ERROR)
+			if(RelativeError < REGLTR_KI_THR_ERROR)
+			{
+				if((Regulator->ErrorI + Error) < REGLTR_ERROR_I_SAT_H)
+					Regulator->ErrorI += Error;
+				else
+					Regulator->ErrorI = REGLTR_ERROR_I_SAT_H;
+			}
+
+			if(RelativeError > REGLTR_KI_H_THR_ERROR)
+				Regulator->ErrorI = (Error > 0) ? REGLTR_ERROR_I_SAT_H : 0;
+
+			ControlI = _IQmpy(Regulator->ErrorI, Regulator->Ki);
+		}
+		else
 		{
-			if(error > 0)
-				Regulator->ErrorI = REGULATOR_ERROR_I_SAT_H;
-			else
-				Regulator->ErrorI = 0;
-
+			Regulator->ErrorI = 0;
+			ControlI = 0;
 		}
-
-		ControlI = _IQmpy(Regulator->ErrorI, Regulator->Ki);
 
 		// Корректировка управления
-		Regulator->Control = Regulator->TargetValue + _IQmpy(error, Regulator->Kp) + ControlI;
+		Regulator->Control = Regulator->TargetValue + _IQmpy(Error, Regulator->Kp) + ControlI;
 		Regulator->TargetValuePrev = Regulator->TargetValue;
 
 		// Проверка насыщения
-		if (Regulator->Control < 0)
+		if(Regulator->Control < 0)
 			Regulator->Control = 0;
-		else if (Regulator->Control > Regulator->ControlSat)
+		else if(Regulator->Control > Regulator->ControlSat)
 			Regulator->Control = Regulator->ControlSat;
 
 		// Применение значения
@@ -136,6 +141,20 @@ void REGULATOR_InitX(pRegulatorSettings Regulator, _iq ControlSat, Int16U Regist
 	Regulator->ErrorI 			= 0;
 	Regulator->TargetValue		= 0;
 	Regulator->TargetValuePrev	= 0;
+}
+// ----------------------------------------
+
+Boolean REGULATOR_IsIErrorSaturated(RegulatorSelector Selector)
+{
+	switch (Selector)
+	{
+		case SelectVd: return (RegulatorVd.ErrorI == REGLTR_ERROR_I_SAT_H);
+		case SelectId: return (RegulatorId.ErrorI == REGLTR_ERROR_I_SAT_H);
+		case SelectVg: return (RegulatorVg.ErrorI == REGLTR_ERROR_I_SAT_H);
+		case SelectIg: return (RegulatorIg.ErrorI == REGLTR_ERROR_I_SAT_H);
+	}
+
+	return FALSE;
 }
 // ----------------------------------------
 

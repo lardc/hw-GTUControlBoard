@@ -1,4 +1,4 @@
-// -----------------------------------------
+// ----------------------------------------
 // Universal regulator
 // ----------------------------------------
 
@@ -30,6 +30,7 @@ void REGULATOR_Cycle(CombinedData MeasureSample);
 void REGULATOR_Enable(RegulatorSelector Selector, Boolean State);
 void REGULATOR_Update(RegulatorSelector Selector, _iq Value);
 void REGULATOR_SetOutput(RegulatorSelector Selector, _iq Value);
+Boolean REGULATOR_IsIErrorSaturated(RegulatorSelector Selector);
 
 void REGULATOR_InitAll();
 void REGULATOR_DisableAll();
