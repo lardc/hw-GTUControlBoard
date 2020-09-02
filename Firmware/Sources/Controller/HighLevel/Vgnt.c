@@ -173,7 +173,7 @@ void VGNT_CacheVariables()
 	COMMON_CacheVariables(&Vd, &Id, &Vg, &Ig, &LogicSettings);
 	
 	ConfirmationMode = DataTable[REG_VGNT_CONF_MODE];
-	ConfirmationTimeCounter = TIMER0_PERIOD * DataTable[REG_VGNT_CONF_TIME];
+	ConfirmationTimeCounter = 1000L * DataTable[REG_VGNT_CONF_TIME] / TIMER0_PERIOD;
 	VRate_mV_s = _FPtoIQ2(DataTable[ConfirmationMode ? REG_VGNT_CONF_VG_RATE : REG_VGNT_VG_RATE], 1000);
 	Vg.ChangeStep = _IQmpy(_FPtoIQ2(TIMER0_PERIOD, 1000), VRate_mV_s);
 }
