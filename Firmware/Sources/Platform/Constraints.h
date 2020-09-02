@@ -47,7 +47,7 @@ typedef struct __TableItemConstraint
 // in mV/ms or mA/ms or mV/s
 #define RISE_FALL_RATE_MIN			1
 #define RISE_FALL_RATE_MAX			1000
-#define RISE_FALL_RATE_FAST_MAX		10000
+#define RISE_FALL_RATE_FAST_MAX		60000
 #define RISE_FALL_RATE_DEF			10
 
 // in mA
