@@ -173,6 +173,14 @@
 #define REG_CAN_DIAG_REC			224	// CAN REC
 //
 #define REG_QUADRATIC_CORR			254	// Use quadratic correction for block
+//
+// ----------------------------------------
+//
+#define REG_FWINFO_SLAVE_NID		256	// Device CAN slave node ID
+#define REG_FWINFO_MASTER_NID		257	// Device CAN master node ID (if presented)
+// 258 - 259
+#define REG_FWINFO_STR_LEN			260	// Length of the information string record
+#define REG_FWINFO_STR_BEGIN		261	// Begining of the information string record
 
 // ENDPOINTS
 //

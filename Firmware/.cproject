@@ -97,7 +97,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="out" artifactName="GTUControlBoard" buildProperties="" description="" id="com.ti.ccstudio.buildDefinitions.C2000.Release.810663381" name="Release" parent="com.ti.ccstudio.buildDefinitions.C2000.Release">
+				<configuration artifactExtension="out" artifactName="GTUControlBoard" buildProperties="" description="" id="com.ti.ccstudio.buildDefinitions.C2000.Release.810663381" name="Release" parent="com.ti.ccstudio.buildDefinitions.C2000.Release" prebuildStep="${PROJECT_LOC}/gen_git_info.bat &amp; ${PROJECT_LOC}/copy_git_info.bat">
 					<folderInfo id="com.ti.ccstudio.buildDefinitions.C2000.Release.810663381.1118973791" name="/" resourcePath="">
 						<toolChain id="com.ti.ccstudio.buildDefinitions.C2000_6.4.exe.ReleaseToolchain.2030193976" name="TI Build Tools" secondaryOutputs="com.ti.ccstudio.buildDefinitions.C2000_6.4.hex.outputType__BIN" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.exe.ReleaseToolchain" targetTool="com.ti.ccstudio.buildDefinitions.C2000_6.4.exe.linkerRelease.1189741700">
 							<option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.1168657445" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
@@ -145,10 +145,10 @@
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.GEN_OPT_INFO.1740495996" name="Generate optimizer information file at level [0-2] (--gen_opt_info, -on)" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.GEN_OPT_INFO" value="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.GEN_OPT_INFO.2" valueType="enumerated"/>
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.STD_LIB_FUNC_NOT_DEFINED.1666711596" name="File does not define any RTS library func (def.) (--std_lib_func_not_defined, -ol2)" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.STD_LIB_FUNC_NOT_DEFINED" value="true" valueType="boolean"/>
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.ADVICE__PERFORMANCE.895501852" name="Provide advice on optimization techniques (--advice:performance)" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.ADVICE__PERFORMANCE" value="--advice:performance=all" valueType="string"/>
-								<inputType id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__C_SRCS.689832674" multipleOfType="false" name="C Sources" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__C_SRCS"/>
-								<inputType id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__CPP_SRCS.2100053397" multipleOfType="false" name="C++ Sources" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__CPP_SRCS"/>
-								<inputType id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__ASM_SRCS.1230577396" multipleOfType="false" name="Assembly Sources" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__ASM_SRCS"/>
-								<inputType id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__ASM2_SRCS.1666774773" multipleOfType="false" name="Assembly Sources" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__ASM2_SRCS"/>
+								<inputType id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__C_SRCS.689832674" multipleOfType="true" name="C Sources" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__C_SRCS"/>
+								<inputType id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__CPP_SRCS.2100053397" multipleOfType="true" name="C++ Sources" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__CPP_SRCS"/>
+								<inputType id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__ASM_SRCS.1230577396" multipleOfType="true" name="Assembly Sources" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__ASM_SRCS"/>
+								<inputType id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__ASM2_SRCS.1666774773" multipleOfType="true" name="Assembly Sources" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compiler.inputType__ASM2_SRCS"/>
 							</tool>
 							<tool id="com.ti.ccstudio.buildDefinitions.C2000_6.4.exe.linkerRelease.1189741700" name="C2000 Linker" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.exe.linkerRelease">
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.4.linkerID.STACK_SIZE.1390376781" name="Set C system stack size (--stack_size, -stack)" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.linkerID.STACK_SIZE" value="0x300" valueType="string"/>
