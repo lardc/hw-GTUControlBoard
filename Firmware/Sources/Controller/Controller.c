@@ -214,6 +214,8 @@ void CONTROL_FillWithDefaults()
 	DataTable[REG_RESULT_IL] = 0;
 	DataTable[REG_RESULT_RG] = 0;
 	DataTable[REG_RESULT_CAL] = 0;
+	DataTable[REG_RESULT_VGNT] = 0;
+	DataTable[REG_RESULT_IGNT] = 0;
 	//
 	DataTable[REG_KELVIN_1_2] = 0;
 	DataTable[REG_KELVIN_4_1] = 0;
