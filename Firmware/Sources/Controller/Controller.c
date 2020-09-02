@@ -204,6 +204,7 @@ void CONTROL_FillWithDefaults()
 	DataTable[REG_FAULT_REASON] = FAULT_NONE;
 	DataTable[REG_DISABLE_REASON] = DISABLE_NONE;
 	DataTable[REG_WARNING] = WARNING_NONE;
+	DataTable[REG_PROBLEM] = PROBLEM_NONE;
 
 	// Set results to zero
 	DataTable[REG_RESULT_KELVIN] = 0;
