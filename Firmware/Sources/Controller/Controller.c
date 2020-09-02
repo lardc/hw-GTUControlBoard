@@ -28,7 +28,6 @@
 	
 // Variables
 //
-DeviceStateCodes Codes = { WARNING_NONE, PROBLEM_NONE, FAULT_NONE };
 volatile Int64U CONTROL_TimeCounter = 0;
 volatile Int64U FanTurnOff_Counter = 0;
 volatile DeviceState CONTROL_State = DS_None;
@@ -121,6 +120,7 @@ void CONTROL_UpdateHigh()
 	{
 		Boolean IsComplited = FALSE;
 		CombinedData MeasureSample;
+		DeviceStateCodes Codes = { WARNING_NONE, PROBLEM_NONE, FAULT_NONE };
 
 		// Выполнение регулирования
 		REGULATOR_Cycle(MeasureSample = MU_HandleADC(ZwADC_GetValues1()));
