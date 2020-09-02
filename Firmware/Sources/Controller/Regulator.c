@@ -142,10 +142,10 @@ Boolean REGULATOR_IsIErrorSaturated(RegulatorSelector Selector)
 {
 	switch (Selector)
 	{
-		case SelectVd: return (RegulatorVd.ErrorI == REGLTR_ERROR_I_SAT_H);
-		case SelectId: return (RegulatorId.ErrorI == REGLTR_ERROR_I_SAT_H);
-		case SelectVg: return (RegulatorVg.ErrorI == REGLTR_ERROR_I_SAT_H);
-		case SelectIg: return (RegulatorIg.ErrorI == REGLTR_ERROR_I_SAT_H);
+		case SelectVd: return (_IQabs(RegulatorVd.ErrorI) == REGLTR_ERROR_I_SAT_H);
+		case SelectId: return (_IQabs(RegulatorId.ErrorI) == REGLTR_ERROR_I_SAT_H);
+		case SelectVg: return (_IQabs(RegulatorVg.ErrorI) == REGLTR_ERROR_I_SAT_H);
+		case SelectIg: return (_IQabs(RegulatorIg.ErrorI) == REGLTR_ERROR_I_SAT_H);
 	}
 
 	return FALSE;
