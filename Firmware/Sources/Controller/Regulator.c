@@ -60,7 +60,7 @@ void REGULATOR_Cycle(CombinedData MeasureSample)
 
 void REGULATOR_CycleX(RegulatorSelector Selector, CombinedData MeasureSample)
 {
-	_iq SampleValue, Error, RelativeError, ControlI = 0;
+	_iq SampleValue;
 	pRegulatorSettings Regulator;
 
 	switch (Selector)
@@ -88,23 +88,17 @@ void REGULATOR_CycleX(RegulatorSelector Selector, CombinedData MeasureSample)
 
 	if(Regulator->Enabled)
 	{
-		Error = Regulator->TargetValuePrev - SampleValue;
+		_iq ControlI = 0;
+		_iq Error = Regulator->TargetValuePrev - SampleValue;
 
 		// Расчёт интегральной ошибки
 		if(Regulator->Ki)
 		{
-			RelativeError = _IQabs(_IQdiv(Error, Regulator->TargetValuePrev));
+			Regulator->ErrorI += Error;
 
-			if(RelativeError < REGLTR_KI_THR_ERROR)
-			{
-				if((Regulator->ErrorI + Error) < REGLTR_ERROR_I_SAT_H)
-					Regulator->ErrorI += Error;
-				else
-					Regulator->ErrorI = REGLTR_ERROR_I_SAT_H;
-			}
-
-			if(RelativeError > REGLTR_KI_H_THR_ERROR)
-				Regulator->ErrorI = (Error > 0) ? REGLTR_ERROR_I_SAT_H : 0;
+			// Проверка насыщения
+			if(_IQabs(Regulator->ErrorI) > REGLTR_ERROR_I_SAT_H)
+				Regulator->ErrorI = (Regulator->ErrorI > 0) ? REGLTR_ERROR_I_SAT_H : _IQmpy(_IQ(-1), REGLTR_ERROR_I_SAT_H);
 
 			ControlI = _IQmpy(Regulator->ErrorI, Regulator->Ki);
 		}
