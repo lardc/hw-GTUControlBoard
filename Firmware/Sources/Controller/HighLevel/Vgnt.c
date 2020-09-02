@@ -99,17 +99,17 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					}
 					State = GATE_STATE_FINISH_PREPARE;
 				}
-				else if((Vg.Setpoint == Vg.Limit) || (MeasureSample.Ig >= Ig.Limit))
+				else if(Vg.Setpoint == Vg.Limit)
 				{
-					if(!ConfirmationMode)
-					{
-						Codes->Problem = PROBLEM_DUT_NO_TRIG;
-						State = GATE_STATE_FINISH_PREPARE;
-					}
-					else
+					if(ConfirmationMode)
 					{
 						Delay = ConfirmationTimeCounter;
 						State = GATE_STATE_V_CONFIRM;
+					}
+					else
+					{
+						Codes->Problem = PROBLEM_DUT_NO_TRIG;
+						State = GATE_STATE_FINISH_PREPARE;
 					}
 				}
 
