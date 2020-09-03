@@ -142,7 +142,7 @@ void MU_LogScope(CombinedData MeasureSample)
 	if (CONTROL_Values_Counter == 0)
 		LocalCounter = 0;
 
-	if (ScopeLogStep++ >= DataTable[REG_SCOPE_STEP])
+	if (ScopeLogStep++ >= DataTable[REG_SCOPE_RATE])
 	{
 		ScopeLogStep = 0;
 

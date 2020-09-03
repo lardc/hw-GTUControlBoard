@@ -132,7 +132,7 @@
 #define REG_GATE_KEEP_ANODE_CURR	132 // Keep anode current for Vg/Ig measurement
 #define REG_VGNT_CONF_MODE			133 // Confirmation mode for Vgnt measurement
 //
-#define REG_SCOPE_STEP				150	// Save sample data with configured step
+#define REG_SCOPE_RATE				150	// Scope rate divisor
 //
 #define REG_DBG						160	// General purpose debug register
 //
