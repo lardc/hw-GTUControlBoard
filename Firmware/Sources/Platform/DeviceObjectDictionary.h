@@ -184,20 +184,20 @@
 
 // ENDPOINTS
 //
-#define EP16_Data_Vg				1
-#define EP16_Data_Ig				2
-#define EP16_Data_Vd				3
-#define EP16_Data_Id				4
+#define EP16_Data_Vg				1	// Sampled gate voltage Vg (mV)
+#define EP16_Data_Ig				2	// Sampled gate current Ig (mA)
+#define EP16_Data_Vd				3	// Sampled direct voltage Vd (mV)
+#define EP16_Data_Id				4	// Sampled direct current Id (mA)
 //
 #define EP16_Control_Vg				5
 #define EP16_Control_Ig				6
 #define EP16_Control_Vd				7
 #define EP16_Control_Id				8
 //
-#define EP16_Target_Vg				9
-#define EP16_Target_Ig				10
-#define EP16_Target_Vd				11
-#define EP16_Target_Id				12
+#define EP16_Target_Vg				9	// Target gate voltage Vg (mV)
+#define EP16_Target_Ig				10	// Target gate current Ig (mA)
+#define EP16_Target_Vd				11	// Target direct voltage Vd (mV)
+#define EP16_Target_Id				12	// Target direct current Id (mA)
 
 // OPERATION RESULTS
 //
