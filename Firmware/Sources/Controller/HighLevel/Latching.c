@@ -134,20 +134,29 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				{
 					if (Delay == 0)
 					{
-						// Проверка тока в анодной цепи
-						_iq ErrId = _IQdiv(_IQabs(MeasureSample.Id - IdTestCurrent), IdTestCurrent);
-
-						if (ErrId < LogicSettings.AllowedError)
+						// Проверка обрыва потенциальной линии управления Vg
+						if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg))
 						{
-							REGULATOR_Update(SelectIg, 0);
-
-							Delay = LogicSettings.StabCounter;
-							State = LATCHING_STATE_GATE_OFF_STAB;
+							Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
+							State = LATCHING_STATE_FINISH_PREPARE;
 						}
 						else
 						{
-							Codes->Problem = PROBLEM_DUT_NO_TRIG;
-							State = LATCHING_STATE_FINISH_PREPARE;
+							// Проверка тока в анодной цепи
+							_iq ErrId = _IQdiv(_IQabs(MeasureSample.Id - IdTestCurrent), IdTestCurrent);
+
+							if (ErrId < LogicSettings.AllowedError)
+							{
+								REGULATOR_Update(SelectIg, 0);
+
+								Delay = LogicSettings.StabCounter;
+								State = LATCHING_STATE_GATE_OFF_STAB;
+							}
+							else
+							{
+								Codes->Problem = PROBLEM_DUT_NO_TRIG;
+								State = LATCHING_STATE_FINISH_PREPARE;
+							}
 						}
 					}
 					else
