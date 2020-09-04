@@ -81,6 +81,18 @@ void HOLDING_Prepare()
 
 Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 {
+	// Detect Vg sensing disconnection
+	if(State == HOLDING_STATE_TRIG_CHECK)
+	{
+		_iq ErrIg = _IQdiv(_IQabs(MeasureSample.Ig - Ig.Limit), Ig.Limit);
+
+		if(ErrIg > LogicSettings.AllowedError && REGULATOR_IsIErrorSaturated(SelectVg))
+		{
+			Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
+			State = HOLDING_STATE_FINISH_PREPARE;
+		}
+	}
+
 	++LogicSettings.CycleCounter;
 
 	switch (State)
