@@ -1,4 +1,4 @@
-// -----------------------------------------
+// ----------------------------------------
 // Logic controller
 // ----------------------------------------
 
@@ -166,6 +166,7 @@
 #define REG_KELVIN_3_2				214	// MUST BE 1
 //
 #define REG_PROCESS_COUNTER			215	// Operation tick counter
+#define REG_EP_LAST_POINTER			216	// Pointer to last element in EP cycle arrays
 //
 #define REG_CAN_BUSOFF_COUNTER		220 // Counter of bus-off states
 #define REG_CAN_STATUS_REG			221	// CAN status register (32 bit)

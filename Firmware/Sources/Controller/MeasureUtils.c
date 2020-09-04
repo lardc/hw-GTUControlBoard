@@ -163,6 +163,9 @@ void MU_LogScope(CombinedData MeasureSample)
 		CONTROL_Values_Trgt_Vd[LocalCounter] = _IQint(tmp.Vd);
 		CONTROL_Values_Trgt_Id[LocalCounter] = _IQint(tmp.Id);
 
+		// Сохранение указателя на последний элемент
+		DataTable[REG_EP_LAST_POINTER] = LocalCounter;
+
 		++LocalCounter;
 	}
 
