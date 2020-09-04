@@ -49,8 +49,8 @@
 #define REG_COMM_ID_LEAK_MAX		1	// Allowed direct current leakage (in mA)
 #define REG_COMM_STAB_TIME			2	// Transient stabilizatioon time (in ms)
 #define REG_COMM_STAB_ERROR			3	// Transient stabilizatioon error (in %)
-#define REG_FAN_OFF_DELAY			4	// Fan turn off delay
-// 5 - 9
+//
+#define REG_FAN_OFF_DELAY			9	// Fan turn off delay (in ms)
 #define REG_PI_CTRL_VG_Kp			10	// Gate voltage PI Kp x1000
 #define REG_PI_CTRL_VG_Ki			11	// Gate voltage PI Ki x1000
 #define REG_PI_CTRL_IG_Kp			12	// Gate current PI Kp x1000
