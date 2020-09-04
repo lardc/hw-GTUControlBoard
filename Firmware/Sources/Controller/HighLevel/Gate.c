@@ -1,4 +1,4 @@
-// -----------------------------------------
+// ----------------------------------------
 // Logic of Gate testing
 // ----------------------------------------
 
@@ -133,15 +133,24 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				// Проверка условия отпирания прибора
 				if (ErrId < LogicSettings.AllowedError)
 				{
-					if (!KeepAnodeCurrent)
+					// Проверка обрыва потенциальной линии управления Vg
+					if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg))
 					{
-						// Снятие анодного тока
-						REGULATOR_Enable(SelectId, FALSE);
-						REGULATOR_SetOutput(SelectId, 0);
+						Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
+						State = GATE_STATE_FINISH_PREPARE;
 					}
+					else
+					{
+						if (!KeepAnodeCurrent)
+						{
+							// Снятие анодного тока
+							REGULATOR_Enable(SelectId, FALSE);
+							REGULATOR_SetOutput(SelectId, 0);
+						}
 
-					Delay = LogicSettings.StabCounter;
-					State = GATE_STATE_MEASURE_STAB;
+						Delay = LogicSettings.StabCounter;
+						State = GATE_STATE_MEASURE_STAB;
+					}
 				}
 
 				// Нарастание тока управления
@@ -155,14 +164,23 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				else
 				{
-					// Прибор не сработал после выхода на Ig
-					if (Delay == 0)
+					// Проверка обрыва потенциальной линии управления Vg
+					if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg))
 					{
-						Codes->Problem = PROBLEM_DUT_NO_TRIG;
+						Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
 						State = GATE_STATE_FINISH_PREPARE;
 					}
 					else
-						--Delay;
+					{
+						// Прибор не сработал после выхода на Ig
+						if (Delay == 0)
+						{
+							Codes->Problem = PROBLEM_DUT_NO_TRIG;
+							State = GATE_STATE_FINISH_PREPARE;
+						}
+						else
+							--Delay;
+					}
 				}
 			}
 			break;
