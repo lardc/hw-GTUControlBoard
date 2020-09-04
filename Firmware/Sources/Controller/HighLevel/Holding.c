@@ -140,10 +140,8 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			{
 				if (Delay == 0)
 				{
-					// Detect Vg sensing disconnection
-					_iq ErrIg = _IQdiv(_IQabs(MeasureSample.Ig - Ig.Limit), Ig.Limit);
-
-					if(ErrIg > LogicSettings.AllowedError && REGULATOR_IsIErrorSaturated(SelectVg))
+					// ѕроверка обрыва потенциальной линии управлени€ Vg
+					if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg))
 					{
 						Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
 						State = HOLDING_STATE_FINISH_PREPARE;
