@@ -1,4 +1,4 @@
-// -----------------------------------------
+// ----------------------------------------
 // Logic of Gate resistance testing
 // ----------------------------------------
 
@@ -110,7 +110,16 @@ Boolean RGATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 		case RGATE_STATE_IG_STAB:
 			{
 				if (Delay == 0)
-					State = RGATE_STATE_IG_CHECK;
+				{
+					// ѕроверка обрыва потенциальной линии управлени€ Vg
+					if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg))
+					{
+						Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
+						State = RGATE_STATE_FINISH_PREPARE;
+					}
+					else
+						State = RGATE_STATE_IG_CHECK;
+				}
 				else
 					--Delay;
 			}
