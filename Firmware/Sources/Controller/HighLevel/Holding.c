@@ -1,4 +1,4 @@
-// -----------------------------------------
+// ----------------------------------------
 // Controller of Holding current testing
 // ----------------------------------------
 
@@ -25,16 +25,18 @@ typedef enum __HoldingState
 	HOLDING_STATE_VD_CHECK,
 	HOLDING_STATE_GATE_STAB,
 	HOLDING_STATE_TRIG_CHECK,
+	HOLDING_STATE_HOLD_CHECK,
 	HOLDING_STATE_ID_FALL,
 	HOLDING_STATE_FINISH_PREPARE,
 	HOLDING_STATE_FINISH
 } HoldingState;
 
+
 // Defines
 #define PREV_SMPL_LEN				4
 #define PREV_SAMPLE_COUNTER_MASK	PREV_SMPL_LEN - 1
 #define PREV_SAMPLE_N				2
-//
+
 
 // Variables
 //
@@ -158,16 +160,34 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					REGULATOR_SetOutput(SelectVg, 0);
 
 					Id.Setpoint = Id.Limit;
-
 					Delay = LogicSettings.StabCounter;
-
-					State = HOLDING_STATE_ID_FALL;
+					State = HOLDING_STATE_HOLD_CHECK;
 				}
 				else
 				{
 					Codes->Problem = PROBLEM_DUT_NO_TRIG;
 					State = HOLDING_STATE_FINISH_PREPARE;
 				}
+			}
+			break;
+
+		case HOLDING_STATE_HOLD_CHECK:
+			{
+				if (Delay == 0)
+				{
+					if (MeasureSample.Id < LogicSettings.IdLeak)
+					{
+						Codes->Problem = PROBLEM_DUT_NO_LATCHING;
+						State = HOLDING_STATE_FINISH_PREPARE;
+					}
+					else
+					{
+						Delay = LogicSettings.StabCounter;
+						State = HOLDING_STATE_ID_FALL;
+					}
+				}
+				else
+					--Delay;
 			}
 			break;
 
@@ -187,7 +207,6 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 
 				PrevSampleIdValue[PrevSampleCounter++] = MeasureSample.Id;
 				PrevSampleCounter &= PREV_SAMPLE_COUNTER_MASK;
-
 
 				// Снижение прямого тока
 				if (Id.Setpoint != IdMinCurrent)
