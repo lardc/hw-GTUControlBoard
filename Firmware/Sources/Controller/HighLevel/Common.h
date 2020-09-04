@@ -23,6 +23,7 @@ typedef struct __CommonSettings
 	Int16U StabCounter;
 	_iq IdLeak;
 	_iq AllowedError;
+	_iq VgMinInput;
 } CommonSettings, *pCommonSettings;
 
 // Functions

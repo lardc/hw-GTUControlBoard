@@ -72,6 +72,7 @@ void COMMON_CacheVariables(pChannelSettings _Vd, pChannelSettings _Id, pChannelS
 	_LogicSettings->StabCounter		= 1000L * DataTable[REG_COMM_STAB_TIME] / TIMER0_PERIOD;
 	_LogicSettings->IdLeak 			= _IQI(DataTable[REG_COMM_ID_LEAK_MAX]);
 	_LogicSettings->AllowedError	= _FPtoIQ2(DataTable[REG_COMM_STAB_ERROR], 100);
+	_LogicSettings->VgMinInput		= _IQI(DataTable[REG_COMM_VG_MIN_INPUT]);
 }
 // ----------------------------------------
 

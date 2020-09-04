@@ -86,6 +86,11 @@ typedef struct __TableItemConstraint
 #define RG_CURRENT_MAX				200
 #define RG_CURRENT_DEF				50
 
+// in mV
+#define VG_MIN_INPUT_MIN			10
+#define VG_MIN_INPUT_MAX			100
+#define VG_MIN_INPUT_DEF			80
+
 // in ms
 #define FAN_OFF_DELAY_DEF			60000
 
