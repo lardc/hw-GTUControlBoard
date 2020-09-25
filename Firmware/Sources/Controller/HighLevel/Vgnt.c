@@ -188,6 +188,7 @@ void VGNT_SaveToRingBuffer(_iq Voltage, _iq Current)
 	}
 	RingBuffer[BufferPointer].Voltage = _IQint(Voltage);
 	RingBuffer[BufferPointer].Current = _IQint(Current);
+	++BufferPointer;
 }
 // ----------------------------------------
 
