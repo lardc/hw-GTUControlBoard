@@ -19,7 +19,7 @@ typedef struct __ChannelSettings
 } ChannelSettings, *pChannelSettings;
 typedef struct __CommonSettings
 {
-	Int16U CycleCounter;
+	Int32U CycleCounter;
 	Int16U StabCounter;
 	_iq IdLeak;
 	_iq AllowedError;

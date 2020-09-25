@@ -109,7 +109,9 @@
 #define REG_VGNT_VG_RATE			61	// Vg rise rate for Vgnt measurement (in mV / s)
 #define REG_VGNT_CONF_VG_RATE		62	// Vg rise rate for Vgnt confirmation (in mV / s)
 #define REG_VGNT_CONF_TIME			63	// Vgnt confirmation time (in ms)
-// 64 - 69
+#define REG_VGNT_VG_TIME_ERR_ZONE	64	// Time from the start to activly monitor Vg sensing problems (in ms)
+#define REG_VGNT_MEAS_POINT_OFFSET	65	// Measurement point offset from SYNC event (in ticks)
+// 66 - 69
 #define REG_HOLD_END_CURRENT		70	// Minimum available current for Ih (in mA)
 #define REG_HOLD_CURRENT_FALL_RATE	71	// Current rate (mA / ms)
 // 72 - 79

@@ -26,18 +26,29 @@ typedef enum __VGNTState
 	GATE_STATE_FINISH_PREPARE,
 	GATE_STATE_FINISH
 } VGNTState;
+typedef struct __SamplePoint
+{
+	Int16U Voltage;
+	Int16U Current;
+} SamplePoint, *pSamplePoint;
 
 // Variables
 //
 static VGNTState State;
 static CommonSettings LogicSettings;
 static ChannelSettings Vg = {0}, Ig = {0}, Vd = {0}, Id = {0};
-static Int16U Delay, ConfirmationTimeCounter;
+static Int16U Delay, ConfirmationTimeCounter, ErrZoneMonitoring, ResultPointOffset;
 static Boolean ConfirmationMode;
+// Ring buffer
+static SamplePoint RingBuffer[VGNT_RING_BUFFER_SIZE];
+static Boolean BufferIsFull;
+static Int16U BufferPointer;
 
 // Forward functions
 //
 void VGNT_CacheVariables();
+void VGNT_SaveToRingBuffer(_iq Voltage, _iq Current);
+SamplePoint VGNT_RingBufferRead(Int16U Offset);
 
 // Functions
 //
@@ -68,13 +79,15 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 	// Detect Vg sensing disconnection
 	if(State == GATE_STATE_V_RISE || State == GATE_STATE_V_CONFIRM)
 	{
-		if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg))
+		if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg) &&
+			LogicSettings.CycleCounter < ErrZoneMonitoring)
 		{
 			Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
 			State = GATE_STATE_FINISH_PREPARE;
 		}
 	}
 
+	VGNT_SaveToRingBuffer(MeasureSample.Vg, MeasureSample.Ig);
 	++LogicSettings.CycleCounter;
 	
 	switch (State)
@@ -92,8 +105,9 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 						Codes->Problem = PROBLEM_VGNT_CONF_TRIG;
 					else
 					{
-						DataTable[REG_RESULT_VGNT] = _IQint(MeasureSample.Vg);
-						DataTable[REG_RESULT_IGNT] = _IQint(MeasureSample.Ig);
+						SamplePoint Sample = VGNT_RingBufferRead(ResultPointOffset);
+						DataTable[REG_RESULT_VGNT] = Sample.Voltage;
+						DataTable[REG_RESULT_IGNT] = Sample.Current;
 					}
 					State = GATE_STATE_FINISH_PREPARE;
 				}
@@ -120,8 +134,9 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			{
 				if(Delay == 0)
 				{
-					DataTable[REG_RESULT_VGNT] = _IQint(MeasureSample.Vg);
-					DataTable[REG_RESULT_IGNT] = _IQint(MeasureSample.Ig);
+					SamplePoint Sample = VGNT_RingBufferRead(0);
+					DataTable[REG_RESULT_VGNT] = Sample.Voltage;
+					DataTable[REG_RESULT_IGNT] = Sample.Current;
 					State = GATE_STATE_FINISH_PREPARE;
 				}
 				else
@@ -164,6 +179,30 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 }
 // ----------------------------------------
 
+void VGNT_SaveToRingBuffer(_iq Voltage, _iq Current)
+{
+	if(BufferPointer == (VGNT_RING_BUFFER_SIZE - 1))
+	{
+		BufferPointer = 0;
+		BufferIsFull = TRUE;
+	}
+	RingBuffer[BufferPointer].Voltage = _IQint(Voltage);
+	RingBuffer[BufferPointer].Current = _IQint(Current);
+}
+// ----------------------------------------
+
+SamplePoint VGNT_RingBufferRead(Int16U Offset)
+{
+	Int16U index;
+	if(BufferPointer >= Offset)
+		index = BufferPointer - Offset;
+	else
+		index = BufferIsFull ? (VGNT_RING_BUFFER_SIZE + BufferPointer - Offset) : 0;
+
+	return RingBuffer[index];
+}
+// ----------------------------------------
+
 void VGNT_CacheVariables()
 {
 	_iq VRate_mV_s;
@@ -172,7 +211,12 @@ void VGNT_CacheVariables()
 	
 	ConfirmationMode = DataTable[REG_VGNT_CONF_MODE];
 	ConfirmationTimeCounter = 1000L * DataTable[REG_VGNT_CONF_TIME] / TIMER0_PERIOD;
+	ErrZoneMonitoring = 1000L * DataTable[REG_VGNT_VG_TIME_ERR_ZONE] / TIMER0_PERIOD;
+	ResultPointOffset = DataTable[REG_VGNT_MEAS_POINT_OFFSET];
 	VRate_mV_s = _FPtoIQ2(DataTable[ConfirmationMode ? REG_VGNT_CONF_VG_RATE : REG_VGNT_VG_RATE], 1000);
 	Vg.ChangeStep = _IQmpy(_FPtoIQ2(TIMER0_PERIOD, 1000), VRate_mV_s);
+
+	BufferIsFull = FALSE;
+	BufferPointer = 0;
 }
 // ----------------------------------------

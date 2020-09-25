@@ -43,7 +43,6 @@ typedef struct __TableItemConstraint
 #define IG_LIM_MAX					1100
 #define IG_LIM_DEF					1000
 
-
 // in mV/ms or mA/ms or mV/s
 #define RISE_FALL_RATE_MIN			1
 #define RISE_FALL_RATE_MAX			1000
@@ -93,6 +92,9 @@ typedef struct __TableItemConstraint
 
 // in ms
 #define FAN_OFF_DELAY_DEF			60000
+
+// in ticks
+#define VGNT_SMPL_POINT_SHIFT_MAX	VGNT_RING_BUFFER_SIZE
 
 
 // Variables
