@@ -1,4 +1,4 @@
-// -----------------------------------------
+п»ї// -----------------------------------------
 // Logic of latching current testing process
 // ----------------------------------------
 
@@ -51,17 +51,17 @@ void LATCHING_CacheVariables();
 //
 void LATCHING_Prepare()
 {
-	// Кэширование переменных
+	// РљСЌС€РёСЂРѕРІР°РЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С…
 	LATCHING_CacheVariables();
 	COMMON_PrepareStart();
 
-	// Активация регуляторов
+	// РђРєС‚РёРІР°С†РёСЏ СЂРµРіСѓР»СЏС‚РѕСЂРѕРІ
 	REGULATOR_Enable(SelectVd, TRUE);
 	REGULATOR_Enable(SelectVg, TRUE);
 	REGULATOR_Enable(SelectId, TRUE);
 	REGULATOR_Enable(SelectIg, TRUE);
 
-	// Выставление начальных значений
+	// Р’С‹СЃС‚Р°РІР»РµРЅРёРµ РЅР°С‡Р°Р»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№
 	REGULATOR_Update(SelectVd, 0);
 	REGULATOR_Update(SelectVg, Vg.Limit);
 	REGULATOR_Update(SelectId, IdTestCurrent);
@@ -78,7 +78,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 
 	switch (State)
 	{
-		// Выход на напряжение Vd
+		// Р’С‹С…РѕРґ РЅР° РЅР°РїСЂСЏР¶РµРЅРёРµ Vd
 		case LATCHING_STATE_VD_RISE:
 			{
 				Vd.Setpoint += Vd.ChangeStep;
@@ -93,7 +93,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Задержка на стабилизацию выхода Vd
+		// Р—Р°РґРµСЂР¶РєР° РЅР° СЃС‚Р°Р±РёР»РёР·Р°С†РёСЋ РІС‹С…РѕРґР° Vd
 		case LATCHING_STATE_VD_STAB:
 			{
 				if (Delay == 0)
@@ -103,7 +103,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Проверка корректности выхода на уставку Vd
+		// РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РІС‹С…РѕРґР° РЅР° СѓСЃС‚Р°РІРєСѓ Vd
 		case LATCHING_STATE_VD_CHECK:
 			{
 				_iq ErrVd = _IQdiv(_IQabs(MeasureSample.Vd - Vd.Setpoint), Vd.Setpoint);
@@ -120,7 +120,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				else
 				{
-					// Отпирание прибора - выставление тока Ig
+					// РћС‚РїРёСЂР°РЅРёРµ РїСЂРёР±РѕСЂР° - РІС‹СЃС‚Р°РІР»РµРЅРёРµ С‚РѕРєР° Ig
 					REGULATOR_Update(SelectIg, Ig.Limit);
 
 					Delay = LogicSettings.StabCounter;
@@ -129,12 +129,12 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-			// Стабилизация выхода Vg после включения
+			// РЎС‚Р°Р±РёР»РёР·Р°С†РёСЏ РІС‹С…РѕРґР° Vg РїРѕСЃР»Рµ РІРєР»СЋС‡РµРЅРёСЏ
 			case LATCHING_STATE_GATE_ON_STAB:
 				{
 					if (Delay == 0)
 					{
-						// Проверка обрыва потенциальной линии управления Vg
+						// РџСЂРѕРІРµСЂРєР° РѕР±СЂС‹РІР° РїРѕС‚РµРЅС†РёР°Р»СЊРЅРѕР№ Р»РёРЅРёРё СѓРїСЂР°РІР»РµРЅРёСЏ Vg
 						if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg))
 						{
 							Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
@@ -142,7 +142,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 						}
 						else
 						{
-							// Проверка тока в анодной цепи
+							// РџСЂРѕРІРµСЂРєР° С‚РѕРєР° РІ Р°РЅРѕРґРЅРѕР№ С†РµРїРё
 							_iq ErrId = _IQdiv(_IQabs(MeasureSample.Id - IdTestCurrent), IdTestCurrent);
 
 							if (ErrId < LogicSettings.AllowedError)
@@ -164,7 +164,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				break;
 
-			// Стабилизация выхода Ig после выключения
+			// РЎС‚Р°Р±РёР»РёР·Р°С†РёСЏ РІС‹С…РѕРґР° Ig РїРѕСЃР»Рµ РІС‹РєР»СЋС‡РµРЅРёСЏ
 			case LATCHING_STATE_GATE_OFF_STAB:
 				{
 					if (Delay == 0)
@@ -174,15 +174,15 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				break;
 
-			// Проверка анодного тока со снятым током управления
+			// РџСЂРѕРІРµСЂРєР° Р°РЅРѕРґРЅРѕРіРѕ С‚РѕРєР° СЃРѕ СЃРЅСЏС‚С‹Рј С‚РѕРєРѕРј СѓРїСЂР°РІР»РµРЅРёСЏ
 			case LATCHING_STATE_ID_CHECK:
 				{
 					if (MeasureSample.Id < LogicSettings.IdLeak)
 					{
-						// Прибор закрылся
+						// РџСЂРёР±РѕСЂ Р·Р°РєСЂС‹Р»СЃСЏ
 						IdTestCurrent += Id.ChangeStep;
 
-						// Если достигнут лимит тока - ошибка
+						// Р•СЃР»Рё РґРѕСЃС‚РёРіРЅСѓС‚ Р»РёРјРёС‚ С‚РѕРєР° - РѕС€РёР±РєР°
 						if (IdTestCurrent >= Id.Limit)
 						{
 							Codes->Problem = PROBLEM_DUT_NO_LATCHING;
@@ -197,25 +197,25 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					}
 					else
 					{
-						// Прибор открыт
+						// РџСЂРёР±РѕСЂ РѕС‚РєСЂС‹С‚
 
-						// Активация малого шага
+						// РђРєС‚РёРІР°С†РёСЏ РјР°Р»РѕРіРѕ С€Р°РіР°
 						if (Id.ChangeStep != IdSmallStep)
 						{
-							// Возрат на шаг назад по току
+							// Р’РѕР·СЂР°С‚ РЅР° С€Р°Рі РЅР°Р·Р°Рґ РїРѕ С‚РѕРєСѓ
 							IdTestCurrent -= Id.ChangeStep;
 
-							// Уменьшение шага
+							// РЈРјРµРЅСЊС€РµРЅРёРµ С€Р°РіР°
 							Id.ChangeStep = IdSmallStep;
 
-							// Запирание прибора
+							// Р—Р°РїРёСЂР°РЅРёРµ РїСЂРёР±РѕСЂР°
 							REGULATOR_Update(SelectId, 0);
 							Delay = LogicSettings.StabCounter;
 							State = LATCHING_STATE_DUT_CLOSE;
 						}
 						else
 						{
-							// Завершение измерения
+							// Р—Р°РІРµСЂС€РµРЅРёРµ РёР·РјРµСЂРµРЅРёСЏ
 							DataTable[REG_RESULT_IL] = _IQint(MeasureSample.Id);
 							State = LATCHING_STATE_FINISH_PREPARE;
 						}
@@ -223,7 +223,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				break;
 
-			// Пауза запирания прибора
+			// РџР°СѓР·Р° Р·Р°РїРёСЂР°РЅРёСЏ РїСЂРёР±РѕСЂР°
 			case LATCHING_STATE_DUT_CLOSE:
 				{
 					if (Delay == 0)
@@ -237,7 +237,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				break;
 
-			// Завершение процесса
+			// Р—Р°РІРµСЂС€РµРЅРёРµ РїСЂРѕС†РµСЃСЃР°
 			case LATCHING_STATE_FINISH_PREPARE:
 				{
 					COMMON_PrepareFinish();
@@ -247,7 +247,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				break;
 
-			// Завершение процесса
+			// Р—Р°РІРµСЂС€РµРЅРёРµ РїСЂРѕС†РµСЃСЃР°
 			case LATCHING_STATE_FINISH:
 				{
 					if (Delay == 0)

@@ -1,4 +1,4 @@
-// ----------------------------------------
+п»ї// ----------------------------------------
 // Controller logic
 // ----------------------------------------
 
@@ -123,10 +123,10 @@ void CONTROL_UpdateHigh()
 		Boolean IsComplited = FALSE;
 		CombinedData MeasureSample;
 
-		// Выполнение регулирования
+		// Р’С‹РїРѕР»РЅРµРЅРёРµ СЂРµРіСѓР»РёСЂРѕРІР°РЅРёСЏ
 		REGULATOR_Cycle(MeasureSample = MU_HandleADC(ZwADC_GetValues1()));
 
-		// Логгирование результата
+		// Р›РѕРіРіРёСЂРѕРІР°РЅРёРµ СЂРµР·СѓР»СЊС‚Р°С‚Р°
 		MU_LogScope(MeasureSample);
 
 		switch (CONTROL_State)

@@ -1,4 +1,4 @@
-// ----------------------------------------
+п»ї// ----------------------------------------
 // Logic of Gate resistance testing
 // ----------------------------------------
 
@@ -54,15 +54,15 @@ void RGATE_CacheVariables();
 //
 void RGATE_Prepare()
 {
-	// Кэширование переменных
+	// РљСЌС€РёСЂРѕРІР°РЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С…
 	RGATE_CacheVariables();
 	COMMON_PrepareStart();
 
-	// Активация регуляторов
+	// РђРєС‚РёРІР°С†РёСЏ СЂРµРіСѓР»СЏС‚РѕСЂРѕРІ
 	REGULATOR_Enable(SelectVg, TRUE);
 	REGULATOR_Enable(SelectIg, TRUE);
 
-	// Выставление начальных значений
+	// Р’С‹СЃС‚Р°РІР»РµРЅРёРµ РЅР°С‡Р°Р»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№
 	REGULATOR_Update(SelectVg, Vg.Limit);
 	REGULATOR_Update(SelectIg, 0);
 
@@ -79,7 +79,7 @@ Boolean RGATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 
 	switch(State)
 	{
-		// Ожидание нарастания напряжения контура Vg
+		// РћР¶РёРґР°РЅРёРµ РЅР°СЂР°СЃС‚Р°РЅРёСЏ РЅР°РїСЂСЏР¶РµРЅРёСЏ РєРѕРЅС‚СѓСЂР° Vg
 		case RGATE_STATE_VG_RISE:
 			{
 				if (Delay == 0)
@@ -91,7 +91,7 @@ Boolean RGATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Нарастание тока Ig
+		// РќР°СЂР°СЃС‚Р°РЅРёРµ С‚РѕРєР° Ig
 		case RGATE_STATE_IG_RISE:
 			{
 				Ig.Setpoint += Ig.ChangeStep;
@@ -106,12 +106,12 @@ Boolean RGATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Задержка на стабилизацию выхода Ig
+		// Р—Р°РґРµСЂР¶РєР° РЅР° СЃС‚Р°Р±РёР»РёР·Р°С†РёСЋ РІС‹С…РѕРґР° Ig
 		case RGATE_STATE_IG_STAB:
 			{
 				if (Delay == 0)
 				{
-					// Проверка обрыва потенциальной линии управления Vg
+					// РџСЂРѕРІРµСЂРєР° РѕР±СЂС‹РІР° РїРѕС‚РµРЅС†РёР°Р»СЊРЅРѕР№ Р»РёРЅРёРё СѓРїСЂР°РІР»РµРЅРёСЏ Vg
 					if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg))
 					{
 						Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
@@ -125,7 +125,7 @@ Boolean RGATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Проверка корректности выхода на уставку Ig
+		// РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РІС‹С…РѕРґР° РЅР° СѓСЃС‚Р°РІРєСѓ Ig
 		case RGATE_STATE_IG_CHECK:
 			{
 				_iq ErrIg = _IQdiv(_IQabs(MeasureSample.Ig - Ig.Setpoint), Ig.Setpoint);
@@ -144,7 +144,7 @@ Boolean RGATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Сбор значений сопротивления
+		// РЎР±РѕСЂ Р·РЅР°С‡РµРЅРёР№ СЃРѕРїСЂРѕС‚РёРІР»РµРЅРёСЏ
 		case RGATE_STATE_COLLECT:
 			{
 				if (Delay == 0)
@@ -160,7 +160,7 @@ Boolean RGATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Подготовка к завершению процесса
+		// РџРѕРґРіРѕС‚РѕРІРєР° Рє Р·Р°РІРµСЂС€РµРЅРёСЋ РїСЂРѕС†РµСЃСЃР°
 		case RGATE_STATE_FINISH_PREPARE:
 			{
 				COMMON_PrepareFinish();
@@ -170,7 +170,7 @@ Boolean RGATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Завершение процесса
+		// Р—Р°РІРµСЂС€РµРЅРёРµ РїСЂРѕС†РµСЃСЃР°
 		case RGATE_STATE_FINISH:
 			{
 				if (Delay == 0)

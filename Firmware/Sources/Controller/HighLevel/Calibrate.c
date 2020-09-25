@@ -1,4 +1,4 @@
-// -----------------------------------------
+п»ї// -----------------------------------------
 // Logic of Gate calibration
 // ----------------------------------------
 
@@ -58,7 +58,7 @@ void CALIBRATE_CacheVariables(RegulatorSelector Select);
 //
 void CALIBRATE_Prepare(RegulatorSelector Select)
 {
-	// Кэширование переменных
+	// РљСЌС€РёСЂРѕРІР°РЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С…
 	CALIBRATE_CacheVariables(Select);
 	COMMON_PrepareStart();
 
@@ -103,7 +103,7 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 
 	switch (State)
 	{
-		// Ожидание готовности вспомогательного контура
+		// РћР¶РёРґР°РЅРёРµ РіРѕС‚РѕРІРЅРѕСЃС‚Рё РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅРѕРіРѕ РєРѕРЅС‚СѓСЂР°
 		case CALIBRATE_STATE_AUX_RISE:
 			{
 				if (Delay == 0)
@@ -116,7 +116,7 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Нарастание основного сигнала
+		// РќР°СЂР°СЃС‚Р°РЅРёРµ РѕСЃРЅРѕРІРЅРѕРіРѕ СЃРёРіРЅР°Р»Р°
 		case CALIBRATE_STATE_RISE:
 			{
 				xSetpoint += xChangeStep;
@@ -131,7 +131,7 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Задержка на стабилизацию основного сигнала
+		// Р—Р°РґРµСЂР¶РєР° РЅР° СЃС‚Р°Р±РёР»РёР·Р°С†РёСЋ РѕСЃРЅРѕРІРЅРѕРіРѕ СЃРёРіРЅР°Р»Р°
 		case CALIBRATE_STATE_STAB:
 			{
 				if (Delay == 0)
@@ -141,7 +141,7 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Проверка корректности выхода на уставку
+		// РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РІС‹С…РѕРґР° РЅР° СѓСЃС‚Р°РІРєСѓ
 		case CALIBRATE_STATE_CHECK:
 			{
 				_iq ErrX = _IQdiv(_IQabs(measure - xSetpoint), xSetpoint);
@@ -168,7 +168,7 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Сбор значений
+		// РЎР±РѕСЂ Р·РЅР°С‡РµРЅРёР№
 		case CALIBRATE_STATE_COLLECT:
 			{
 				if (Delay == 0)
@@ -184,7 +184,7 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Подготовка к завершению процесса
+		// РџРѕРґРіРѕС‚РѕРІРєР° Рє Р·Р°РІРµСЂС€РµРЅРёСЋ РїСЂРѕС†РµСЃСЃР°
 		case CALIBRATE_STATE_FINISH_PREPARE:
 			{
 				COMMON_PrepareFinish();
@@ -194,7 +194,7 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Завершение процесса
+		// Р—Р°РІРµСЂС€РµРЅРёРµ РїСЂРѕС†РµСЃСЃР°
 		case CALIBRATE_STATE_FINISH:
 			{
 				if (Delay == 0)

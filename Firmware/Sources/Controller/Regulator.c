@@ -1,4 +1,4 @@
-// -----------------------------------------
+ï»¿// -----------------------------------------
 // Universal regulator
 // ----------------------------------------
 
@@ -44,16 +44,16 @@ void REGULATOR_InitX(pRegulatorSettings Regulator, _iq ControlSat, Int16U Regist
 //
 void REGULATOR_Cycle(CombinedData MeasureSample)
 {
-	// Ðåãóëÿòîð íàïðÿæåíèÿ öåïè óïðàâëåíèÿ
+	// Ð ÐµÐ³ÑƒÐ»ÑÑ‚Ð¾Ñ€ Ð½Ð°Ð¿Ñ€ÑÐ¶ÐµÐ½Ð¸Ñ Ñ†ÐµÐ¿Ð¸ ÑƒÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ
 	REGULATOR_CycleX(SelectVg, MeasureSample);
 
-	// Ðåãóëÿòîð òîêà öåïè óïðàâëåíèÿ
+	// Ð ÐµÐ³ÑƒÐ»ÑÑ‚Ð¾Ñ€ Ñ‚Ð¾ÐºÐ° Ñ†ÐµÐ¿Ð¸ ÑƒÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ
 	REGULATOR_CycleX(SelectIg, MeasureSample);
 
-	// Ðåãóëÿòîð íàïðÿæåíèÿ ñèëîâîé öåïè
+	// Ð ÐµÐ³ÑƒÐ»ÑÑ‚Ð¾Ñ€ Ð½Ð°Ð¿Ñ€ÑÐ¶ÐµÐ½Ð¸Ñ ÑÐ¸Ð»Ð¾Ð²Ð¾Ð¹ Ñ†ÐµÐ¿Ð¸
 	REGULATOR_CycleX(SelectVd, MeasureSample);
 
-	// Ðåãóëÿòîð òîêà ñèëîâîé öåïè
+	// Ð ÐµÐ³ÑƒÐ»ÑÑ‚Ð¾Ñ€ Ñ‚Ð¾ÐºÐ° ÑÐ¸Ð»Ð¾Ð²Ð¾Ð¹ Ñ†ÐµÐ¿Ð¸
 	REGULATOR_CycleX(SelectId, MeasureSample);
 }
 // ----------------------------------------
@@ -91,12 +91,12 @@ void REGULATOR_CycleX(RegulatorSelector Selector, CombinedData MeasureSample)
 		_iq ControlI = 0;
 		_iq Error = Regulator->TargetValuePrev - SampleValue;
 
-		// Ðàñ÷¸ò èíòåãðàëüíîé îøèáêè
+		// Ð Ð°ÑÑ‡Ñ‘Ñ‚ Ð¸Ð½Ñ‚ÐµÐ³Ñ€Ð°Ð»ÑŒÐ½Ð¾Ð¹ Ð¾ÑˆÐ¸Ð±ÐºÐ¸
 		if(Regulator->Ki)
 		{
 			Regulator->ErrorI += Error;
 
-			// Ïðîâåðêà íàñûùåíèÿ
+			// ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð°ÑÑ‹Ñ‰ÐµÐ½Ð¸Ñ
 			if(_IQabs(Regulator->ErrorI) > REGLTR_ERROR_I_SAT_H)
 				Regulator->ErrorI = (Regulator->ErrorI > 0) ? REGLTR_ERROR_I_SAT_H : _IQmpy(_IQ(-1), REGLTR_ERROR_I_SAT_H);
 
@@ -108,17 +108,17 @@ void REGULATOR_CycleX(RegulatorSelector Selector, CombinedData MeasureSample)
 			ControlI = 0;
 		}
 
-		// Êîððåêòèðîâêà óïðàâëåíèÿ
+		// ÐšÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð¸Ñ€Ð¾Ð²ÐºÐ° ÑƒÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ
 		Regulator->Control = Regulator->TargetValue + _IQmpy(Error, Regulator->Kp) + ControlI;
 		Regulator->TargetValuePrev = Regulator->TargetValue;
 
-		// Ïðîâåðêà íàñûùåíèÿ
+		// ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð°ÑÑ‹Ñ‰ÐµÐ½Ð¸Ñ
 		if(Regulator->Control < 0)
 			Regulator->Control = 0;
 		else if(Regulator->Control > Regulator->ControlSat)
 			Regulator->Control = Regulator->ControlSat;
 
-		// Ïðèìåíåíèå çíà÷åíèÿ
+		// ÐŸÑ€Ð¸Ð¼ÐµÐ½ÐµÐ½Ð¸Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ
 		REGULATOR_SetOutput(Selector, Regulator->Control);
 	}
 }

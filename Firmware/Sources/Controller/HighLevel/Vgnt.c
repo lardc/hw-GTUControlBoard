@@ -1,4 +1,4 @@
-// ----------------------------------------
+п»ї// ----------------------------------------
 // Logic of Gate testing
 // ----------------------------------------
 
@@ -54,19 +54,19 @@ SamplePoint VGNT_RingBufferRead(Int16U Offset);
 //
 void VGNT_Prepare()
 {
-	// Кэширование переменных
+	// РљСЌС€РёСЂРѕРІР°РЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С…
 	VGNT_CacheVariables();
 	COMMON_PrepareStart();
 	
-	// Активация регуляторов
+	// РђРєС‚РёРІР°С†РёСЏ СЂРµРіСѓР»СЏС‚РѕСЂРѕРІ
 	REGULATOR_Enable(SelectVg, TRUE);
 	REGULATOR_Enable(SelectIg, TRUE);
 	
-	// Выставление начальных значений
+	// Р’С‹СЃС‚Р°РІР»РµРЅРёРµ РЅР°С‡Р°Р»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№
 	REGULATOR_Update(SelectVg, 0);
 	REGULATOR_Update(SelectIg, Ig.Limit);
 	
-	// Включение подстройки напряжения питания для снижения нагрева ОУ
+	// Р’РєР»СЋС‡РµРЅРёРµ РїРѕРґСЃС‚СЂРѕР№РєРё РЅР°РїСЂСЏР¶РµРЅРёСЏ РїРёС‚Р°РЅРёСЏ РґР»СЏ СЃРЅРёР¶РµРЅРёСЏ РЅР°РіСЂРµРІР° РћРЈ
 	ZbGPIO_GatePSTune(TRUE);
 	
 	State = GATE_STATE_V_RISE;
@@ -92,7 +92,7 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 	
 	switch (State)
 	{
-		// Процесс нарастания напряжения Vg
+		// РџСЂРѕС†РµСЃСЃ РЅР°СЂР°СЃС‚Р°РЅРёСЏ РЅР°РїСЂСЏР¶РµРЅРёСЏ Vg
 		case GATE_STATE_V_RISE:
 			{
 				Vg.Setpoint += Vg.ChangeStep;
@@ -129,7 +129,7 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 			
-		// Процесс удержания напряжения Vg
+		// РџСЂРѕС†РµСЃСЃ СѓРґРµСЂР¶Р°РЅРёСЏ РЅР°РїСЂСЏР¶РµРЅРёСЏ Vg
 		case GATE_STATE_V_CONFIRM:
 			{
 				if(Delay == 0)
@@ -151,7 +151,7 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 			
-		// Подготовка к завершению процесса
+		// РџРѕРґРіРѕС‚РѕРІРєР° Рє Р·Р°РІРµСЂС€РµРЅРёСЋ РїСЂРѕС†РµСЃСЃР°
 		case GATE_STATE_FINISH_PREPARE:
 			{
 				COMMON_PrepareFinish();
@@ -160,7 +160,7 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 			
-		// Завершение процесса
+		// Р—Р°РІРµСЂС€РµРЅРёРµ РїСЂРѕС†РµСЃСЃР°
 		case GATE_STATE_FINISH:
 			{
 				if(Delay == 0)

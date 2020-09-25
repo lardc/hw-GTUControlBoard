@@ -1,4 +1,4 @@
-// ----------------------------------------
+п»ї// ----------------------------------------
 // Logic of Gate testing
 // ----------------------------------------
 
@@ -49,17 +49,17 @@ void GATE_CacheVariables();
 //
 void GATE_Prepare()
 {
-	// Кэширование переменных
+	// РљСЌС€РёСЂРѕРІР°РЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С…
 	GATE_CacheVariables();
 	COMMON_PrepareStart();
 
-	// Активация регуляторов
+	// РђРєС‚РёРІР°С†РёСЏ СЂРµРіСѓР»СЏС‚РѕСЂРѕРІ
 	REGULATOR_Enable(SelectVd, TRUE);
 	REGULATOR_Enable(SelectVg, TRUE);
 	REGULATOR_Enable(SelectId, TRUE);
 	REGULATOR_Enable(SelectIg, TRUE);
 
-	// Выставление начальных значений
+	// Р’С‹СЃС‚Р°РІР»РµРЅРёРµ РЅР°С‡Р°Р»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№
 	REGULATOR_Update(SelectVd, 0);
 	REGULATOR_Update(SelectVg, 0);
 	REGULATOR_Update(SelectId, Id.Limit);
@@ -76,7 +76,7 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 
 	switch (State)
 	{
-		// Выход на напряжение Vd, Vg
+		// Р’С‹С…РѕРґ РЅР° РЅР°РїСЂСЏР¶РµРЅРёРµ Vd, Vg
 		case GATE_STATE_V_RISE:
 			{
 				Vd.Setpoint += Vd.ChangeStep;
@@ -98,7 +98,7 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Задержка на стабилизацию выхода Vd, Vg
+		// Р—Р°РґРµСЂР¶РєР° РЅР° СЃС‚Р°Р±РёР»РёР·Р°С†РёСЋ РІС‹С…РѕРґР° Vd, Vg
 		case GATE_STATE_V_STAB:
 			{
 				if (Delay == 0)
@@ -108,7 +108,7 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Проверка отсутствия тока утечки прямой цепи
+		// РџСЂРѕРІРµСЂРєР° РѕС‚СЃСѓС‚СЃС‚РІРёСЏ С‚РѕРєР° СѓС‚РµС‡РєРё РїСЂСЏРјРѕР№ С†РµРїРё
 		case GATE_STATE_IL_CHECK:
 			{
 				if (MeasureSample.Id > LogicSettings.IdLeak)
@@ -124,16 +124,16 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Запуск формирования тока управления
+		// Р—Р°РїСѓСЃРє С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ С‚РѕРєР° СѓРїСЂР°РІР»РµРЅРёСЏ
 		case GATE_STATE_IG_RISE:
 			{
 				_iq ErrId = _IQdiv(_IQabs(MeasureSample.Id - Id.Limit), Id.Limit);
 				_iq ErrIg = _IQdiv(_IQabs(MeasureSample.Ig - Ig.Limit), Ig.Limit);
 
-				// Проверка условия отпирания прибора
+				// РџСЂРѕРІРµСЂРєР° СѓСЃР»РѕРІРёСЏ РѕС‚РїРёСЂР°РЅРёСЏ РїСЂРёР±РѕСЂР°
 				if (ErrId < LogicSettings.AllowedError)
 				{
-					// Проверка обрыва потенциальной линии управления Vg
+					// РџСЂРѕРІРµСЂРєР° РѕР±СЂС‹РІР° РїРѕС‚РµРЅС†РёР°Р»СЊРЅРѕР№ Р»РёРЅРёРё СѓРїСЂР°РІР»РµРЅРёСЏ Vg
 					if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg))
 					{
 						Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
@@ -143,7 +143,7 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					{
 						if (!KeepAnodeCurrent)
 						{
-							// Снятие анодного тока
+							// РЎРЅСЏС‚РёРµ Р°РЅРѕРґРЅРѕРіРѕ С‚РѕРєР°
 							REGULATOR_Enable(SelectId, FALSE);
 							REGULATOR_SetOutput(SelectId, 0);
 						}
@@ -153,7 +153,7 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					}
 				}
 
-				// Нарастание тока управления
+				// РќР°СЂР°СЃС‚Р°РЅРёРµ С‚РѕРєР° СѓРїСЂР°РІР»РµРЅРёСЏ
 				if (Ig.Setpoint != Ig.Limit)
 				{
 					Ig.Setpoint += Ig.ChangeStep;
@@ -164,7 +164,7 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				else
 				{
-					// Проверка обрыва потенциальной линии управления Vg
+					// РџСЂРѕРІРµСЂРєР° РѕР±СЂС‹РІР° РїРѕС‚РµРЅС†РёР°Р»СЊРЅРѕР№ Р»РёРЅРёРё СѓРїСЂР°РІР»РµРЅРёСЏ Vg
 					if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg))
 					{
 						Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
@@ -172,7 +172,7 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					}
 					else
 					{
-						// Прибор не сработал после выхода на Ig
+						// РџСЂРёР±РѕСЂ РЅРµ СЃСЂР°Р±РѕС‚Р°Р» РїРѕСЃР»Рµ РІС‹С…РѕРґР° РЅР° Ig
 						if (Delay == 0)
 						{
 							Codes->Problem = PROBLEM_DUT_NO_TRIG;
@@ -185,16 +185,16 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Стабилизация и измерение
+		// РЎС‚Р°Р±РёР»РёР·Р°С†РёСЏ Рё РёР·РјРµСЂРµРЅРёРµ
 		case GATE_STATE_MEASURE_STAB:
 			{
 				if (Delay == 0)
 				{
-					// Снятие анодного тока
+					// РЎРЅСЏС‚РёРµ Р°РЅРѕРґРЅРѕРіРѕ С‚РѕРєР°
 					REGULATOR_Enable(SelectId, FALSE);
 					REGULATOR_SetOutput(SelectId, 0);
 
-					// Сохранение результата
+					// РЎРѕС…СЂР°РЅРµРЅРёРµ СЂРµР·СѓР»СЊС‚Р°С‚Р°
 					DataTable[REG_RESULT_IGT] = _IQint(MeasureSample.Ig);
 					DataTable[REG_RESULT_VGT] = _IQint(MeasureSample.Vg);
 
@@ -206,7 +206,7 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Подготовка к завершению процесса
+		// РџРѕРґРіРѕС‚РѕРІРєР° Рє Р·Р°РІРµСЂС€РµРЅРёСЋ РїСЂРѕС†РµСЃСЃР°
 		case GATE_STATE_FINISH_PREPARE:
 			{
 				COMMON_PrepareFinish();
@@ -216,7 +216,7 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Завершение процесса
+		// Р—Р°РІРµСЂС€РµРЅРёРµ РїСЂРѕС†РµСЃСЃР°
 		case GATE_STATE_FINISH:
 			{
 				if (Delay == 0)
