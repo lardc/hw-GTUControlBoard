@@ -1,4 +1,4 @@
-// -----------------------------------------
+п»ї// -----------------------------------------
 // Logic of Gate calibration
 // ----------------------------------------
 
@@ -42,15 +42,15 @@ void HEATING_TEST_CacheVariables();
 //
 void HEATING_TEST_Prepare()
 {
-	// Кэширование переменных
+	// РљСЌС€РёСЂРѕРІР°РЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С…
 	HEATING_TEST_CacheVariables();
 	COMMON_PrepareStart();
 
-	// Активация регуляторов
+	// РђРєС‚РёРІР°С†РёСЏ СЂРµРіСѓР»СЏС‚РѕСЂРѕРІ
 	REGULATOR_Enable(SelectVg, TRUE);
 	REGULATOR_Enable(SelectIg, TRUE);
 
-	// Выставление начальных значений
+	// Р’С‹СЃС‚Р°РІР»РµРЅРёРµ РЅР°С‡Р°Р»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№
 	REGULATOR_Update(SelectVg, 0);
 	REGULATOR_Update(SelectIg, Ig.Limit);
 
@@ -63,7 +63,7 @@ Boolean HEATING_TEST_Process(CombinedData MeasureSample, pDeviceStateCodes Codes
 {
 	switch (State)
 	{
-		// Нарастание основного сигнала
+		// РќР°СЂР°СЃС‚Р°РЅРёРµ РѕСЃРЅРѕРІРЅРѕРіРѕ СЃРёРіРЅР°Р»Р°
 		case HEATING_TEST_STATE_RISE:
 			{
 				xSetpoint += xChangeStep;
@@ -77,7 +77,7 @@ Boolean HEATING_TEST_Process(CombinedData MeasureSample, pDeviceStateCodes Codes
 			}
 			break;
 
-		// Задержка на стабилизацию основного сигнала
+		// Р—Р°РґРµСЂР¶РєР° РЅР° СЃС‚Р°Р±РёР»РёР·Р°С†РёСЋ РѕСЃРЅРѕРІРЅРѕРіРѕ СЃРёРіРЅР°Р»Р°
 		case HEATING_TEST_STATE_STAB:
 			{
 			}

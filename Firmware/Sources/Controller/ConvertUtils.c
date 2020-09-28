@@ -1,4 +1,4 @@
-// -----------------------------------------
+п»ї// -----------------------------------------
 // Utility functions for parameters conversion
 // ----------------------------------------
 
@@ -43,16 +43,16 @@ DACConvParameters CU_LoadParams_Simple(Int16U RegK, Int16U RegB);
 //
 void CU_Cache()
 {
-	// Цепь управления - напряжение
+	// Р¦РµРїСЊ СѓРїСЂР°РІР»РµРЅРёСЏ - РЅР°РїСЂСЏР¶РµРЅРёРµ
 	ParamsGateV  = CU_LoadParams_Simple(REG_DAC_VG_CONV_K, REG_DAC_VG_CONV_B);
 
-	// Цепь управления - ток
+	// Р¦РµРїСЊ СѓРїСЂР°РІР»РµРЅРёСЏ - С‚РѕРє
 	ParamsGateI  = CU_LoadParams(REG_DAC_IG_CONV_K, REG_DAC_IG_CONV_B, REG_DAC_IG_FINE_P2, REG_DAC_IG_FINE_P1, REG_DAC_IG_FINE_P0);
 
-	// Силовая цепь - напряжение
+	// РЎРёР»РѕРІР°СЏ С†РµРїСЊ - РЅР°РїСЂСЏР¶РµРЅРёРµ
 	ParamsDirectV = CU_LoadParams_Simple(REG_DAC_VD_CONV_K, REG_DAC_VD_CONV_B);
 
-	// Силовая цепь - ток
+	// РЎРёР»РѕРІР°СЏ С†РµРїСЊ - С‚РѕРє
 	ParamsDirectI = CU_LoadParams(REG_DAC_ID_CONV_K, REG_DAC_ID_CONV_B, REG_DAC_ID_FINE_P2, REG_DAC_ID_FINE_P1, REG_DAC_ID_FINE_P0);
 }
 // ----------------------------------------

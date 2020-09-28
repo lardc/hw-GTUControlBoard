@@ -1,4 +1,4 @@
-// -----------------------------------------
+п»ї// -----------------------------------------
 // Utility functions for measurements
 // ----------------------------------------
 
@@ -33,7 +33,7 @@ static ADCConvParameters ParamsGateV, ParamsGateI, ParamsDirectV, ParamsDirectI;
 _iq MU_ADCtoX(Int16U ADCInput, ADCConvParameters Parameters);
 ADCConvParameters MU_LoadParams(Int16U RegK, Int16U RegB, Int16U RegP2, Int16U RegP1, Int16U RegP0);
 
-// Функции преобразования значений АЦП
+// Р¤СѓРЅРєС†РёРё РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ Р·РЅР°С‡РµРЅРёР№ РђР¦Рџ
 _iq MU_GateV (Int16U ADCInput);
 _iq MU_GateI (Int16U ADCInput);
 _iq MU_DirectV(Int16U ADCInput);
@@ -44,19 +44,19 @@ _iq MU_DirectI(Int16U ADCInput);
 //
 void MU_Cache()
 {
-	// Цепь управления - напряжение
+	// Р¦РµРїСЊ СѓРїСЂР°РІР»РµРЅРёСЏ - РЅР°РїСЂСЏР¶РµРЅРёРµ
 	ParamsGateV  = MU_LoadParams(REG_ADC_VG_CONV_K,  REG_ADC_VG_CONV_B,
 								 REG_ADC_VG_FINE_P2, REG_ADC_VG_FINE_P1, REG_ADC_VG_FINE_P0);
 
-	// Цепь управления - ток
+	// Р¦РµРїСЊ СѓРїСЂР°РІР»РµРЅРёСЏ - С‚РѕРє
 	ParamsGateI  = MU_LoadParams(REG_ADC_IG_CONV_K,  REG_ADC_IG_CONV_B,
 								 REG_ADC_IG_FINE_P2, REG_ADC_IG_FINE_P1, REG_ADC_IG_FINE_P0);
 
-	// Силовая цепь - напряжение
+	// РЎРёР»РѕРІР°СЏ С†РµРїСЊ - РЅР°РїСЂСЏР¶РµРЅРёРµ
 	ParamsDirectV = MU_LoadParams(REG_ADC_VD_CONV_K, REG_ADC_VD_CONV_B,
 								 REG_ADC_VD_FINE_P2, REG_ADC_VD_FINE_P1, REG_ADC_VD_FINE_P0);
 
-	// Силовая цепь - ток
+	// РЎРёР»РѕРІР°СЏ С†РµРїСЊ - С‚РѕРє
 	ParamsDirectI = MU_LoadParams(REG_ADC_ID_CONV_K, REG_ADC_ID_CONV_B,
 								 REG_ADC_ID_FINE_P2, REG_ADC_ID_FINE_P1, REG_ADC_ID_FINE_P0);
 }
@@ -138,7 +138,7 @@ void MU_LogScope(CombinedData MeasureSample)
 	CombinedData tmp;
 	static Int16U ScopeLogStep = 0, LocalCounter = 0;
 
-	// Сброс локального счётчика в начале логгирования
+	// РЎР±СЂРѕСЃ Р»РѕРєР°Р»СЊРЅРѕРіРѕ СЃС‡С‘С‚С‡РёРєР° РІ РЅР°С‡Р°Р»Рµ Р»РѕРіРіРёСЂРѕРІР°РЅРёСЏ
 	if (CONTROL_Values_Counter == 0)
 		LocalCounter = 0;
 
@@ -163,17 +163,17 @@ void MU_LogScope(CombinedData MeasureSample)
 		CONTROL_Values_Trgt_Vd[LocalCounter] = _IQint(tmp.Vd);
 		CONTROL_Values_Trgt_Id[LocalCounter] = _IQint(tmp.Id);
 
-		// Сохранение указателя на последний элемент
+		// РЎРѕС…СЂР°РЅРµРЅРёРµ СѓРєР°Р·Р°С‚РµР»СЏ РЅР° РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚
 		DataTable[REG_EP_LAST_POINTER] = LocalCounter;
 
 		++LocalCounter;
 	}
 
-	// Условие обновления глобального счётчика данных
+	// РЈСЃР»РѕРІРёРµ РѕР±РЅРѕРІР»РµРЅРёСЏ РіР»РѕР±Р°Р»СЊРЅРѕРіРѕ СЃС‡С‘С‚С‡РёРєР° РґР°РЅРЅС‹С…
 	if (CONTROL_Values_Counter < VALUES_x_SIZE)
 		CONTROL_Values_Counter = LocalCounter;
 
-	// Сброс локального счётчика
+	// РЎР±СЂРѕСЃ Р»РѕРєР°Р»СЊРЅРѕРіРѕ СЃС‡С‘С‚С‡РёРєР°
 	if (LocalCounter >= VALUES_x_SIZE)
 		LocalCounter = 0;
 }

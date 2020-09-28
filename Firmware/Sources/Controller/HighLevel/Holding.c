@@ -1,4 +1,4 @@
-// ----------------------------------------
+п»ї// ----------------------------------------
 // Controller of Holding current testing
 // ----------------------------------------
 
@@ -58,17 +58,17 @@ void HOLDING_CacheVariables();
 //
 void HOLDING_Prepare()
 {
-	// Кэширование переменных
+	// РљСЌС€РёСЂРѕРІР°РЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С…
 	HOLDING_CacheVariables();
 	COMMON_PrepareStart();
 
-	// Активация регуляторов
+	// РђРєС‚РёРІР°С†РёСЏ СЂРµРіСѓР»СЏС‚РѕСЂРѕРІ
 	REGULATOR_Enable(SelectVd, TRUE);
 	REGULATOR_Enable(SelectVg, TRUE);
 	REGULATOR_Enable(SelectId, TRUE);
 	REGULATOR_Enable(SelectIg, TRUE);
 
-	// Выставление начальных значений
+	// Р’С‹СЃС‚Р°РІР»РµРЅРёРµ РЅР°С‡Р°Р»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№
 	REGULATOR_Update(SelectVd, 0);
 	REGULATOR_Update(SelectVg, Vg.Limit);
 	REGULATOR_Update(SelectId, Id.Limit);
@@ -85,7 +85,7 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 
 	switch (State)
 	{
-		// Выход на напряжение Vd
+		// Р’С‹С…РѕРґ РЅР° РЅР°РїСЂСЏР¶РµРЅРёРµ Vd
 		case HOLDING_STATE_VD_RISE:
 			{
 				Vd.Setpoint += Vd.ChangeStep;
@@ -100,7 +100,7 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Задержка на стабилизацию выхода Vd
+		// Р—Р°РґРµСЂР¶РєР° РЅР° СЃС‚Р°Р±РёР»РёР·Р°С†РёСЋ РІС‹С…РѕРґР° Vd
 		case HOLDING_STATE_VD_STAB:
 			{
 				if (Delay == 0)
@@ -110,7 +110,7 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Проверка корректности выхода на уставку Vd
+		// РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РІС‹С…РѕРґР° РЅР° СѓСЃС‚Р°РІРєСѓ Vd
 		case HOLDING_STATE_VD_CHECK:
 			{
 				_iq ErrVd = _IQdiv(_IQabs(MeasureSample.Vd - Vd.Setpoint), Vd.Setpoint);
@@ -127,7 +127,7 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				else
 				{
-					// Отпирание прибора - выставление напряжения Ig
+					// РћС‚РїРёСЂР°РЅРёРµ РїСЂРёР±РѕСЂР° - РІС‹СЃС‚Р°РІР»РµРЅРёРµ РЅР°РїСЂСЏР¶РµРЅРёСЏ Ig
 					REGULATOR_Update(SelectIg, Ig.Limit);
 					Delay = LogicSettings.StabCounter;
 					State = HOLDING_STATE_GATE_STAB;
@@ -135,12 +135,12 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Стабилизация выхода Ig
+		// РЎС‚Р°Р±РёР»РёР·Р°С†РёСЏ РІС‹С…РѕРґР° Ig
 		case HOLDING_STATE_GATE_STAB:
 			{
 				if (Delay == 0)
 				{
-					// Проверка обрыва потенциальной линии управления Vg
+					// РџСЂРѕРІРµСЂРєР° РѕР±СЂС‹РІР° РїРѕС‚РµРЅС†РёР°Р»СЊРЅРѕР№ Р»РёРЅРёРё СѓРїСЂР°РІР»РµРЅРёСЏ Vg
 					if(MeasureSample.Vg < LogicSettings.VgMinInput && REGULATOR_IsIErrorSaturated(SelectVg))
 					{
 						Codes->Problem = PROBLEM_DUT_NO_VG_SENSING;
@@ -154,15 +154,15 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Проверка отпирания прибора
+		// РџСЂРѕРІРµСЂРєР° РѕС‚РїРёСЂР°РЅРёСЏ РїСЂРёР±РѕСЂР°
 		case HOLDING_STATE_TRIG_CHECK:
 			{
 				_iq ErrId = _IQdiv(_IQabs(MeasureSample.Id - Id.Limit), Id.Limit);
 
-				// Проверка условия отпирания прибора
+				// РџСЂРѕРІРµСЂРєР° СѓСЃР»РѕРІРёСЏ РѕС‚РїРёСЂР°РЅРёСЏ РїСЂРёР±РѕСЂР°
 				if (ErrId < LogicSettings.AllowedError)
 				{
-					// Снятие сигнала управления
+					// РЎРЅСЏС‚РёРµ СЃРёРіРЅР°Р»Р° СѓРїСЂР°РІР»РµРЅРёСЏ
 					REGULATOR_Enable(SelectIg, FALSE);
 					REGULATOR_Enable(SelectVg, FALSE);
 					REGULATOR_SetOutput(SelectIg, 0);
@@ -200,16 +200,16 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Снижение анодного тока Id
+		// РЎРЅРёР¶РµРЅРёРµ Р°РЅРѕРґРЅРѕРіРѕ С‚РѕРєР° Id
 		case HOLDING_STATE_ID_FALL:
 			{
-				// Проверка условия запирания прибора
+				// РџСЂРѕРІРµСЂРєР° СѓСЃР»РѕРІРёСЏ Р·Р°РїРёСЂР°РЅРёСЏ РїСЂРёР±РѕСЂР°
 				if (MeasureSample.Id < LogicSettings.IdLeak)
 				{
 					PrevSampleCounter -= PREV_SAMPLE_N;
 					PrevSampleCounter &= PREV_SAMPLE_COUNTER_MASK;
 
-					// Если прибор закрылся - сохранение предыдущего результата
+					// Р•СЃР»Рё РїСЂРёР±РѕСЂ Р·Р°РєСЂС‹Р»СЃСЏ - СЃРѕС…СЂР°РЅРµРЅРёРµ РїСЂРµРґС‹РґСѓС‰РµРіРѕ СЂРµР·СѓР»СЊС‚Р°С‚Р°
 					DataTable[REG_RESULT_IH] = _IQint(PrevSampleIdValue[PrevSampleCounter]);
 					State = HOLDING_STATE_FINISH_PREPARE;
 				}
@@ -217,7 +217,7 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				PrevSampleIdValue[PrevSampleCounter++] = MeasureSample.Id;
 				PrevSampleCounter &= PREV_SAMPLE_COUNTER_MASK;
 
-				// Снижение прямого тока
+				// РЎРЅРёР¶РµРЅРёРµ РїСЂСЏРјРѕРіРѕ С‚РѕРєР°
 				if (Id.Setpoint != IdMinCurrent)
 				{
 					Id.Setpoint -= Id.ChangeStep;
@@ -228,7 +228,7 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				else
 				{
-					// Прибор не закрылся после выхода на минимум Id
+					// РџСЂРёР±РѕСЂ РЅРµ Р·Р°РєСЂС‹Р»СЃСЏ РїРѕСЃР»Рµ РІС‹С…РѕРґР° РЅР° РјРёРЅРёРјСѓРј Id
 					if (Delay == 0)
 					{
 						Codes->Problem = PROBLEM_DUT_NO_CLOSE;
@@ -240,7 +240,7 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Подготовка к завершению процесса
+		// РџРѕРґРіРѕС‚РѕРІРєР° Рє Р·Р°РІРµСЂС€РµРЅРёСЋ РїСЂРѕС†РµСЃСЃР°
 		case HOLDING_STATE_FINISH_PREPARE:
 			{
 				COMMON_PrepareFinish();
@@ -250,7 +250,7 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Завершение процесса
+		// Р—Р°РІРµСЂС€РµРЅРёРµ РїСЂРѕС†РµСЃСЃР°
 		case HOLDING_STATE_FINISH:
 			{
 				if (Delay == 0)

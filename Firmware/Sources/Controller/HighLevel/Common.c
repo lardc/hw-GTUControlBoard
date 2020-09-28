@@ -1,4 +1,4 @@
-// -----------------------------------------
+ï»¿// -----------------------------------------
 // Common high-level tools
 // ----------------------------------------
 
@@ -24,19 +24,19 @@ void COMMON_ClearVar(pChannelSettings Variable);
 //
 void COMMON_PrepareStart()
 {
-	// Êýøèðîâàíèå êîýôôèöèåíòîâ ïåðåñ÷¸òà
+	// ÐšÑÑˆÐ¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ ÐºÐ¾ÑÑ„Ñ„Ð¸Ñ†Ð¸ÐµÐ½Ñ‚Ð¾Ð² Ð¿ÐµÑ€ÐµÑÑ‡Ñ‘Ñ‚Ð°
 	MU_Cache();
 	CU_Cache();
 
-	// Èíèöèàëèçàöèÿ ðåãóëÿòîðîâ
+	// Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ñ€ÐµÐ³ÑƒÐ»ÑÑ‚Ð¾Ñ€Ð¾Ð²
 	REGULATOR_InitAll();
 	ZbDAC_ForceOutputsToZero();
 
-	// Àêòèâàöèÿ ñèñòåìû
+	// ÐÐºÑ‚Ð¸Ð²Ð°Ñ†Ð¸Ñ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹
 	ZbGPIO_GateEnableOutput(TRUE);
 	ZbGPIO_DirectEnableOutput(TRUE);
 
-	// Ñèíõðîñèãíàë äëÿ îñöèëëîãðàôà
+	// Ð¡Ð¸Ð½Ñ…Ñ€Ð¾ÑÐ¸Ð³Ð½Ð°Ð» Ð´Ð»Ñ Ð¾ÑÑ†Ð¸Ð»Ð»Ð¾Ð³Ñ€Ð°Ñ„Ð°
 	ZbGPIO_SyncOSC(TRUE);
 }
 // ----------------------------------------
@@ -52,22 +52,22 @@ void COMMON_ClearVar(pChannelSettings Variable)
 void COMMON_CacheVariables(pChannelSettings _Vd, pChannelSettings _Id, pChannelSettings _Vg, pChannelSettings _Ig,
 						   pCommonSettings _LogicSettings)
 {
-	// Î÷èñòêà ïåðåìåííûõ
+	// ÐžÑ‡Ð¸ÑÑ‚ÐºÐ° Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ñ…
 	COMMON_ClearVar(_Vd);
 	COMMON_ClearVar(_Id);
 	COMMON_ClearVar(_Vg);
 	COMMON_ClearVar(_Ig);
 
-	// Ïðèñâîåíèå ïðåäåëüíûõ çíà÷åíèé
+	// ÐŸÑ€Ð¸ÑÐ²Ð¾ÐµÐ½Ð¸Ðµ Ð¿Ñ€ÐµÐ´ÐµÐ»ÑŒÐ½Ñ‹Ñ… Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ð¹
 	_Vd->Limit = _IQI(DataTable[REG_V_DIRECT_LIMIT]);
 	_Id->Limit = _IQI(DataTable[REG_I_DIRECT_LIMIT]);
 	_Vg->Limit = _IQI(DataTable[REG_V_GATE_LIMIT]);
 	_Ig->Limit = _IQI(DataTable[REG_I_GATE_LIMIT]);
 
-	// Øàã íàðàñòàíèÿ àíîäíîãî íàïðÿæåíèÿ
+	// Ð¨Ð°Ð³ Ð½Ð°Ñ€Ð°ÑÑ‚Ð°Ð½Ð¸Ñ Ð°Ð½Ð¾Ð´Ð½Ð¾Ð³Ð¾ Ð½Ð°Ð¿Ñ€ÑÐ¶ÐµÐ½Ð¸Ñ
 	_Vd->ChangeStep = _IQmpy(_FPtoIQ2(TIMER0_PERIOD, 1000), _IQI(DataTable[REG_COMM_VD_RISE_RATE]));
 
-	// Îáùèå íàñòðîéêè ëîãèêè
+	// ÐžÐ±Ñ‰Ð¸Ðµ Ð½Ð°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸ Ð»Ð¾Ð³Ð¸ÐºÐ¸
 	_LogicSettings->CycleCounter	= 0;
 	_LogicSettings->StabCounter		= 1000L * DataTable[REG_COMM_STAB_TIME] / TIMER0_PERIOD;
 	_LogicSettings->IdLeak 			= _IQI(DataTable[REG_COMM_ID_LEAK_MAX]);

@@ -1,4 +1,4 @@
-// -----------------------------------------
+﻿// -----------------------------------------
 // Constraints for tunable parameters
 // ----------------------------------------
 
@@ -77,8 +77,8 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
                                     		   {RISE_FALL_RATE_MIN, RISE_FALL_RATE_MAX, RISE_FALL_RATE_DEF},			// 61
                                     		   {RISE_FALL_RATE_MIN, RISE_FALL_RATE_FAST_MAX, RISE_FALL_RATE_DEF},		// 62
                                     		   {TIME_MIN, TIME_MAX, TIME_DEF},											// 63
-                                    		   {0, 0, 0},																// 64
-                                    		   {0, 0, 0},																// 65
+                                    		   {TIME_MIN, TIME_MAX, TIME_DEF},											// 64
+                                    		   {0, VGNT_SMPL_POINT_SHIFT_MAX, 0},										// 65
                                     		   {0, 0, 0},																// 66
                                     		   {0, 0, 0},																// 67
                                     		   {0, 0, 0},																// 68

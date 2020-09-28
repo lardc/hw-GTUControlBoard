@@ -1,4 +1,4 @@
-// -----------------------------------------
+п»ї// -----------------------------------------
 // Board-specific GPIO functions
 // ----------------------------------------
 
@@ -12,7 +12,7 @@
 //
 void ZbGPIO_Init()
 {
-	// Настройка в режиме выхода
+	// РќР°СЃС‚СЂРѕР№РєР° РІ СЂРµР¶РёРјРµ РІС‹С…РѕРґР°
 	ZwGPIO_WritePin(PIN_MP_ENABLE_LGC, FALSE);
 	ZwGPIO_WritePin(PIN_GATE_ENABLE_LGC, FALSE);
 	ZwGPIO_WritePin(PIN_LED_1, FALSE);
@@ -29,7 +29,7 @@ void ZbGPIO_Init()
 	ZwGPIO_PinToOutput(PIN_SYNC_OSC);
 	ZwGPIO_PinToOutput(PIN_FAN);
 
-   	// Настройка в режиме входа
+   	// РќР°СЃС‚СЂРѕР№РєР° РІ СЂРµР¶РёРјРµ РІС…РѕРґР°
    	ZwGPIO_PinToInput(PIN_VRF_SENSE, TRUE, GPIO_NSAMPLE);
    	ZwGPIO_PinToInput(PIN_EXT_SYNC, TRUE, GPIO_NSAMPLE);
 }
