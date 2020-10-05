@@ -210,7 +210,10 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					PrevSampleCounter &= PREV_SAMPLE_COUNTER_MASK;
 
 					// Если прибор закрылся - сохранение предыдущего результата
-					DataTable[REG_RESULT_IH] = _IQint(PrevSampleIdValue[PrevSampleCounter]);
+					_iq res = PrevSampleIdValue[PrevSampleCounter];
+					DataTable[REG_RESULT_IH] = _IQint(res);
+					DataTable[REG_RESULT_IH_UA] = _IQint(_IQmpy(_IQfrac(res), _IQ(1000)));
+
 					State = HOLDING_STATE_FINISH_PREPARE;
 				}
 

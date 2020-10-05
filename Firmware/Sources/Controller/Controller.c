@@ -223,6 +223,8 @@ void CONTROL_FillWithDefaults()
 	DataTable[REG_RESULT_VGNT] = 0;
 	DataTable[REG_RESULT_IGNT] = 0;
 	//
+	DataTable[REG_RESULT_IH_UA] = 0;
+	//
 	DataTable[REG_KELVIN_1_2] = 0;
 	DataTable[REG_KELVIN_4_1] = 0;
 	DataTable[REG_KELVIN_1_4] = 0;
