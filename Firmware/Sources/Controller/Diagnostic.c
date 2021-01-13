@@ -68,6 +68,11 @@ Boolean DIAG_Process(Int16U Command)
 				ZbGPIO_GatePSTune(DataTable[REG_DBG]);
 			break;
 
+		case ACT_DBG_EXT_OSC:
+			if(CONTROL_State == DS_None)
+				DataTable[REG_DBG_STATE_EXT_OSC] = ZbGPIO_ExtSyncTrig();
+			break;
+
 		default:
 			return FALSE;
 	}

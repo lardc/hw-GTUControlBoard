@@ -20,6 +20,7 @@
 #define ACT_DBG_SYNC_OSC			18	// Test output of oscilloscope synchronization
 #define ACT_DBG_FAN					19	// Test FAN
 #define ACT_DBG_GATE_PS_TUNE		20	// Test tune of gate power supply
+#define ACT_DBG_EXT_OSC				21	// Read state OSC input from BVT
 //
 #define ACT_START_KELVIN			100	// Start Kelvin measurement
 #define ACT_START_GATE				101	// Start gate measurement
@@ -138,6 +139,7 @@
 #define REG_SCOPE_RATE				150	// Scope rate divisor
 //
 #define REG_DBG						160	// General purpose debug register
+#define REG_DBG_STATE_EXT_OSC		165	// State external OSC
 //
 #define REG_PWD_1					180	// Unlock password location 1
 #define REG_PWD_2					181	// Unlock password location 2
