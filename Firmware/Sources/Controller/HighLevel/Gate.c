@@ -241,6 +241,6 @@ void GATE_CacheVariables()
 
 	Vg.ChangeStep = _IQmpy(_FPtoIQ2(TIMER0_PERIOD, 1000), _IQI(DataTable[REG_GATE_VG_RATE]));
 	Ig.ChangeStep = _IQmpy(_FPtoIQ2(TIMER0_PERIOD, 1000), _IQI(DataTable[REG_RG_CURRENT_RATE]));
-	KeepAnodeCurrent = DataTable[REG_GATE_KEEP_ANODE_CURR];
+	KeepAnodeCurrent = DataTable[REG_GATE_VGT_PURE] ? FALSE : TRUE;
 }
 // ----------------------------------------

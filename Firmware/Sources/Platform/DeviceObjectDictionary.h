@@ -129,12 +129,15 @@
 //
 // ----------------------------------------
 //
-#define REG_V_DIRECT_LIMIT			128	// Direct voltage limit, Vd (in mV)
-#define REG_I_DIRECT_LIMIT			129	// Direct current limit, Id (in mA)
-#define REG_V_GATE_LIMIT			130	// Gate voltage limit, Vg (in mV)
-#define REG_I_GATE_LIMIT			131	// Gate current limit, Ig (in mA)
-#define REG_GATE_KEEP_ANODE_CURR	132 // Keep anode current for Vg/Ig measurement
-#define REG_VGNT_CONF_MODE			133 // Confirmation mode for Vgnt measurement
+#define REG_GATE_VGT_PURE			128	// Sample VGT after terminating main current
+#define REG_HOLD_USE_STRIKE			129	// Strike pulse before holding current (for compatibility only)
+#define REG_HOLD_WITH_SL			130	// Measure holding current with static losses (for compatibility only)
+//
+#define REG_V_DIRECT_LIMIT			131	// Direct voltage limit, Vd (in mV)
+#define REG_I_DIRECT_LIMIT			132	// Direct current limit, Id (in mA)
+#define REG_V_GATE_LIMIT			133	// Gate voltage limit, Vg (in mV)
+#define REG_I_GATE_LIMIT			134	// Gate current limit, Ig (in mA)
+#define REG_VGNT_CONF_MODE			135 // Confirmation mode for Vgnt measurement
 //
 #define REG_SCOPE_RATE				150	// Scope rate divisor
 //
