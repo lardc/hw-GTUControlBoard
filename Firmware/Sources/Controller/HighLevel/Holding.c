@@ -24,6 +24,7 @@ typedef enum __HoldingState
 	HOLDING_STATE_VD_STAB,
 	HOLDING_STATE_VD_CHECK,
 	HOLDING_STATE_GATE_STAB,
+	HOLDING_STATE_WAIT_END_SL,
 	HOLDING_STATE_TRIG_CHECK,
 	HOLDING_STATE_HOLD_CHECK,
 	HOLDING_STATE_ID_FALL,
@@ -31,12 +32,15 @@ typedef enum __HoldingState
 	HOLDING_STATE_FINISH
 } HoldingState;
 
-
 // Defines
 #define PREV_SMPL_LEN				4
 #define PREV_SAMPLE_COUNTER_MASK	PREV_SMPL_LEN - 1
 #define PREV_SAMPLE_N				2
 
+#define	TIME_SIN					1000
+#define	WAIT_TIME_AFTER_SIN			500
+#define	WAIT_TIME_WORK_SL			TIME_SIN + WAIT_TIME_AFTER_SIN
+#define	WAIT_TIME_WORK				WAIT_TIME_WORK_SL + 4000			// in mS*10
 
 // Variables
 //
@@ -47,7 +51,7 @@ static Int16U Delay;
 static _iq IdMinCurrent;
 static _iq PrevSampleIdValue[PREV_SMPL_LEN];
 static Int16U PrevSampleCounter = 0;
-
+static Boolean UseGostMethod = 0;
 
 // Forward functions
 //
@@ -73,6 +77,14 @@ void HOLDING_Prepare()
 	REGULATOR_Update(SelectVg, Vg.Limit);
 	REGULATOR_Update(SelectId, Id.Limit);
 	REGULATOR_Update(SelectIg, 0);
+
+	UseGostMethod = (Boolean)DataTable[REG_HOLD_WITH_SL];
+	if(UseGostMethod)
+	{
+		REGULATOR_Enable(SelectVg, FALSE);
+		REGULATOR_Enable(SelectIg, FALSE);
+		REGULATOR_Update(SelectVg, 0);
+	}
 
 	State = HOLDING_STATE_VD_RISE;
 	ZwTimer_StartT0();
@@ -127,10 +139,19 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				else
 				{
-					// Отпирание прибора - выставление напряжения Ig
-					REGULATOR_Update(SelectIg, Ig.Limit);
-					Delay = LogicSettings.StabCounter;
-					State = HOLDING_STATE_GATE_STAB;
+					if(UseGostMethod)
+					{
+						// Готовность к отпиранию прибора
+						Delay = LogicSettings.StabCounter + WAIT_TIME_WORK;
+						State = HOLDING_STATE_WAIT_END_SL;
+					}
+					else
+					{
+						// Отпирание прибора - выставление напряжения Ig
+						REGULATOR_Update(SelectIg, Ig.Limit);
+						Delay = LogicSettings.StabCounter;
+						State = HOLDING_STATE_GATE_STAB;
+					}
 				}
 			}
 			break;
@@ -149,6 +170,16 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					else
 						State = HOLDING_STATE_TRIG_CHECK;
 				}
+				else
+					--Delay;
+			}
+			break;
+
+		// Ожидание завершение формирования сигнала SL
+		case HOLDING_STATE_WAIT_END_SL:
+			{
+				if (Delay == 0)
+					State = HOLDING_STATE_TRIG_CHECK;
 				else
 					--Delay;
 			}

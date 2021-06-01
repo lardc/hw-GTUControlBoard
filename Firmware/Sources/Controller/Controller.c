@@ -231,6 +231,8 @@ void CONTROL_FillWithDefaults()
 	DataTable[REG_KELVIN_3_2] = 0;
 	//
 	DataTable[REG_PROCESS_COUNTER] = 0;
+	//
+	DataTable[REG_HOLD_WITH_SL] = 0;
 }
 // ----------------------------------------
 

@@ -131,7 +131,7 @@
 //
 #define REG_GATE_VGT_PURE			128	// Sample VGT after terminating main current
 #define REG_HOLD_USE_STRIKE			129	// Strike pulse before holding current (for compatibility only)
-#define REG_HOLD_WITH_SL			130	// Measure holding current with static losses (for compatibility only)
+#define REG_HOLD_WITH_SL			130	// Measure holding current with static losses
 //
 #define REG_V_DIRECT_LIMIT			131	// Direct voltage limit, Vd (in mV)
 #define REG_I_DIRECT_LIMIT			132	// Direct current limit, Id (in mA)
