@@ -140,6 +140,7 @@
 #define REG_VGNT_CONF_MODE			135 // Confirmation mode for Vgnt measurement
 //
 #define REG_SCOPE_RATE				150	// Scope rate divisor
+#define REG_SCOPE_RATE_2			151	// Scope rate divisor (for compatibility only)
 //
 #define REG_DBG						160	// General purpose debug register
 #define REG_DBG_STATE_EXT_OSC		165	// State external OSC
