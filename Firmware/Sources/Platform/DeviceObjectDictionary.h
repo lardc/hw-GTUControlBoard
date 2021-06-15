@@ -143,6 +143,7 @@
 #define REG_SCOPE_RATE_2			151	// Scope rate divisor (for compatibility only)
 //
 #define REG_DBG						160	// General purpose debug register
+
 #define REG_DBG_STATE_EXT_OSC		165	// State external OSC
 //
 #define REG_PWD_1					180	// Unlock password location 1

@@ -40,7 +40,8 @@ typedef enum __HoldingState
 #define	TIME_SIN					1000
 #define	WAIT_TIME_AFTER_SIN			500
 #define	WAIT_TIME_WORK_SL			TIME_SIN + WAIT_TIME_AFTER_SIN
-#define	WAIT_TIME_WORK				WAIT_TIME_WORK_SL + 4000			// in mS*10
+#define	WAIT_TIME_WORK				WAIT_TIME_WORK_SL + 1000			// in mS*10
+#define	WAIT_TIME_OPEN				5000								// in mS*10
 
 // Variables
 //
@@ -52,6 +53,7 @@ static _iq IdMinCurrent;
 static _iq PrevSampleIdValue[PREV_SMPL_LEN];
 static Int16U PrevSampleCounter = 0;
 static Boolean UseGostMethod = 0;
+static Boolean NeedWaitOpenSignal = 0;
 
 // Forward functions
 //
@@ -78,12 +80,18 @@ void HOLDING_Prepare()
 	REGULATOR_Update(SelectId, Id.Limit);
 	REGULATOR_Update(SelectIg, 0);
 
-	UseGostMethod = (Boolean)DataTable[REG_HOLD_WITH_SL];
-	if(UseGostMethod)
+	if(DataTable[REG_HOLD_WITH_SL])
 	{
+		UseGostMethod = TRUE;
+		NeedWaitOpenSignal = TRUE;
 		REGULATOR_Enable(SelectVg, FALSE);
 		REGULATOR_Enable(SelectIg, FALSE);
 		REGULATOR_Update(SelectVg, 0);
+	}
+	else
+	{
+		UseGostMethod = FALSE;
+		NeedWaitOpenSignal = FALSE;
 	}
 
 	State = HOLDING_STATE_VD_RISE;
@@ -175,11 +183,14 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			}
 			break;
 
-		// Ожидание завершение формирования сигнала SL
+		// Ожидание формирования сигнала SL
 		case HOLDING_STATE_WAIT_END_SL:
 			{
 				if (Delay == 0)
+				{
+					Delay = LogicSettings.StabCounter + WAIT_TIME_OPEN;
 					State = HOLDING_STATE_TRIG_CHECK;
+				}
 				else
 					--Delay;
 			}
@@ -205,8 +216,18 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				}
 				else
 				{
-					Codes->Problem = PROBLEM_DUT_NO_TRIG;
-					State = HOLDING_STATE_FINISH_PREPARE;
+					if(NeedWaitOpenSignal)
+					{
+						if (Delay == 0)
+							NeedWaitOpenSignal = FALSE;
+						else
+							--Delay;
+					}
+					else
+					{
+						Codes->Problem = PROBLEM_DUT_NO_TRIG;
+						State = HOLDING_STATE_FINISH_PREPARE;
+					}
 				}
 			}
 			break;
