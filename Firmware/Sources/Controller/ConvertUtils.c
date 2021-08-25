@@ -31,7 +31,7 @@ typedef struct __DACConvParameters
 
 // Variables
 static DACConvParameters ParamsGateV, ParamsGateI, ParamsGateLowI,ParamsDirectV, ParamsDirectI;
-
+static _iq IgLowLimit;
 
 // Forward functions
 Int16U CU_XtoDAC(_iq Value, DACConvParameters Parameters);
@@ -43,6 +43,8 @@ DACConvParameters CU_LoadParams_Simple(Int16U RegK, Int16U RegB);
 //
 void CU_Cache()
 {
+	IgLowLimit = _IQI(DataTable[REG_DAC_LOW_IG_LIMIT]);
+
 	// Цепь управления - напряжение
 	ParamsGateV  = CU_LoadParams_Simple(REG_DAC_VG_CONV_K, REG_DAC_VG_CONV_B);
 
@@ -68,10 +70,7 @@ Int16U CU_GateVtoDAC(_iq Value)
 
 Int16U CU_GateItoDAC(_iq Value)
 {
-	if(Value < 50)
-		return CU_XtoDAC(Value, ParamsGateLowI);
-	else
-		return CU_XtoDAC(Value, ParamsGateI);
+	return CU_XtoDAC(Value, (Value < IgLowLimit) ? ParamsGateLowI : ParamsGateI);
 }
 // ----------------------------------------
 
