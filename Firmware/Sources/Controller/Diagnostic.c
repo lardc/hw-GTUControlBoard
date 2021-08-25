@@ -70,7 +70,7 @@ Boolean DIAG_Process(Int16U Command)
 
 		case ACT_DBG_EXT_OSC:
 			if(CONTROL_State == DS_None)
-				DataTable[REG_DBG_STATE_EXT_OSC] = ZbGPIO_ExtSyncTrig();
+				DataTable[REG_DBG] = ZbGPIO_ExtSyncTrig() ? 1 : 0;
 			break;
 
 		default:
