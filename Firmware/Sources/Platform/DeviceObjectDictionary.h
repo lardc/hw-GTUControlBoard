@@ -89,18 +89,18 @@
 #define REG_DAC_VD_CONV_K			38	// Conversion coefficient K for direct voltage x1000
 #define REG_DAC_VD_CONV_B			39	// Conversion offset for direct voltage (in mV)
 
-#define REG_DAC_ID_FINE_P2			40	// Fine coefficient for Vg quadratic correction P2 x1e6
-#define REG_DAC_ID_FINE_P1			41	// Fine coefficient for Vg quadratic correction P1 x1000
-#define REG_DAC_ID_FINE_P0			42	// Fine coefficient for Vg quadratic correction P0 (in mV)
+#define REG_DAC_ID_FINE_P2			40	// Fine coefficient for Id quadratic correction P2 x1e6
+#define REG_DAC_ID_FINE_P1			41	// Fine coefficient for Id quadratic correction P1 x1000
+#define REG_DAC_ID_FINE_P0			42	// Fine coefficient for Id quadratic correction P0 (in mV)
 #define REG_DAC_ID_CONV_K			43	// Conversion coefficient K for direct current x1000
 #define REG_DAC_ID_CONV_B			44	// Conversion offset for direct current (in mA)
 
 #define REG_DAC_VG_CONV_K			45	// Conversion coefficient K for gate voltage x1000
 #define REG_DAC_VG_CONV_B			46	// Conversion offset for gate voltage (in mV)
 
-#define REG_DAC_IG_FINE_P2			47	// Fine coefficient for Vg quadratic correction P2 x1e6
-#define REG_DAC_IG_FINE_P1			48	// Fine coefficient for Vg quadratic correction P1 x1000
-#define REG_DAC_IG_FINE_P0			49	// Fine coefficient for Vg quadratic correction P0 (in mV)
+#define REG_DAC_IG_FINE_P2			47	// Fine coefficient for Ig quadratic correction P2 x1e6
+#define REG_DAC_IG_FINE_P1			48	// Fine coefficient for Ig quadratic correction P1 x1000
+#define REG_DAC_IG_FINE_P0			49	// Fine coefficient for Ig quadratic correction P0 (in mV)
 #define REG_DAC_IG_CONV_K			50	// Conversion coefficient K for gate current x1000
 #define REG_DAC_IG_CONV_B			51	// Conversion offset for gate current (in mA)
 // 52 - 54
@@ -126,7 +126,12 @@
 // 92 - 99
 #define REG_CAL_V_RISE_RATE			100	// Calibration voltage rise rate (in mV / ms)
 #define REG_CAL_I_RISE_RATE			101	// Calibration current rise rate (in mA / ms)
-//
+// 105 - 109 для тока до 50мА
+#define REG_DAC_LOW_IG_FINE_P2		105	// Fine coefficient for low Ig quadratic correction P2 x1e6
+#define REG_DAC_LOW_IG_FINE_P1		106	// Fine coefficient for low Ig quadratic correction P1 x1000
+#define REG_DAC_LOW_IG_FINE_P0		107	// Fine coefficient for low Ig quadratic correction P0 (in mA)
+#define REG_DAC_LOW_IG_CONV_K		108	// Conversion coefficient K for low gate current x1000
+#define REG_DAC_LOW_IG_CONV_B		109	// Conversion offset for low gate current (in mA)
 // ----------------------------------------
 //
 #define REG_GATE_VGT_PURE			128	// Sample VGT after terminating main current

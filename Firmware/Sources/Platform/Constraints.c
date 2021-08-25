@@ -118,11 +118,11 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
 											{0, 0, 0},																// 102
 											{0, 0, 0},																// 103
 											{0, 0, 0},																// 104
-											{0, 0, 0},																// 105
-											{0, 0, 0},																// 106
-											{0, 0, 0},																// 107
-											{0, 0, 0},																// 108
-											{0, 0, 0},																// 109
+											{0, INT16U_MAX, 0},																// 105
+											{PROPORTIONAL_MIN, INT16U_MAX, PROPORTIONAL_DEF},																// 106
+											{0, INT16U_MAX, 0},																// 107
+											{PROPORTIONAL_MIN, INT16U_MAX, PROPORTIONAL_DEF},																// 108
+											{0, INT16U_MAX, 0},																// 109
 											{0, 0, 0},																// 110
 											{0, 0, 0},																// 111
 											{0, 0, 0},																// 112

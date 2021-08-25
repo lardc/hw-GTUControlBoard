@@ -30,7 +30,7 @@ typedef struct __DACConvParameters
 
 
 // Variables
-static DACConvParameters ParamsGateV, ParamsGateI, ParamsDirectV, ParamsDirectI;
+static DACConvParameters ParamsGateV, ParamsGateI, ParamsGateLowI,ParamsDirectV, ParamsDirectI;
 
 
 // Forward functions
@@ -49,6 +49,9 @@ void CU_Cache()
 	// Цепь управления - ток
 	ParamsGateI  = CU_LoadParams(REG_DAC_IG_CONV_K, REG_DAC_IG_CONV_B, REG_DAC_IG_FINE_P2, REG_DAC_IG_FINE_P1, REG_DAC_IG_FINE_P0);
 
+	// Цепь управления - младший ток (до 50мА)
+	ParamsGateLowI  = CU_LoadParams(REG_DAC_LOW_IG_CONV_K, REG_DAC_LOW_IG_CONV_B, REG_DAC_LOW_IG_FINE_P2, REG_DAC_LOW_IG_FINE_P1, REG_DAC_LOW_IG_FINE_P0);
+
 	// Силовая цепь - напряжение
 	ParamsDirectV = CU_LoadParams_Simple(REG_DAC_VD_CONV_K, REG_DAC_VD_CONV_B);
 
@@ -65,7 +68,10 @@ Int16U CU_GateVtoDAC(_iq Value)
 
 Int16U CU_GateItoDAC(_iq Value)
 {
-	return CU_XtoDAC(Value, ParamsGateI);
+	if(Value < 50)
+		return CU_XtoDAC(Value, ParamsGateLowI);
+	else
+		return CU_XtoDAC(Value, ParamsGateI);
 }
 // ----------------------------------------
 

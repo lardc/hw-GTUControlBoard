@@ -39,7 +39,7 @@ typedef struct __TableItemConstraint
 #define VG_LIM_DEF					5000
 
 // in mA
-#define IG_LIM_MIN					25
+#define IG_LIM_MIN					5
 #define IG_LIM_MAX					1100
 #define IG_LIM_DEF					1000
 
