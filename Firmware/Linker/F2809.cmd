@@ -100,8 +100,7 @@ PAGE 1 :   /* Data Memory */
    RAMM1       : origin = 0x000480, length = 0x000380     /* on-chip RAM block M1 */
    BOOT_RSVD   : origin = 0x000400, length = 0x000080     /* Part of M1, BOOT rom will use this for stack */
 
-   RAM_MAIN    : origin = 0x008000, length = 0x003300     /* on-chip RAM block L0, L1, part of H0 */
-   RAMH0_DAT   : origin = 0x00B300, length = 0x000800     /* on-chip RAM block H0 lower part for data */
+   RAM_MAIN    : origin = 0x008000, length = 0x003B00     /* on-chip RAM block L0, L1, part of H0 */
 }
 
 /* Allocate sections to memory blocks.
@@ -132,7 +131,7 @@ SECTIONS
    /* Allocate uninitalized data sections: */
    .stack              : > RAMM1       PAGE = 1
    .esysmem            : > RAMM1       PAGE = 1
-   .ebss               : > RAMH0_DAT   PAGE = 1
+   .ebss               : > RAM_MAIN    PAGE = 1
 
    /* Initalized sections go in Flash */
    /* For SDFlash to program these, they must be allocated to page 0 */
