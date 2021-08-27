@@ -191,6 +191,7 @@
 //
 #define REG_RESULT_IH_UA			231	// IH fraction part (in uA)
 #define REG_RESULT_IGT_UA			232	// IGT fraction part (in uA)
+#define REG_RESULT_CAL_FRAC			233	// Calibration result fractional part
 //
 #define REG_QUADRATIC_CORR			254	// Use quadratic correction for block
 //

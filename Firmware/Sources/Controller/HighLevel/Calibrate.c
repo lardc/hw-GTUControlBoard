@@ -174,6 +174,8 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				if (Delay == 0)
 				{
 					DataTable[REG_RESULT_CAL] = _IQint(Avg);
+					DataTable[REG_RESULT_CAL_FRAC] = _IQint(_IQmpy(_IQfrac(Avg), _IQ(1000)));
+
 					State = CALIBRATE_STATE_FINISH_PREPARE;
 				}
 				else
