@@ -126,13 +126,19 @@
 // 92 - 99
 #define REG_CAL_V_RISE_RATE			100	// Calibration voltage rise rate (in mV / ms)
 #define REG_CAL_I_RISE_RATE			101	// Calibration current rise rate (in mA / ms)
-// 105 - 110 для тока до 50мА
+// 105 - 110 для тока до 50мА - задание
 #define REG_DAC_LOW_IG_FINE_P2		105	// Fine coefficient for low Ig quadratic correction P2 x1e6
 #define REG_DAC_LOW_IG_FINE_P1		106	// Fine coefficient for low Ig quadratic correction P1 x1000
 #define REG_DAC_LOW_IG_FINE_P0		107	// Fine coefficient for low Ig quadratic correction P0 (in mA)
 #define REG_DAC_LOW_IG_CONV_K		108	// Conversion coefficient K for low gate current x1000
 #define REG_DAC_LOW_IG_CONV_B		109	// Conversion offset for low gate current (in mA)
 #define REG_DAC_LOW_IG_LIMIT		110 // Верхняя граница для младшего диапазона (в мА)
+// 105 - 110 для тока до 50мА - измерение
+#define REG_ADC_LOW_IG_FINE_P2		115	// Fine coefficient for low Ig quadratic correction P2 x1e6
+#define REG_ADC_LOW_IG_FINE_P1		116	// Fine coefficient for low Ig quadratic correction P1 x1000
+#define REG_ADC_LOW_IG_FINE_P0		117	// Fine coefficient for low Ig quadratic correction P0 (in mA)
+#define REG_ADC_LOW_IG_CONV_K		118	// Conversion coefficient K for low gate current x1000
+#define REG_ADC_LOW_IG_CONV_B		119	// Conversion offset for low gate current (in mA)
 // ----------------------------------------
 //
 #define REG_GATE_VGT_PURE			128	// Sample VGT after terminating main current

@@ -26,8 +26,8 @@ typedef struct __ADCConvParameters
 
 
 // Variables
-static ADCConvParameters ParamsGateV, ParamsGateI, ParamsDirectV, ParamsDirectI;
-
+static ADCConvParameters ParamsGateV, ParamsGateI, ParamsGateILow, ParamsDirectV, ParamsDirectI;
+static _iq IgLowLimit;
 
 // Forward functions
 _iq MU_ADCtoX(Int16U ADCInput, ADCConvParameters Parameters);
@@ -44,6 +44,7 @@ _iq MU_DirectI(Int16U ADCInput);
 //
 void MU_Cache()
 {
+	IgLowLimit = _IQI(DataTable[REG_DAC_LOW_IG_LIMIT]);
 	// Цепь управления - напряжение
 	ParamsGateV  = MU_LoadParams(REG_ADC_VG_CONV_K,  REG_ADC_VG_CONV_B,
 								 REG_ADC_VG_FINE_P2, REG_ADC_VG_FINE_P1, REG_ADC_VG_FINE_P0);
@@ -51,6 +52,10 @@ void MU_Cache()
 	// Цепь управления - ток
 	ParamsGateI  = MU_LoadParams(REG_ADC_IG_CONV_K,  REG_ADC_IG_CONV_B,
 								 REG_ADC_IG_FINE_P2, REG_ADC_IG_FINE_P1, REG_ADC_IG_FINE_P0);
+
+	// Цепь управления - младший ток до 50мА
+	ParamsGateILow = MU_LoadParams(REG_ADC_LOW_IG_CONV_K,  REG_ADC_LOW_IG_CONV_B,
+								   REG_ADC_LOW_IG_FINE_P2, REG_ADC_LOW_IG_FINE_P1, REG_ADC_LOW_IG_FINE_P0);
 
 	// Силовая цепь - напряжение
 	ParamsDirectV = MU_LoadParams(REG_ADC_VD_CONV_K, REG_ADC_VD_CONV_B,
@@ -70,7 +75,8 @@ _iq MU_GateV(Int16U ADCInput)
 
 _iq MU_GateI(Int16U ADCInput)
 {
-	return MU_ADCtoX(ADCInput, ParamsGateI);
+	_iq IgtLow = MU_ADCtoX(ADCInput, ParamsGateILow);
+	return (IgtLow < IgLowLimit) ? IgtLow : MU_ADCtoX(ADCInput, ParamsGateI);
 }
 // ----------------------------------------
 
