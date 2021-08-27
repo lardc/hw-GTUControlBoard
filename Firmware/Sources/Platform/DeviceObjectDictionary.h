@@ -190,6 +190,7 @@
 #define REG_CAN_DIAG_REC			224	// CAN REC
 //
 #define REG_RESULT_IH_UA			231	// IH fraction part (in uA)
+#define REG_RESULT_IGT_UA			232	// IGT fraction part (in uA)
 //
 #define REG_QUADRATIC_CORR			254	// Use quadratic correction for block
 //

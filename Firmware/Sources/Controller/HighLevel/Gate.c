@@ -196,8 +196,8 @@ Boolean GATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 
 					// Сохранение результата
 					DataTable[REG_RESULT_IGT] = _IQint(MeasureSample.Ig);
+					DataTable[REG_RESULT_IGT_UA] = _IQint(_IQmpy(_IQfrac(MeasureSample.Ig), _IQ(1000)));
 					DataTable[REG_RESULT_VGT] = _IQint(MeasureSample.Vg);
-
 
 					State = GATE_STATE_FINISH_PREPARE;
 				}
