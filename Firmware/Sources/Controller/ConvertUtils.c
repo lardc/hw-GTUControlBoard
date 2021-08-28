@@ -43,7 +43,7 @@ DACConvParameters CU_LoadParams_Simple(Int16U RegK, Int16U RegB);
 //
 void CU_Cache()
 {
-	IgLowLimit = _IQI(DataTable[REG_DAC_LOW_IG_LIMIT]);
+	IgLowLimit = _IQI(DataTable[REG_LOW_IG_LIMIT]);
 
 	// Цепь управления - напряжение
 	ParamsGateV  = CU_LoadParams_Simple(REG_DAC_VG_CONV_K, REG_DAC_VG_CONV_B);

@@ -51,7 +51,7 @@
 #define REG_COMM_STAB_TIME			2	// Transient stabilizatioon time (in ms)
 #define REG_COMM_STAB_ERROR			3	// Transient stabilizatioon error (in %)
 #define REG_COMM_VG_MIN_INPUT		4	// Minimum allowed voltage input from Vg potential (in mV)
-//
+// 5 - 8
 #define REG_FAN_OFF_DELAY			9	// Fan turn off delay (in ms)
 #define REG_PI_CTRL_VG_Kp			10	// Gate voltage PI Kp x1000
 #define REG_PI_CTRL_VG_Ki			11	// Gate voltage PI Ki x1000
@@ -120,20 +120,20 @@
 #define REG_LATCH_RATE_SMALL		81	// Small step of increasing Id for latching test (in mA / ms)
 #define REG_LATCH_START_CURRENT		82	// Test start current (in mA)
 #define REG_LATCH_STAB_TIME			83	// Transient stabilizatioon time (in ms)
-// 83 - 89
+// 84 - 89
 #define REG_RG_CURRENT				90	// Test current (in mA)
 #define REG_RG_CURRENT_RATE			91	// Current rise rate (in mA / ms)
 // 92 - 99
 #define REG_CAL_V_RISE_RATE			100	// Calibration voltage rise rate (in mV / ms)
 #define REG_CAL_I_RISE_RATE			101	// Calibration current rise rate (in mA / ms)
-// 105 - 110 для тока до 50мА - задание
+// 102 - 104
 #define REG_DAC_LOW_IG_FINE_P2		105	// Fine coefficient for low Ig quadratic correction P2 x1e6
 #define REG_DAC_LOW_IG_FINE_P1		106	// Fine coefficient for low Ig quadratic correction P1 x1000
 #define REG_DAC_LOW_IG_FINE_P0		107	// Fine coefficient for low Ig quadratic correction P0 (in mA)
 #define REG_DAC_LOW_IG_CONV_K		108	// Conversion coefficient K for low gate current x1000
 #define REG_DAC_LOW_IG_CONV_B		109	// Conversion offset for low gate current (in mA)
-#define REG_DAC_LOW_IG_LIMIT		110 // Верхняя граница для младшего диапазона (в мА)
-// 105 - 110 для тока до 50мА - измерение
+#define REG_LOW_IG_LIMIT			110 // Верхняя граница для младшего диапазона (в мА)
+// 111 - 114
 #define REG_ADC_LOW_IG_FINE_P2		115	// Fine coefficient for low Ig quadratic correction P2 x1e6
 #define REG_ADC_LOW_IG_FINE_P1		116	// Fine coefficient for low Ig quadratic correction P1 x1000
 #define REG_ADC_LOW_IG_FINE_P0		117	// Fine coefficient for low Ig quadratic correction P0 (in mA)

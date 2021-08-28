@@ -44,7 +44,7 @@ _iq MU_DirectI(Int16U ADCInput);
 //
 void MU_Cache()
 {
-	IgLowLimit = _IQI(DataTable[REG_DAC_LOW_IG_LIMIT]);
+	IgLowLimit = _IQI(DataTable[REG_LOW_IG_LIMIT]);
 	// Цепь управления - напряжение
 	ParamsGateV  = MU_LoadParams(REG_ADC_VG_CONV_K,  REG_ADC_VG_CONV_B,
 								 REG_ADC_VG_FINE_P2, REG_ADC_VG_FINE_P1, REG_ADC_VG_FINE_P0);
