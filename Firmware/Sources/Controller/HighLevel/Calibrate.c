@@ -217,7 +217,7 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 
 void CALIBRATE_CacheVariables(RegulatorSelector Select)
 {
-	COMMON_CacheVariables(&Vd, &Id, &Vg, &Ig, &LogicSettings);
+	COMMON_CacheCalibrationVariables(&Vd, &Id, &Vg, &Ig, &LogicSettings);
 
 	switch (Select)
 	{

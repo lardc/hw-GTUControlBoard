@@ -18,7 +18,7 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
 											{TIME_MIN, TIME_MAX, TIME_DEF},											// 2
 											{PERCENT_MIN, PERCENT_MAX, PERCENT_DEF_STAB_ERR},						// 3
 											{VG_MIN_INPUT_MIN, VG_MIN_INPUT_MAX, VG_MIN_INPUT_DEF},					// 4
-											{0, 0, 0},																// 5
+											{PERCENT_MIN, PERCENT_MAX, PERCENT_DEF_STAB_CAL_ERR},					// 5
 											{0, 0, 0},																// 6
 											{0, 0, 0},																// 7
 											{0, 0, 0},																// 8

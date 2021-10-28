@@ -51,7 +51,8 @@
 #define REG_COMM_STAB_TIME			2	// Transient stabilizatioon time (in ms)
 #define REG_COMM_STAB_ERROR			3	// Transient stabilizatioon error (in %)
 #define REG_COMM_VG_MIN_INPUT		4	// Minimum allowed voltage input from Vg potential (in mV)
-// 5 - 8
+#define REG_COMM_CAL_STAB_ERROR		5	// Transient stabilizatioon error for calibration (in %)
+// 6 - 8
 #define REG_FAN_OFF_DELAY			9	// Fan turn off delay (in ms)
 #define REG_PI_CTRL_VG_Kp			10	// Gate voltage PI Kp x1000
 #define REG_PI_CTRL_VG_Ki			11	// Gate voltage PI Ki x1000

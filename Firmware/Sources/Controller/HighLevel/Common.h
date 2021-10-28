@@ -33,5 +33,7 @@ void COMMON_PrepareFinish();
 void COMMON_Finish();
 void COMMON_CacheVariables(pChannelSettings _Vd, pChannelSettings _Id, pChannelSettings _Vg, pChannelSettings _Ig,
 						   pCommonSettings _LogicSettings);
+void COMMON_CacheCalibrationVariables(pChannelSettings _Vd, pChannelSettings _Id, pChannelSettings _Vg, pChannelSettings _Ig,
+						   pCommonSettings _LogicSettings);
 
 #endif // __COMMON_H

@@ -18,6 +18,8 @@
 // Forward functions
 //
 void COMMON_ClearVar(pChannelSettings Variable);
+void COMMON_CacheVariablesX(pChannelSettings _Vd, pChannelSettings _Id, pChannelSettings _Vg, pChannelSettings _Ig,
+						   pCommonSettings _LogicSettings, Boolean IsCalibration);
 
 
 // Functions
@@ -52,6 +54,20 @@ void COMMON_ClearVar(pChannelSettings Variable)
 void COMMON_CacheVariables(pChannelSettings _Vd, pChannelSettings _Id, pChannelSettings _Vg, pChannelSettings _Ig,
 						   pCommonSettings _LogicSettings)
 {
+	COMMON_CacheVariablesX(_Vd, _Id, _Vg, _Ig, _LogicSettings, FALSE);
+}
+// ----------------------------------------
+
+void COMMON_CacheCalibrationVariables(pChannelSettings _Vd, pChannelSettings _Id, pChannelSettings _Vg, pChannelSettings _Ig,
+						   pCommonSettings _LogicSettings)
+{
+	COMMON_CacheVariablesX(_Vd, _Id, _Vg, _Ig, _LogicSettings, TRUE);
+}
+// ----------------------------------------
+
+void COMMON_CacheVariablesX(pChannelSettings _Vd, pChannelSettings _Id, pChannelSettings _Vg, pChannelSettings _Ig,
+						   pCommonSettings _LogicSettings, Boolean IsCalibration)
+{
 	// Очистка переменных
 	COMMON_ClearVar(_Vd);
 	COMMON_ClearVar(_Id);
@@ -71,7 +87,7 @@ void COMMON_CacheVariables(pChannelSettings _Vd, pChannelSettings _Id, pChannelS
 	_LogicSettings->CycleCounter	= 0;
 	_LogicSettings->StabCounter		= 1000L * DataTable[REG_COMM_STAB_TIME] / TIMER0_PERIOD;
 	_LogicSettings->IdLeak 			= _IQI(DataTable[REG_COMM_ID_LEAK_MAX]);
-	_LogicSettings->AllowedError	= _FPtoIQ2(DataTable[REG_COMM_STAB_ERROR], 100);
+	_LogicSettings->AllowedError	= _FPtoIQ2(DataTable[IsCalibration ? REG_COMM_CAL_STAB_ERROR : REG_COMM_STAB_ERROR], 100);
 	_LogicSettings->VgMinInput		= _IQI(DataTable[REG_COMM_VG_MIN_INPUT]);
 }
 // ----------------------------------------

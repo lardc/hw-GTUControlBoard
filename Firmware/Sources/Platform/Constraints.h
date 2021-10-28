@@ -63,6 +63,7 @@ typedef struct __TableItemConstraint
 #define PERCENT_MIN					1
 #define PERCENT_MAX					100
 #define PERCENT_DEF_STAB_ERR		5
+#define PERCENT_DEF_STAB_CAL_ERR	20
 //
 #define PROPORTIONAL_MIN			1
 #define PROPORTIONAL_DEF			1000
