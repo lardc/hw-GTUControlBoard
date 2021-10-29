@@ -23,7 +23,6 @@
 //
 #define I_SAT_VALUE				_IQI(1100.0f)
 #define V_SAT_VALUE				_IQI(15000.0f)
-//
 
 
 // Types
@@ -32,8 +31,7 @@ typedef enum __CalibrateState
 {
 	CALIBRATE_STATE_AUX_RISE = 0,
 	CALIBRATE_STATE_RISE,
-	CALIBRATE_STATE_STAB,
-	CALIBRATE_STATE_CHECK,
+	CALIBRATE_STATE_STAB_CHECK,
 	CALIBRATE_STATE_COLLECT,
 	CALIBRATE_STATE_FINISH_PREPARE,
 	CALIBRATE_STATE_FINISH
@@ -125,28 +123,23 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					xSetpoint = xLimit;
 					Delay = LogicSettings.StabCounter;
 
-					State = CALIBRATE_STATE_STAB;
+					State = CALIBRATE_STATE_STAB_CHECK;
 				}
 				REGULATOR_Update(SavedSelector, xSetpoint);
 			}
 			break;
 
-		// Задержка на стабилизацию основного сигнала
-		case CALIBRATE_STATE_STAB:
-			{
-				if (Delay == 0)
-					State = CALIBRATE_STATE_CHECK;
-				else
-					--Delay;
-			}
-			break;
-
 		// Проверка корректности выхода на уставку
-		case CALIBRATE_STATE_CHECK:
+		case CALIBRATE_STATE_STAB_CHECK:
 			{
 				_iq ErrX = _IQdiv(_IQabs(measure - xSetpoint), xSetpoint);
 
-				if (ErrX > LogicSettings.AllowedError)
+				if ((Delay <= (LogicSettings.StabCounter / 2)) && (ErrX <= LogicSettings.AllowedError))
+				{
+					Delay = CAL_SAMPLES_COUNT;
+					State = CALIBRATE_STATE_COLLECT;
+				}
+				else if (Delay == 0)
 				{
 					Int16U problem;
 					switch (SavedSelector)
@@ -161,10 +154,7 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					State = CALIBRATE_STATE_FINISH_PREPARE;
 				}
 				else
-				{
-					Delay = CAL_SAMPLES_COUNT;
-					State = CALIBRATE_STATE_COLLECT;
-				}
+					--Delay;
 			}
 			break;
 
