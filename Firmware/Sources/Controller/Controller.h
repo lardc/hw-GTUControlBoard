@@ -47,8 +47,7 @@ extern volatile Int64U CONTROL_TimeCounter;
 extern volatile DeviceState CONTROL_State;
 extern volatile Int16U CONTROL_Values_Counter;
 extern volatile Int16U CONTROL_BootLoaderRequest;
-
-
+extern volatile Int64U FanTurnOff_Counter;
 // Functions
 //
 // Initialize controller

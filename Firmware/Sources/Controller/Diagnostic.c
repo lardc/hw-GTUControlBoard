@@ -60,7 +60,10 @@ Boolean DIAG_Process(Int16U Command)
 
 		case ACT_DBG_FAN:
 			if(CONTROL_State == DS_None)
-				ZbGPIO_FAN(DataTable[REG_DBG]);
+			{
+				ZbGPIO_FAN(TRUE);
+				FanTurnOff_Counter = CONTROL_TimeCounter + 1000;
+				}
 			break;
 
 		case ACT_DBG_GATE_PS_TUNE:

@@ -19,7 +19,7 @@
 
 // Constants
 //
-#define CAL_SAMPLES_COUNT		16
+#define CAL_SAMPLES_COUNT		100
 //
 #define I_SAT_VALUE				_IQI(1100.0f)
 #define V_SAT_VALUE				_IQI(15000.0f)
