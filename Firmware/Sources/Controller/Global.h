@@ -21,6 +21,8 @@
 #define DT_EPROM_ADDRESS				0
 #define EP_COUNT						12
 #define VALUES_x_SIZE					1000
+//
+#define CAL_COMPATIBILITY				TRUE			// Режим совместемости калибровки
 //--------------------------------------------------------
 
 // Regulator parameters

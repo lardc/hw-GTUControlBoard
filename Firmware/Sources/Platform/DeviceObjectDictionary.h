@@ -5,6 +5,8 @@
 #ifndef __DEV_OBJ_DIC_H
 #define __DEV_OBJ_DIC_H
 
+#include "Global.h"
+
 // ACTIONS
 //
 #define ACT_CLR_FAULT				3	// Clear fault (try switch state from FAULT to NONE)
@@ -30,10 +32,17 @@
 #define ACT_STOP_TEST				105 // Stop current test
 #define ACT_START_VGNT				106	// Start Vgnt measurement
 //
+#if CAL_COMPATIBILITY == TRUE
+#define ACT_START_CAL_IG			110 // Start Vg calibration
+#define ACT_START_CAL_ID			111 // Start Ig calibration
+#define ACT_START_CAL_VG			112 // Start Vg calibration
+#define ACT_START_CAL_VD			113 // Start Vd calibration
+#else
 #define ACT_START_CAL_VG			110 // Start Vg calibration
 #define ACT_START_CAL_IG			111 // Start Ig calibration
 #define ACT_START_CAL_VD			112 // Start Vd calibration
 #define ACT_START_CAL_ID			113 // Start Id calibration
+#endif
 //
 #define ACT_SAVE_TO_ROM				200	// Save parameters to EEPROM module
 #define ACT_RESTORE_FROM_ROM		201	// Restore parameters from EEPROM module
@@ -151,7 +160,11 @@
 #define REG_V_GATE_LIMIT			133	// Gate voltage limit, Vg (in mV)
 #define REG_I_GATE_LIMIT			134	// Gate current limit, Ig (in mA)
 #define REG_VGNT_CONF_MODE			135 // Confirmation mode for Vgnt measurement
-//
+
+#if CAL_COMPATIBILITY == TRUE
+#define REG_CAL_CURRENT				140	// Calibration current
+#endif
+
 #define REG_SCOPE_RATE				150	// Scope rate divisor
 #define REG_SCOPE_RATE_2			151	// Scope rate divisor (for compatibility only)
 //
@@ -179,6 +192,9 @@
 #define REG_RESULT_IL				202	// IL  (in mA)
 #define REG_RESULT_RG				203	// R   (in Ohm * 10)
 #define REG_RESULT_CAL				204	// Calibration result
+#if CAL_COMPATIBILITY == TRUE
+#define REG_RESULT_CAL_V			205	// Calibration result, voltage
+#endif
 #define REG_RESULT_VGNT				205	// Vgnt (in mV)
 #define REG_RESULT_IGNT				206	// Ignt (in mA)
 //
@@ -199,6 +215,9 @@
 #define REG_RESULT_IH_UA			231	// IH fraction part (in uA)
 #define REG_RESULT_IGT_UA			232	// IGT fraction part (in uA)
 #define REG_RESULT_CAL_FRAC			233	// Calibration result fractional part
+#if CAL_COMPATIBILITY == TRUE
+#define REG_RESULT_CAL_V_FRAC		234	// Calibration result fractional part, voltage
+#endif
 //
 #define REG_QUADRATIC_CORR			254	// Use quadratic correction for block
 //

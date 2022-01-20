@@ -15,6 +15,7 @@
 #include "MeasureUtils.h"
 #include "Regulator.h"
 #include "Common.h"
+#include "Constraints.h"
 
 
 // Constants
@@ -45,7 +46,7 @@ static CalibrateState State;
 static CommonSettings LogicSettings;
 static ChannelSettings Vg = {0}, Ig = {0}, Vd = {0}, Id = {0};
 static Int16U Delay;
-static _iq Avg, xLimit, xSetpoint, xChangeStep;
+static _iq Avg, AvgV, xLimit, xSetpoint, xChangeStep;
 
 // Forward functions
 //
@@ -88,7 +89,7 @@ void CALIBRATE_Prepare(RegulatorSelector Select)
 
 Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 {
-	_iq measure;
+	_iq measure, measureV = 0;
 	++LogicSettings.CycleCounter;
 
 	switch (SavedSelector)
@@ -96,7 +97,10 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 		case SelectVd: measure = MeasureSample.Vd; break;
 		case SelectId: measure = MeasureSample.Id; break;
 		case SelectVg: measure = MeasureSample.Vg; break;
-		case SelectIg: measure = MeasureSample.Ig; break;
+		case SelectIg:
+			measure  = MeasureSample.Ig;
+			measureV = MeasureSample.Vg;
+			break;
 	}
 
 	switch (State)
@@ -166,11 +170,18 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					DataTable[REG_RESULT_CAL] = _IQint(Avg);
 					DataTable[REG_RESULT_CAL_FRAC] = _IQint(_IQmpy(_IQfrac(Avg), _IQ(1000)));
 
+#if CAL_COMPATIBILITY == TRUE
+					if(SavedSelector == SelectIg)
+						DataTable[REG_RESULT_CAL_V] = _IQint(AvgV);
+						DataTable[REG_RESULT_CAL_V_FRAC] = _IQint(_IQmpy(_IQfrac(AvgV), _IQ(1000)));
+#endif
+
 					State = CALIBRATE_STATE_FINISH_PREPARE;
 				}
 				else
 				{
 					Avg += _IQdiv(measure, _IQI(CAL_SAMPLES_COUNT));
+					AvgV += _IQdiv(measureV, _IQI(CAL_SAMPLES_COUNT));
 					--Delay;
 				}
 			}
@@ -232,8 +243,21 @@ void CALIBRATE_CacheVariables(RegulatorSelector Select)
 			break;
 	}
 
+#if CAL_COMPATIBILITY == TRUE
+	switch(Select)
+	{
+		case SelectId:
+			xLimit = (DataTable[REG_CAL_CURRENT] < ID_LIM_MAX) ? _IQI(DataTable[REG_CAL_CURRENT]) : _IQ(ID_LIM_MAX);
+			break;
+
+		case SelectIg:
+			xLimit = (DataTable[REG_CAL_CURRENT] < IG_LIM_MAX) ? _IQI(DataTable[REG_CAL_CURRENT]) : _IQ(IG_LIM_MAX);
+			break;
+	}
+#endif
+
 	xSetpoint = 0;
-	Avg = 0;
+	Avg = AvgV = 0;
 	SavedSelector = Select;
 }
 // ----------------------------------------

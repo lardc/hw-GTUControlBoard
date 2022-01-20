@@ -227,6 +227,11 @@ void CONTROL_FillWithDefaults()
 	DataTable[REG_RESULT_IGT_UA] = 0;
 	DataTable[REG_RESULT_CAL_FRAC] = 0;
 	//
+#if CAL_COMPATIBILITY == TRUE
+	DataTable[REG_RESULT_CAL_V] = 0;
+	DataTable[REG_RESULT_CAL_V_FRAC] = 0;
+#endif
+	//
 	DataTable[REG_KELVIN_1_2] = 0;
 	DataTable[REG_KELVIN_4_1] = 0;
 	DataTable[REG_KELVIN_1_4] = 0;

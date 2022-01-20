@@ -157,7 +157,11 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 											{0, 0, 0},																// 137
 											{0, 0, 0},																// 138
 											{0, 0, 0},																// 139
+#if CAL_COMPATIBILITY == TRUE
+											{0, INT16U_MAX, 0},														// 140
+#else
 											{0, 0, 0},																// 140
+#endif
 											{0, 0, 0},																// 141
 											{0, 0, 0},																// 142
 											{0, 0, 0},																// 143
