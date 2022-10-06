@@ -22,7 +22,7 @@
 #define EP_COUNT						12
 #define VALUES_x_SIZE					1000
 //
-#define CAL_COMPATIBILITY				TRUE			// Режим совместемости калибровки
+#define CAL_COMPATIBILITY				FALSE			// Режим совместемости калибровки
 //--------------------------------------------------------
 
 // Regulator parameters
