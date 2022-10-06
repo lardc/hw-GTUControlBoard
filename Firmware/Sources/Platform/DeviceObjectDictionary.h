@@ -116,7 +116,10 @@
 // 66 - 69
 #define REG_HOLD_END_CURRENT		70	// Minimum available current for Ih (in mA)
 #define REG_HOLD_CURRENT_FALL_RATE	71	// Current rate (mA / ms)
-// 72 - 79
+#define REG_HOLD_VCLOSE_LEVEL		72	// Порог напряжения Vd для определения запирания прибора (в В)
+#define REG_HOLD_TRIG_WAIT_GOST		73	// Время ожидания отпирания прибора блоком стат. потерь по ГОСТ (в мс)
+#define REG_HOLD_BACK_SHIFT			74	// Сдвиг назад при измерении Ih (в тиках)
+// 75 - 79
 #define REG_LATCH_RATE_LARGE		80	// Large step of increasing Id for latching test (in mA / ms)
 #define REG_LATCH_RATE_SMALL		81	// Small step of increasing Id for latching test (in mA / ms)
 #define REG_LATCH_START_CURRENT		82	// Test start current (in mA)
