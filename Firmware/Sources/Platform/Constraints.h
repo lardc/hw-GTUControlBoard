@@ -59,6 +59,11 @@ typedef struct __TableItemConstraint
 #define TIME_MAX					100
 #define TIME_DEF					10
 
+// in ms
+#define TIME_WAIT_GOST_MIN			1
+#define TIME_WAIT_GOST_MAX			1000
+#define TIME_WAIT_GOST_DEF			500
+
 // in %
 #define PERCENT_MIN					1
 #define PERCENT_MAX					100
@@ -72,6 +77,12 @@ typedef struct __TableItemConstraint
 #define HOLD_END_MIN				1
 #define HOLD_END_MAX				100
 #define HOLD_END_DEF				20
+
+// in mV
+#define HOLD_VD_CLOSE_DEF			5000
+
+// in ticks
+#define HOLD_BACK_SHIFT_DEF			3
 
 // in mA
 #define LATCH_RATE_SMALL_DEF		1
