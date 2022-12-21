@@ -18,7 +18,7 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
 											{TIME_MIN, TIME_MAX, TIME_DEF},											// 2
 											{PERCENT_MIN, PERCENT_MAX, PERCENT_DEF_STAB_ERR},						// 3
 											{VG_MIN_INPUT_MIN, VG_MIN_INPUT_MAX, VG_MIN_INPUT_DEF},					// 4
-											{0, 0, 0},																// 5
+											{PERCENT_MIN, PERCENT_MAX, PERCENT_DEF_STAB_CAL_ERR},					// 5
 											{0, 0, 0},																// 6
 											{0, 0, 0},																// 7
 											{0, 0, 0},																// 8
@@ -85,9 +85,9 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
 											{0, 0, 0},																// 69
 											{HOLD_END_MIN, HOLD_END_MAX, HOLD_END_DEF},								// 70
 											{RISE_FALL_RATE_MIN, RISE_FALL_RATE_MAX, RISE_FALL_RATE_DEF},			// 71
-											{0, 0, 0},																// 72
-											{0, 0, 0},																// 73
-											{0, 0, 0},																// 74
+											{VD_LIM_MIN, VD_LIM_MAX, HOLD_VD_CLOSE_DEF},							// 72
+											{TIME_WAIT_GOST_MIN, TIME_WAIT_GOST_MAX, TIME_WAIT_GOST_DEF},			// 73
+											{0, IH_RING_BUFFER_SIZE, HOLD_BACK_SHIFT_DEF},							// 74
 											{0, 0, 0},																// 75
 											{0, 0, 0},																// 76
 											{0, 0, 0},																// 77
@@ -167,7 +167,7 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 											{0, 0, 0},																// 147
 											{0, 0, 0},																// 148
 											{0, 0, 0},																// 149
-											{0, INT16U_MAX, 0},														// 150
+											{0, INT16U_MAX, SCOPE_RATE_DEF},										// 150
 											{0, INT16U_MAX, 0},														// 151
 											{0, 0, 0},																// 152
 											{0, 0, 0},																// 153

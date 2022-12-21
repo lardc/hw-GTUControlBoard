@@ -34,7 +34,7 @@ typedef struct __TableItemConstraint
 #define ID_LIM_DEF					1000
 
 // in mV
-#define VG_LIM_MIN					100
+#define VG_LIM_MIN					30
 #define VG_LIM_MAX					12500
 #define VG_LIM_DEF					5000
 
@@ -59,10 +59,16 @@ typedef struct __TableItemConstraint
 #define TIME_MAX					100
 #define TIME_DEF					10
 
+// in ms
+#define TIME_WAIT_GOST_MIN			1
+#define TIME_WAIT_GOST_MAX			1000
+#define TIME_WAIT_GOST_DEF			500
+
 // in %
 #define PERCENT_MIN					1
 #define PERCENT_MAX					100
 #define PERCENT_DEF_STAB_ERR		5
+#define PERCENT_DEF_STAB_CAL_ERR	20
 //
 #define PROPORTIONAL_MIN			1
 #define PROPORTIONAL_DEF			1000
@@ -71,6 +77,12 @@ typedef struct __TableItemConstraint
 #define HOLD_END_MIN				1
 #define HOLD_END_MAX				100
 #define HOLD_END_DEF				20
+
+// in mV
+#define HOLD_VD_CLOSE_DEF			5000
+
+// in ticks
+#define HOLD_BACK_SHIFT_DEF			3
 
 // in mA
 #define LATCH_RATE_SMALL_DEF		1
@@ -95,7 +107,7 @@ typedef struct __TableItemConstraint
 
 // in ticks
 #define VGNT_SMPL_POINT_SHIFT_MAX	VGNT_RING_BUFFER_SIZE
-
+#define SCOPE_RATE_DEF				5
 
 // Variables
 //

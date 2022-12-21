@@ -51,7 +51,8 @@
 #define REG_COMM_STAB_TIME			2	// Transient stabilizatioon time (in ms)
 #define REG_COMM_STAB_ERROR			3	// Transient stabilizatioon error (in %)
 #define REG_COMM_VG_MIN_INPUT		4	// Minimum allowed voltage input from Vg potential (in mV)
-// 5 - 8
+#define REG_COMM_CAL_STAB_ERROR		5	// Transient stabilizatioon error for calibration (in %)
+// 6 - 8
 #define REG_FAN_OFF_DELAY			9	// Fan turn off delay (in ms)
 #define REG_PI_CTRL_VG_Kp			10	// Gate voltage PI Kp x1000
 #define REG_PI_CTRL_VG_Ki			11	// Gate voltage PI Ki x1000
@@ -115,7 +116,10 @@
 // 66 - 69
 #define REG_HOLD_END_CURRENT		70	// Minimum available current for Ih (in mA)
 #define REG_HOLD_CURRENT_FALL_RATE	71	// Current rate (mA / ms)
-// 72 - 79
+#define REG_HOLD_VCLOSE_LEVEL		72	// Порог напряжения Vd для определения запирания прибора (в В)
+#define REG_HOLD_TRIG_WAIT_GOST		73	// Время ожидания отпирания прибора блоком стат. потерь по ГОСТ (в мс)
+#define REG_HOLD_BACK_SHIFT			74	// Сдвиг назад при измерении Ih (в тиках)
+// 75 - 79
 #define REG_LATCH_RATE_LARGE		80	// Large step of increasing Id for latching test (in mA / ms)
 #define REG_LATCH_RATE_SMALL		81	// Small step of increasing Id for latching test (in mA / ms)
 #define REG_LATCH_START_CURRENT		82	// Test start current (in mA)
