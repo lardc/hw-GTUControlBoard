@@ -85,6 +85,7 @@ void ZbDAC_DirectWriteX(Int16U Data)
 	DELAY_US(1);
 	ZwGPIO_WritePin(PIN_PDAC_LDAC, TRUE);
 	ZwGPIO_WritePin(PIN_DAC_W2, TRUE);
+	DELAY_US(1);
 }
 // ----------------------------------------
 

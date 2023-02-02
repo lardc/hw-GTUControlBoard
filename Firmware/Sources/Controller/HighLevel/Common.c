@@ -105,6 +105,7 @@ void COMMON_Finish()
 {
 	ZbGPIO_GateEnableOutput(FALSE);
 	ZbGPIO_DirectEnableOutput(FALSE);
+	ZbGPIO_LED1(FALSE);
 	ZwTimer_StopT0();
 }
 // ----------------------------------------
