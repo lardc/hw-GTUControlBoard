@@ -24,8 +24,9 @@
 #include "Diagnostic.h"
 #include "Regulator.h"
 #include "MeasureUtils.h"
+#include "Common.h"
 
-	
+
 // Variables
 //
 DeviceStateCodes Codes = { WARNING_NONE, PROBLEM_NONE, FAULT_NONE };
@@ -174,10 +175,8 @@ void CONTROL_UpdateHigh()
 			DataTable[REG_PROBLEM] = Codes.Problem;
 			DataTable[REG_WARNING] = Codes.Warning;
 			DataTable[REG_TEST_FINISHED] = (Codes.Problem == PROBLEM_NONE) ? OPRESULT_OK : OPRESULT_FAIL;
-
-			ZbGPIO_LED1(FALSE);
-		}	
-	}				
+		}
+	}
 }
 // ----------------------------------------
 
@@ -238,7 +237,6 @@ void CONTROL_FillWithDefaults()
 	DataTable[REG_KELVIN_3_2] = 0;
 	//
 	DataTable[REG_PROCESS_COUNTER] = 0;
-	//
 }
 // ----------------------------------------
 
@@ -248,10 +246,8 @@ void CONTROL_HaltExecution()
 	CycleActive = FALSE;
 	CONTROL_SetDeviceState(DS_None);
 
-	ZbGPIO_DirectEnableOutput(FALSE);
-	ZbGPIO_GateEnableOutput(FALSE);
-	ZbDAC_ForceOutputsToZero();
-	ZbGPIO_LED1(FALSE);
+	COMMON_PrepareFinish();
+	COMMON_Finish();
 }
 // ----------------------------------------
 

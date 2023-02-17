@@ -22,7 +22,7 @@
 #define EP_COUNT						12
 #define VALUES_x_SIZE					1000
 //
-#define CAL_COMPATIBILITY				TRUE			// Режим совместемости калибровки
+#define CAL_COMPATIBILITY				FALSE			// Режим совместемости калибровки
 //--------------------------------------------------------
 
 // Regulator parameters
@@ -37,6 +37,7 @@
 // Specific parameters
 //--------------------------------------------------------
 #define VGNT_RING_BUFFER_SIZE			50				// Размер кольцевого буфера Vgnt для сдвига точки измерения
+#define IH_RING_BUFFER_SIZE				50				// Размер кольцевого буфера Ih для сдвига точки измерения
 //--------------------------------------------------------
 
 #endif // __GLOBAL_H
