@@ -85,7 +85,7 @@ PAGE 0:    /* Program Memory */
    LOADER_BEGIN : origin = 0x3F7FF6, length = 0x000002     /* Part of FLASHA.  Used for "boot to Flash" bootloader mode. */
    CSM_PWL      : origin = 0x3F7FF8, length = 0x000008     /* Part of FLASHA.  CSM password locations in FLASHA */
    
-   RAMH0_PR     : origin = 0x3FBB00, length = 0x000500     /* on-chip RAM block H0 lower part for program */
+   RAM          : origin = 0x3F8000, length = 0x004000     /* on-chip RAM full range */
 
    ROM          : origin = 0x3FF000, length = 0x000FC0     /* Boot ROM */
    RESET        : origin = 0x3FFFC0, length = 0x000002     /* part of boot ROM  */
@@ -99,8 +99,6 @@ PAGE 1 :   /* Data Memory */
    RAMM0_FL    : origin = 0x0003FF, length = 0x000001     /* on-chip RAM block M0 for boot flag */
    RAMM1       : origin = 0x000480, length = 0x000380     /* on-chip RAM block M1 */
    BOOT_RSVD   : origin = 0x000400, length = 0x000080     /* Part of M1, BOOT rom will use this for stack */
-
-   RAM_MAIN    : origin = 0x008000, length = 0x003B00     /* on-chip RAM block L0, L1, part of H0 */
 }
 
 /* Allocate sections to memory blocks.
@@ -112,14 +110,24 @@ PAGE 1 :   /* Data Memory */
  
 SECTIONS
 {
- 
+Flash28_API:
+   {
+        -lFlash2809_API_V100.lib(.econst)
+        -lFlash2809_API_V100.lib(.text)
+   }                   LOAD = FLASHCD,
+                       RUN = RAM,
+                       LOAD_START(_Flash28_API_LoadStart),
+                       LOAD_END(_Flash28_API_LoadEnd),
+                       RUN_START(_Flash28_API_RunStart),
+                       PAGE = 0
+
    /* Allocate program areas: */
    .cinit              : > FLASHCD     PAGE = 0
    .pinit              : > FLASHCD     PAGE = 0
    .text               : > FLASHCD     PAGE = 0
    codestart           : > BEGIN       PAGE = 0
    ramfuncs            : LOAD = FLASHCD,
-                         RUN = RAMH0_PR,
+                         RUN = RAM,
                          LOAD_START(_RamfuncsLoadStart),
                          LOAD_END(_RamfuncsLoadEnd),
                          RUN_START(_RamfuncsRunStart),
@@ -131,7 +139,7 @@ SECTIONS
    /* Allocate uninitalized data sections: */
    .stack              : > RAMM1       PAGE = 1
    .esysmem            : > RAMM1       PAGE = 1
-   .ebss               : > RAM_MAIN    PAGE = 1
+   .ebss               : > RAM         PAGE = 0
 
    /* Initalized sections go in Flash */
    /* For SDFlash to program these, they must be allocated to page 0 */
@@ -140,7 +148,7 @@ SECTIONS
 
    /* Allocate IQ math areas: */
    IQmath              : LOAD = FLASHCD,
-                         RUN = RAMH0_PR,
+                         RUN = RAM,
                          LOAD_START(_IQmathLoadStart),
                          LOAD_END(_IQmathLoadEnd),
                          RUN_START(_IQmathRunStart),
@@ -160,9 +168,6 @@ SECTIONS
 						 LOAD_START(_RamconstsLoadStart),
                          LOAD_END(_RamconstsLoadEnd),
 						 RUN_START(_RamconstsRunStart)
-
-   /* Allocate large memory blocks section: */
-   data_mem	           : > RAM_MAIN    PAGE = 1
 
    /* Allocate special memory boot-loader flag: */
    bl_flag             : > RAMM0_FL    PAGE = 1

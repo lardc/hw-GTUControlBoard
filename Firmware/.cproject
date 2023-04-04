@@ -46,6 +46,9 @@
 									<listOptionValue builtIn="false" value="../../../hw-TMS-libs/Library"/>
 									<listOptionValue builtIn="false" value="../../../hw-TMS-libs/RTS"/>
 									<listOptionValue builtIn="false" value="../../../hw-TMS-libs/IQmath"/>
+									<listOptionValue builtIn="false" value="../../../hw-TMS-libs/Firmware"/>
+									<listOptionValue builtIn="false" value="../../../hw-TMS-libs/BootLoader/Controller"/>
+									<listOptionValue builtIn="false" value="../../../hw-TMS-libs/FlashAPI"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.DEBUGGING_MODEL.1941673318" name="Debugging model" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.DEBUGGING_MODEL" value="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.DEBUGGING_MODEL.SYMDEBUG__SKELETAL" valueType="enumerated"/>
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.PROGRAM_LEVEL_COMPILE.978848970" name="Program mode compilation (--program_level_compile, -pm)" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.compilerID.PROGRAM_LEVEL_COMPILE" value="true" valueType="boolean"/>
@@ -75,6 +78,7 @@
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.4.linkerID.LIBRARY.678699863" name="Include library file or command file as input (--library, -l)" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.linkerID.LIBRARY"/>
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.4.linkerID.SEARCH_PATH.1224644328" name="Add &lt;dir&gt; to library search path (--search_path, -i)" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.linkerID.SEARCH_PATH" valueType="libPaths">
 									<listOptionValue builtIn="false" value="../../../hw-TMS-libs/IQmath"/>
+									<listOptionValue builtIn="false" value="../../../hw-TMS-libs/FlashAPI"/>
 								</option>
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.4.linkerID.XML_LINK_INFO.139781524" name="Detailed link information data-base into &lt;file&gt; (--xml_link_info, -xml_link_info)" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.linkerID.XML_LINK_INFO" value="&quot;GTUControlBoard_linkInfo.xml&quot;" valueType="string"/>
 								<option id="com.ti.ccstudio.buildDefinitions.C2000_6.4.linkerID.ABSOLUTE_EXE.349672348" name="Produce absolute executable object file (default) (--absolute_exe, -a)" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.linkerID.ABSOLUTE_EXE" value="true" valueType="boolean"/>
