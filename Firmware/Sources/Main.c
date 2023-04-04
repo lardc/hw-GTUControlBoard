@@ -1,4 +1,4 @@
-﻿// -----------------------------------------
+﻿// ----------------------------------------
 // Program entry point
 // ----------------------------------------
 
@@ -14,7 +14,7 @@
 
 
 // FORWARD FUNCTIONS
-// -----------------------------------------
+// ----------------------------------------
 Boolean InitializeCPU();
 void InitializeTimers();
 void InitializeADC();
@@ -23,11 +23,11 @@ void InitializeSPI();
 void InitializeCAN();
 void InitializeBoard();
 void InitializeController(Boolean GoodClock);
-// -----------------------------------------
+// ----------------------------------------
 
 
 // FORWARD ISRs
-// -----------------------------------------
+// ----------------------------------------
 // CPU Timer 0 ISR
 ISRCALL Timer0_ISR();
 // CPU Timer 2 ISR
@@ -38,11 +38,11 @@ ISRCALL CAN0_ISR();
 ISRCALL SEQ1_ISR();
 // ILLEGAL ISR
 ISRCALL IllegalInstruction_ISR();
-// -----------------------------------------
+// ----------------------------------------
 
 
 // FUNCTIONS
-// -----------------------------------------
+// ----------------------------------------
 void main()
 {
 	Boolean clockInitResult;
@@ -96,7 +96,7 @@ void main()
 	while(TRUE)
 		CONTROL_Idle();
 }
-// -----------------------------------------
+// ----------------------------------------
 
 Boolean InitializeCPU()
 {
@@ -123,7 +123,7 @@ Boolean InitializeCPU()
 
    	return clockInitResult;
 }
-// -----------------------------------------
+// ----------------------------------------
 
 void InitializeTimers()
 {
@@ -135,7 +135,7 @@ void InitializeTimers()
 	ZwTimer_SetT2(TIMER2_PERIOD);
 	ZwTimer_EnableInterruptsT2(TRUE);
 }
-// -----------------------------------------
+// ----------------------------------------
 
 void InitializeADC()
 {
@@ -152,7 +152,7 @@ void InitializeADC()
 	// Config sampling channels
 	ZwADC_ConfigureSequentialCascaded(16, ADC_Channels);
 }
-// -----------------------------------------
+// ----------------------------------------
 
 void InitializeSCI()
 {
@@ -162,14 +162,14 @@ void InitializeSCI()
 
 	ZwSCI_EnableInterruptsGlobal(FALSE);
 }
-// -----------------------------------------
+// ----------------------------------------
 
 void InitializeSPI()
 {
 	// Common (ABCD)
 	ZwSPI_EnableInterruptsGlobal(FALSE);
 }
-// -----------------------------------------
+// ----------------------------------------
 
 void InitializeCAN()
 {
@@ -183,7 +183,7 @@ void InitializeCAN()
     ZwCANa_InitInterrupts(TRUE);
     ZwCANa_EnableInterrupts(TRUE);
 }
-// -----------------------------------------
+// ----------------------------------------
 
 void InitializeBoard()
 {
@@ -192,18 +192,18 @@ void InitializeBoard()
    	ZbMEM_Init();
    	ZbVRegister_Init();
 }
-// -----------------------------------------
+// ----------------------------------------
 
 void InitializeController(Boolean GoodClock)
 {
 	// Init controllers and logic
 	CONTROL_Init(!GoodClock);
 }
-// -----------------------------------------
+// ----------------------------------------
 
 
 // ISRs
-// -----------------------------------------
+// ----------------------------------------
 #ifdef BOOT_FROM_FLASH
 	#pragma CODE_SECTION(Timer0_ISR, "ramfuncs");
 	#pragma CODE_SECTION(Timer2_ISR, "ramfuncs");
@@ -224,7 +224,7 @@ ISRCALL Timer0_ISR(void)
 	// allow other interrupts from group 1
 	TIMER0_ISR_DONE;
 }
-// -----------------------------------------
+// ----------------------------------------
 
 // timer 2 ISR
 ISRCALL Timer2_ISR(void)
@@ -250,7 +250,7 @@ ISRCALL Timer2_ISR(void)
 	// no PIE
 	TIMER2_ISR_DONE;
 }
-// -----------------------------------------
+// ----------------------------------------
 
 // ADC SEQ1 ISR
 ISRCALL SEQ1_ISR(void)
@@ -264,7 +264,7 @@ ISRCALL SEQ1_ISR(void)
 	// allow other interrupts from group 1
 	ADC_ISR_DONE;
 }
-// -----------------------------------------
+// ----------------------------------------
 
 // Line 0 ISR
 ISRCALL CAN0_ISR(void)
@@ -274,7 +274,7 @@ ISRCALL CAN0_ISR(void)
 	// allow other interrupts from group 9
 	CAN_ISR_DONE;
 }
-// -----------------------------------------
+// ----------------------------------------
 
 // ILLEGAL ISR
 ISRCALL IllegalInstruction_ISR(void)
@@ -285,6 +285,6 @@ ISRCALL IllegalInstruction_ISR(void)
 	// Reset system using WD
 	ZwSystem_ForceDog();
 }
-// -----------------------------------------
+// ----------------------------------------
 
 // No more.
