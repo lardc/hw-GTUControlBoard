@@ -1,4 +1,4 @@
-#ifndef __LABEL_DESCRIPTION_H
+﻿#ifndef __LABEL_DESCRIPTION_H
 #define __LABEL_DESCRIPTION_H
 
 // Include

@@ -1,4 +1,4 @@
-#ifndef __LABEL_INDEX_SELECTOR_H
+﻿#ifndef __LABEL_INDEX_SELECTOR_H
 #define __LABEL_INDEX_SELECTOR_H
 
 // Include
