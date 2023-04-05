@@ -11,6 +11,8 @@
 #include "SysConfig.h"
 //
 #include "Controller.h"
+#include "Flash.h"
+#include "FirmwareLabel.h"
 
 
 // FORWARD FUNCTIONS
@@ -49,6 +51,8 @@ void main()
 
 	// Boot process
 	clockInitResult = InitializeCPU();
+	FLASH_Init();
+	FWLB_LoadBoardLabel();
 
 	// Only if good clocking was established
 	if(clockInitResult)
