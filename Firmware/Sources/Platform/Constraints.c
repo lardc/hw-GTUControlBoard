@@ -149,15 +149,15 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 											{NO, YES, NO},															// 129
 											{NO, YES, NO},															// 130
 											{VD_LIM_MIN, VD_LIM_MAX, VD_LIM_DEF},									// 131
-											{ID_LIM_MIN, ID_LIM_MAX, ID_LIM_DEF},									// 132
+											{CURRENT_MIN, CURRENT_MAX, CURRENT_DEF},								// 132
 											{VG_LIM_MIN, VG_LIM_MAX, VG_LIM_DEF},									// 133
-											{IG_LIM_MIN, IG_LIM_MAX, IG_LIM_DEF},									// 134
+											{CURRENT_MIN, CURRENT_MAX, CURRENT_DEF},								// 134
 											{NO, YES, NO},															// 135
 											{0, 0, 0},																// 136
 											{0, 0, 0},																// 137
 											{0, 0, 0},																// 138
 											{0, 0, 0},																// 139
-											{CAL_CURR_MIN, CAL_CURR_MAX, CAL_CURR_DEF},								// 140
+											{CURRENT_MIN, CURRENT_MAX, CURRENT_DEF},								// 140
 											{0, 0, 0},																// 141
 											{0, 0, 0},																// 142
 											{0, 0, 0},																// 143

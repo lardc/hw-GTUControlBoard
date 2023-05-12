@@ -118,7 +118,7 @@
 #define REG_DAC_IG_CONV_B			51	// Conversion offset for gate current (in mA)
 // 52 - 54
 #define REG_KELVIN_PROBE_TIME		55	// Time for probing (in ms)
-// 51 - 59
+// 56 - 59
 #define REG_GATE_VG_RATE			60	// Vg rise rate for gate measurement (in mV / ms)
 #define REG_VGNT_VG_RATE			61	// Vg rise rate for Vgnt measurement (in mV / s)
 #define REG_VGNT_CONF_VG_RATE		62	// Vg rise rate for Vgnt confirmation (in mV / s)

@@ -208,19 +208,19 @@ void REGULATOR_Init(RegulatorSelector Selector)
 	switch (Selector)
 	{
 		case SelectVd:
-			REGULATOR_InitX(&RegulatorVd, REGLTR_VD_SAT, REG_PI_CTRL_VD_Kp, REG_PI_CTRL_VD_Ki);
+			REGULATOR_InitX(&RegulatorVd, REGLTR_Vx_SAT, REG_PI_CTRL_VD_Kp, REG_PI_CTRL_VD_Ki);
 			break;
 
 		case SelectId:
-			REGULATOR_InitX(&RegulatorId, REGLTR_ID_SAT, REG_PI_CTRL_ID_Kp, REG_PI_CTRL_ID_Ki);
+			REGULATOR_InitX(&RegulatorId, REGLTR_Ix_SAT, REG_PI_CTRL_ID_Kp, REG_PI_CTRL_ID_Ki);
 			break;
 
 		case SelectVg:
-			REGULATOR_InitX(&RegulatorVg, REGLTR_VG_SAT, REG_PI_CTRL_VG_Kp, REG_PI_CTRL_VG_Ki);
+			REGULATOR_InitX(&RegulatorVg, REGLTR_Vx_SAT, REG_PI_CTRL_VG_Kp, REG_PI_CTRL_VG_Ki);
 			break;
 
 		case SelectIg:
-			REGULATOR_InitX(&RegulatorIg, REGLTR_IG_SAT, REG_PI_CTRL_IG_Kp, REG_PI_CTRL_IG_Ki);
+			REGULATOR_InitX(&RegulatorIg, REGLTR_Ix_SAT, REG_PI_CTRL_IG_Kp, REG_PI_CTRL_IG_Ki);
 			break;
 	}
 }

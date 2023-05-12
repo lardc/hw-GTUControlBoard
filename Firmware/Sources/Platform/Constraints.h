@@ -22,31 +22,20 @@ typedef struct __TableItemConstraint
 
 
 // Restrictions
-//
+// in mA
+#define CURRENT_MIN					1
+#define CURRENT_MAX					REGLTR_I_MAX
+#define CURRENT_DEF					1000
+
 // in mV
 #define VD_LIM_MIN					1500
 #define VD_LIM_MAX					12500
 #define VD_LIM_DEF					12000
 
-// in mA
-#define ID_LIM_MIN					25
-#define ID_LIM_MAX					1100
-#define ID_LIM_DEF					1000
-
 // in mV
 #define VG_LIM_MIN					30
 #define VG_LIM_MAX					12500
 #define VG_LIM_DEF					5000
-
-// in mA
-#define IG_LIM_MIN					5
-#define IG_LIM_MAX					1100
-#define IG_LIM_DEF					1000
-
-// in mA
-#define CAL_CURR_MIN				1
-#define CAL_CURR_MAX				1200
-#define CAL_CURR_DEF				1000
 
 // in mV/ms or mA/ms or mV/s
 #define RISE_FALL_RATE_MIN			1
