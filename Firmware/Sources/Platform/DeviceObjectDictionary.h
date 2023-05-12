@@ -31,19 +31,19 @@
 #define ACT_START_RG				104 // Start gate resistance test
 #define ACT_STOP_TEST				105 // Stop current test
 #define ACT_START_VGNT				106	// Start Vgnt measurement
-//
-#if CAL_COMPATIBILITY == TRUE
-#define ACT_START_CAL_IG			110 // Start Vg calibration
-#define ACT_START_CAL_ID			111 // Start Ig calibration
-#define ACT_START_CAL_VG			112 // Start Vg calibration
-#define ACT_START_CAL_VD			113 // Start Vd calibration
-#else
+
+// Номера команд калибровки в режиме совместимости
+#define ACT_CMP_START_CAL_IG		110 // Start Vg calibration
+#define ACT_CMP_START_CAL_ID		111 // Start Ig calibration
+#define ACT_CMP_START_CAL_VG		112 // Start Vg calibration
+#define ACT_CMP_START_CAL_VD		113 // Start Vd calibration
+
+// Номера команд калибровки в основном режиме
 #define ACT_START_CAL_VG			110 // Start Vg calibration
 #define ACT_START_CAL_IG			111 // Start Ig calibration
 #define ACT_START_CAL_VD			112 // Start Vd calibration
 #define ACT_START_CAL_ID			113 // Start Id calibration
-#endif
-//
+
 #define ACT_SAVE_TO_ROM				200	// Save parameters to EEPROM module
 #define ACT_RESTORE_FROM_ROM		201	// Restore parameters from EEPROM module
 #define ACT_RESET_TO_DEFAULT		202	// Reset parameters to default values (only in controller memory)
@@ -155,6 +155,8 @@
 #define REG_ADC_LOW_IG_FINE_P0		117	// Fine coefficient for low Ig quadratic correction P0 (in mA)
 #define REG_ADC_LOW_IG_CONV_K		118	// Conversion coefficient K for low gate current x1000
 #define REG_ADC_LOW_IG_CONV_B		119	// Conversion offset for low gate current (in mA)
+
+#define REG_OLD_GTU_COMPATIBLE		120	// Режим совместимости с блоками GTU на базе ЭМ GateTester
 // ----------------------------------------
 //
 #define REG_GATE_VGT_PURE			128	// Sample VGT after terminating main current
@@ -167,9 +169,7 @@
 #define REG_I_GATE_LIMIT			134	// Gate current limit, Ig (in mA)
 #define REG_VGNT_CONF_MODE			135 // Confirmation mode for Vgnt measurement
 
-#if CAL_COMPATIBILITY == TRUE
-#define REG_CAL_CURRENT				140	// Calibration current
-#endif
+#define REG_CAL_CURRENT				140	// В режиме совместимости - ток калибровки, мА
 
 #define REG_SCOPE_RATE				150	// Scope rate divisor
 #define REG_SCOPE_RATE_2			151	// Scope rate divisor (for compatibility only)
@@ -198,9 +198,7 @@
 #define REG_RESULT_IL				202	// IL  (in mA)
 #define REG_RESULT_RG				203	// R   (in Ohm * 10)
 #define REG_RESULT_CAL				204	// Calibration result
-#if CAL_COMPATIBILITY == TRUE
-#define REG_RESULT_CAL_V			205	// Calibration result, voltage
-#endif
+#define REG_RESULT_CAL_V			205	// В режиме совместимости - напряжение Vgt во время калибровки, мВ
 #define REG_RESULT_VGNT				205	// Vgnt (in mV)
 #define REG_RESULT_IGNT				206	// Ignt (in mA)
 //
@@ -221,9 +219,7 @@
 #define REG_RESULT_IH_UA			231	// IH fraction part (in uA)
 #define REG_RESULT_IGT_UA			232	// IGT fraction part (in uA)
 #define REG_RESULT_CAL_FRAC			233	// Calibration result fractional part
-#if CAL_COMPATIBILITY == TRUE
-#define REG_RESULT_CAL_V_FRAC		234	// Calibration result fractional part, voltage
-#endif
+#define REG_RESULT_CAL_V_FRAC		234	// В режиме совместимости - дробная часть напряжения Vgt во время калибровки
 //
 #define REG_QUADRATIC_CORR			254	// Use quadratic correction for block
 //

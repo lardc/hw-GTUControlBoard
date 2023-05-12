@@ -43,6 +43,11 @@ typedef struct __TableItemConstraint
 #define IG_LIM_MAX					1100
 #define IG_LIM_DEF					1000
 
+// in mA
+#define CAL_CURR_MIN				1
+#define CAL_CURR_MAX				1200
+#define CAL_CURR_DEF				1000
+
 // in mV/ms or mA/ms or mV/s
 #define RISE_FALL_RATE_MIN			1
 #define RISE_FALL_RATE_MAX			1000

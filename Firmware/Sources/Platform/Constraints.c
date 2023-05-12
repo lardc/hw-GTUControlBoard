@@ -133,7 +133,7 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
 											{0, INT16U_MAX, 0},														// 117
 											{PROPORTIONAL_MIN, INT16U_MAX, PROPORTIONAL_DEF},						// 118
 											{0, INT16U_MAX, 0},														// 119
-											{0, 0, 0},																// 120
+											{NO, YES, NO},															// 120
 											{0, 0, 0},																// 121
 											{0, 0, 0},																// 122
 											{0, 0, 0},																// 123
@@ -157,11 +157,7 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 											{0, 0, 0},																// 137
 											{0, 0, 0},																// 138
 											{0, 0, 0},																// 139
-#if CAL_COMPATIBILITY == TRUE
-											{0, INT16U_MAX, 0},														// 140
-#else
-											{0, 0, 0},																// 140
-#endif
+											{CAL_CURR_MIN, CAL_CURR_MAX, CAL_CURR_DEF},								// 140
 											{0, 0, 0},																// 141
 											{0, 0, 0},																// 142
 											{0, 0, 0},																// 143

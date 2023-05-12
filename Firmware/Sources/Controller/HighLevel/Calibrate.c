@@ -170,11 +170,11 @@ Boolean CALIBRATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					DataTable[REG_RESULT_CAL] = _IQint(Avg);
 					DataTable[REG_RESULT_CAL_FRAC] = _IQint(_IQmpy(_IQfrac(Avg), _IQ(1000)));
 
-#if CAL_COMPATIBILITY == TRUE
-					if(SavedSelector == SelectIg)
+					if(SavedSelector == SelectIg && DataTable[REG_OLD_GTU_COMPATIBLE])
+					{
 						DataTable[REG_RESULT_CAL_V] = _IQint(AvgV);
 						DataTable[REG_RESULT_CAL_V_FRAC] = _IQint(_IQmpy(_IQfrac(AvgV), _IQ(1000)));
-#endif
+					}
 
 					State = CALIBRATE_STATE_FINISH_PREPARE;
 				}
@@ -243,18 +243,8 @@ void CALIBRATE_CacheVariables(RegulatorSelector Select)
 			break;
 	}
 
-#if CAL_COMPATIBILITY == TRUE
-	switch(Select)
-	{
-		case SelectId:
-			xLimit = (DataTable[REG_CAL_CURRENT] < ID_LIM_MAX) ? _IQI(DataTable[REG_CAL_CURRENT]) : _IQ(ID_LIM_MAX);
-			break;
-
-		case SelectIg:
-			xLimit = (DataTable[REG_CAL_CURRENT] < IG_LIM_MAX) ? _IQI(DataTable[REG_CAL_CURRENT]) : _IQ(IG_LIM_MAX);
-			break;
-	}
-#endif
+	if(DataTable[REG_OLD_GTU_COMPATIBLE] && (Select == SelectId || Select == SelectIg))
+		xLimit = DataTable[REG_CAL_CURRENT];
 
 	xSetpoint = 0;
 	Avg = AvgV = 0;
