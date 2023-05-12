@@ -163,6 +163,7 @@
 #define REG_HOLD_USE_STRIKE			129	// Strike pulse before holding current (for compatibility only)
 #define REG_HOLD_WITH_SL			130	// Measure holding current with static losses
 //
+// В режиме совместимости запись в регистры 131 - 134 заблокирована
 #define REG_V_DIRECT_LIMIT			131	// Direct voltage limit, Vd (in mV)
 #define REG_I_DIRECT_LIMIT			132	// Direct current limit, Id (in mA)
 #define REG_V_GATE_LIMIT			133	// Gate voltage limit, Vg (in mV)

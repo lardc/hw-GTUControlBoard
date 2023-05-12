@@ -229,6 +229,9 @@ static Boolean DEVPROFILE_Validate16(Int16U Address, Int16U Data)
 	if(ENABLE_LOCKING && !UnlockedForNVWrite && (Address < DATA_TABLE_WR_START))
 		return FALSE;
 
+	if(DataTable[REG_OLD_GTU_COMPATIBLE] && REG_V_DIRECT_LIMIT <= Address && Address <= REG_I_GATE_LIMIT)
+		return FALSE;
+
 	if(Address < DATA_TABLE_WR_START)
 	{
 		if(Data < NVConstraint[Address - DATA_TABLE_NV_START].Min || Data > NVConstraint[Address - DATA_TABLE_NV_START].Max)
