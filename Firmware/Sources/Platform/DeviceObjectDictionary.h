@@ -173,6 +173,7 @@
 
 #define REG_SCOPE_RATE				150	// Scope rate divisor
 #define REG_SCOPE_RATE_2			151	// Scope rate divisor (for compatibility only)
+#define REG_SCOPE_RATE				152	// Scope rate divisor
 //
 #define REG_DBG						160	// General purpose debug register
 
@@ -233,8 +234,16 @@
 //
 #define REG_MEM_SYMBOL				299	// Считанный по адресу памяти символ
 
+// SCOPE TYPE
+// Выбор сохраняемой осциллограммы в режиме совместимости
+#define SCOPE_TYPE_NONE				0	// Deactivate this scope
+#define SCOPE_TYPE_I				1	// Log I values
+#define SCOPE_TYPE_V				2	// Log V values
+#define SCOPE_TYPE_TARGET_I			3	// Log target I values
+#define SCOPE_TYPE_CONTROL			4	// Log control signal's values
+
 // ENDPOINTS
-//
+// В основном режиме
 #define EP16_Data_Vg				1	// Sampled gate voltage Vg (mV)
 #define EP16_Data_Ig				2	// Sampled gate current Ig (mA)
 #define EP16_Data_Vd				3	// Sampled direct voltage Vd (mV)
@@ -249,6 +258,11 @@
 #define EP16_Target_Ig				10	// Target gate current Ig (mA)
 #define EP16_Target_Vd				11	// Target direct voltage Vd (mV)
 #define EP16_Target_Id				12	// Target direct current Id (mA)
+
+// ENDPOINTS
+// В режиме совместимости
+#define EP16_Scope1					1
+#define EP16_Scope2					2
 
 // OPERATION RESULTS
 //

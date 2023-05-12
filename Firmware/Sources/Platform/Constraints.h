@@ -112,7 +112,7 @@ typedef struct __TableItemConstraint
 
 // in ticks
 #define VGNT_SMPL_POINT_SHIFT_MAX	VGNT_RING_BUFFER_SIZE
-#define SCOPE_RATE_DEF				5
+#define SCOPE_RATE_DEF				20
 
 // Variables
 //
