@@ -171,8 +171,8 @@
 
 #define REG_CAL_CURRENT				140	// В режиме совместимости - ток калибровки, мА
 
-#define REG_SCOPE_RATE				150	// Scope rate divisor
-#define REG_SCOPE_RATE_2			151	// Scope rate divisor (for compatibility only)
+#define REG_SCOPE_TYPE_1			150	// Scope type 1
+#define REG_SCOPE_TYPE_2			151	// Scope type 2
 #define REG_SCOPE_RATE				152	// Scope rate divisor
 //
 #define REG_DBG						160	// General purpose debug register

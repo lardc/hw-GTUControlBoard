@@ -8,7 +8,6 @@
 // Includes
 #include "DeviceObjectDictionary.h"
 #include "DataTable.h"
-#include "Controller.h"
 #include "stdlib.h"
 #include "IQmathUtils.h"
 #include "Regulator.h"
@@ -139,7 +138,7 @@ CombinedData MU_HandleADC(pInt16U Samples)
 }
 // ----------------------------------------
 
-void MU_LogScope(CombinedData MeasureSample)
+void MU_LogScope(CombinedData MeasureSample, DeviceState State)
 {
 	CombinedData tmp;
 	static Int16U ScopeLogStep = 0, LocalCounter = 0;
@@ -151,7 +150,6 @@ void MU_LogScope(CombinedData MeasureSample)
 	if (ScopeLogStep++ >= DataTable[REG_SCOPE_RATE])
 	{
 		ScopeLogStep = 0;
-
 		CONTROL_Values_Vg[LocalCounter] = _IQint(MeasureSample.Vg);
 		CONTROL_Values_Ig[LocalCounter] = _IQint(MeasureSample.Ig);
 		CONTROL_Values_Vd[LocalCounter] = _IQint(MeasureSample.Vd);
@@ -169,9 +167,50 @@ void MU_LogScope(CombinedData MeasureSample)
 		CONTROL_Values_Trgt_Vd[LocalCounter] = _IQint(tmp.Vd);
 		CONTROL_Values_Trgt_Id[LocalCounter] = _IQint(tmp.Id);
 
+		// Перезапись данных для режима совместимости
+		if(DataTable[REG_OLD_GTU_COMPATIBLE] && \
+				(DataTable[REG_SCOPE_TYPE_1] != SCOPE_TYPE_NONE || \
+						DataTable[REG_SCOPE_TYPE_2] != SCOPE_TYPE_NONE))
+		{
+			// Выбор источника сигнала
+			Int16U V = 0, I = 0;
+			if(State == DS_Gate)
+			{
+				V = CONTROL_Values_Vg[LocalCounter];
+				I = CONTROL_Values_Ig[LocalCounter];
+			}
+			else if(State == DS_IH)
+				I = CONTROL_Values_Id[LocalCounter];
+
+			// Запись в выбранные EP
+			switch(DataTable[REG_SCOPE_TYPE_1])
+			{
+				case SCOPE_TYPE_I:
+					CONTROL_Values_Vg[LocalCounter] = I;
+					break;
+				case SCOPE_TYPE_V:
+					CONTROL_Values_Vg[LocalCounter] = V;
+					break;
+				default:
+					CONTROL_Values_Vg[LocalCounter] = 0;
+					break;
+			}
+			switch(DataTable[REG_SCOPE_TYPE_1])
+			{
+				case SCOPE_TYPE_I:
+					CONTROL_Values_Ig[LocalCounter] = I;
+					break;
+				case SCOPE_TYPE_V:
+					CONTROL_Values_Ig[LocalCounter] = V;
+					break;
+				default:
+					CONTROL_Values_Ig[LocalCounter] = 0;
+					break;
+			}
+		}
+
 		// Сохранение указателя на последний элемент
 		DataTable[REG_EP_LAST_POINTER] = LocalCounter;
-
 		++LocalCounter;
 	}
 

@@ -128,7 +128,7 @@ void CONTROL_UpdateHigh()
 		REGULATOR_Cycle(MeasureSample = MU_HandleADC(ZwADC_GetValues1()));
 
 		// Логгирование результата
-		MU_LogScope(MeasureSample);
+		MU_LogScope(MeasureSample, CONTROL_State);
 
 		switch (CONTROL_State)
 		{
