@@ -42,7 +42,7 @@ static Boolean ConfirmationMode;
 // Ring buffer
 static SamplePoint RingBuffer[VGNT_RING_BUFFER_SIZE];
 static Boolean BufferIsFull;
-static Int16U BufferPointer;
+static Int16S BufferPointer;
 
 // Forward functions
 //
@@ -181,14 +181,14 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 
 void VGNT_SaveToRingBuffer(_iq Voltage, _iq Current)
 {
-	if(BufferPointer == (VGNT_RING_BUFFER_SIZE - 1))
+	BufferPointer++;
+	if(BufferPointer >= (VGNT_RING_BUFFER_SIZE - 1))
 	{
 		BufferPointer = 0;
 		BufferIsFull = TRUE;
 	}
 	RingBuffer[BufferPointer].Voltage = _IQint(Voltage);
 	RingBuffer[BufferPointer].Current = _IQint(Current);
-	++BufferPointer;
 }
 // ----------------------------------------
 
@@ -218,6 +218,6 @@ void VGNT_CacheVariables()
 	Vg.ChangeStep = _IQmpy(_FPtoIQ2(TIMER0_PERIOD, 1000), VRate_mV_s);
 
 	BufferIsFull = FALSE;
-	BufferPointer = 0;
+	BufferPointer = -1;
 }
 // ----------------------------------------
