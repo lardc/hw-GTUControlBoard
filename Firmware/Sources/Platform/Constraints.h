@@ -51,7 +51,7 @@ typedef struct __TableItemConstraint
 
 // in mA
 #define ID_LEAK_MIN					1
-#define ID_LEAK_MAX					50
+#define ID_LEAK_MAX					500
 #define ID_LEAK_DEF					10
 
 // in ms
