@@ -122,6 +122,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 				{
 					// Отпирание прибора - выставление тока Ig
 					REGULATOR_Update(SelectIg, Ig.Limit);
+					REGULATOR_Enable(SelectVd, FALSE);
 
 					Delay = LogicSettings.StabCounter;
 					State = LATCHING_STATE_GATE_ON_STAB;
@@ -191,6 +192,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 						else
 						{
 							REGULATOR_Update(SelectId, IdTestCurrent);
+							REGULATOR_Enable(SelectVd, TRUE);
 							Delay = LogicSettings.StabCounter;
 							State = LATCHING_STATE_VD_STAB;
 						}
@@ -229,6 +231,7 @@ Boolean LATCHING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					if (Delay == 0)
 					{
 						REGULATOR_Update(SelectId, IdTestCurrent);
+						REGULATOR_Enable(SelectVd, TRUE);
 						Delay = LogicSettings.StabCounter;
 						State = LATCHING_STATE_VD_STAB;
 					}
