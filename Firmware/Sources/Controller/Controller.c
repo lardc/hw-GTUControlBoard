@@ -128,7 +128,7 @@ void CONTROL_UpdateHigh()
 		REGULATOR_Cycle(MeasureSample = MU_HandleADC(ZwADC_GetValues1()));
 
 		// Логгирование результата
-		MU_LogScope(MeasureSample);
+		MU_LogScope(MeasureSample, CONTROL_State);
 
 		switch (CONTROL_State)
 		{
@@ -226,10 +226,8 @@ void CONTROL_FillWithDefaults()
 	DataTable[REG_RESULT_IGT_UA] = 0;
 	DataTable[REG_RESULT_CAL_FRAC] = 0;
 	//
-#if CAL_COMPATIBILITY == TRUE
 	DataTable[REG_RESULT_CAL_V] = 0;
 	DataTable[REG_RESULT_CAL_V_FRAC] = 0;
-#endif
 	//
 	DataTable[REG_KELVIN_1_2] = 0;
 	DataTable[REG_KELVIN_4_1] = 0;
@@ -253,13 +251,13 @@ void CONTROL_HaltExecution()
 
 void CONTROL_Execute(Int16U ActionID, pInt16U UserError)
 {
-	if (CONTROL_State == DS_None)
+	if(CONTROL_State == DS_None)
 	{
 		CONTROL_FillWithDefaults();
 		CycleActive = TRUE;
 		ZbGPIO_LED1(TRUE);
 
-		switch (ActionID)
+		switch(ActionID)
 		{
 			case ACT_START_KELVIN:
 				CONTROL_SetDeviceState(DS_Kelvin);
@@ -291,24 +289,57 @@ void CONTROL_Execute(Int16U ActionID, pInt16U UserError)
 				RGATE_Prepare();
 				break;
 
-			case ACT_START_CAL_VG:
-				CONTROL_SetDeviceState(DS_Calibrate);
-				CALIBRATE_Prepare(SelectVg);
-				break;
+			default:
+				if(DataTable[REG_OLD_GTU_COMPATIBLE])
+				{
+					switch(ActionID)
+					{
+						case ACT_CMP_START_CAL_VG:
+							CONTROL_SetDeviceState(DS_Calibrate);
+							CALIBRATE_Prepare(SelectVg);
+							break;
 
-			case ACT_START_CAL_IG:
-				CONTROL_SetDeviceState(DS_Calibrate);
-				CALIBRATE_Prepare(SelectIg);
-				break;
+						case ACT_CMP_START_CAL_IG:
+							CONTROL_SetDeviceState(DS_Calibrate);
+							CALIBRATE_Prepare(SelectIg);
+							break;
 
-			case ACT_START_CAL_VD:
-				CONTROL_SetDeviceState(DS_Calibrate);
-				CALIBRATE_Prepare(SelectVd);
-				break;
+						case ACT_CMP_START_CAL_VD:
+							CONTROL_SetDeviceState(DS_Calibrate);
+							CALIBRATE_Prepare(SelectVd);
+							break;
 
-			case ACT_START_CAL_ID:
-				CONTROL_SetDeviceState(DS_Calibrate);
-				CALIBRATE_Prepare(SelectId);
+						case ACT_CMP_START_CAL_ID:
+							CONTROL_SetDeviceState(DS_Calibrate);
+							CALIBRATE_Prepare(SelectId);
+							break;
+					}
+				}
+				else
+				{
+					switch(ActionID)
+					{
+						case ACT_START_CAL_VG:
+							CONTROL_SetDeviceState(DS_Calibrate);
+							CALIBRATE_Prepare(SelectVg);
+							break;
+
+						case ACT_START_CAL_IG:
+							CONTROL_SetDeviceState(DS_Calibrate);
+							CALIBRATE_Prepare(SelectIg);
+							break;
+
+						case ACT_START_CAL_VD:
+							CONTROL_SetDeviceState(DS_Calibrate);
+							CALIBRATE_Prepare(SelectVd);
+							break;
+
+						case ACT_START_CAL_ID:
+							CONTROL_SetDeviceState(DS_Calibrate);
+							CALIBRATE_Prepare(SelectId);
+							break;
+					}
+				}
 				break;
 		}
 	}

@@ -1,4 +1,4 @@
-﻿// -----------------------------------------
+﻿// ----------------------------------------
 // Constraints for tunable parameters
 // ----------------------------------------
 
@@ -133,7 +133,7 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
 											{0, INT16U_MAX, 0},														// 117
 											{PROPORTIONAL_MIN, INT16U_MAX, PROPORTIONAL_DEF},						// 118
 											{0, INT16U_MAX, 0},														// 119
-											{0, 0, 0},																// 120
+											{NO, YES, NO},															// 120
 											{0, 0, 0},																// 121
 											{0, 0, 0},																// 122
 											{0, 0, 0},																// 123
@@ -149,19 +149,15 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 											{NO, YES, NO},															// 129
 											{NO, YES, NO},															// 130
 											{VD_LIM_MIN, VD_LIM_MAX, VD_LIM_DEF},									// 131
-											{ID_LIM_MIN, ID_LIM_MAX, ID_LIM_DEF},									// 132
+											{CURRENT_MIN, CURRENT_MAX, CURRENT_DEF},								// 132
 											{VG_LIM_MIN, VG_LIM_MAX, VG_LIM_DEF},									// 133
-											{IG_LIM_MIN, IG_LIM_MAX, IG_LIM_DEF},									// 134
+											{CURRENT_MIN, CURRENT_MAX, CURRENT_DEF},								// 134
 											{NO, YES, NO},															// 135
 											{0, 0, 0},																// 136
 											{0, 0, 0},																// 137
 											{0, 0, 0},																// 138
 											{0, 0, 0},																// 139
-#if CAL_COMPATIBILITY == TRUE
-											{0, INT16U_MAX, 0},														// 140
-#else
-											{0, 0, 0},																// 140
-#endif
+											{CURRENT_MIN, CURRENT_MAX, CURRENT_DEF},								// 140
 											{0, 0, 0},																// 141
 											{0, 0, 0},																// 142
 											{0, 0, 0},																// 143
@@ -171,9 +167,9 @@ const TableItemConstraint VConstraint[DATA_TABLE_WP_START - DATA_TABLE_WR_START]
 											{0, 0, 0},																// 147
 											{0, 0, 0},																// 148
 											{0, 0, 0},																// 149
-											{0, INT16U_MAX, SCOPE_RATE_DEF},										// 150
-											{0, INT16U_MAX, 0},														// 151
-											{0, 0, 0},																// 152
+											{SCOPE_TYPE_NONE, SCOPE_TYPE_CONTROL, SCOPE_TYPE_NONE},					// 150
+											{SCOPE_TYPE_NONE, SCOPE_TYPE_CONTROL, SCOPE_TYPE_NONE},					// 151
+											{0, INT16U_MAX, SCOPE_RATE_DEF},										// 152
 											{0, 0, 0},																// 153
 											{0, 0, 0},																// 154
 											{0, 0, 0},																// 155

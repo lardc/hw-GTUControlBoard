@@ -1,4 +1,4 @@
-﻿// -----------------------------------------
+﻿// ----------------------------------------
 // Utility functions for measurements
 // ----------------------------------------
 
@@ -9,6 +9,7 @@
 #include "stdinc.h"
 //
 #include "IQmathLib.h"
+#include "Controller.h"
 
 // Functions
 //
@@ -19,6 +20,6 @@ void MU_Cache();
 CombinedData MU_HandleADC(pInt16U Samples);
 
 // Запись значений в массивы
-void MU_LogScope(CombinedData MeasureSample);
+void MU_LogScope(CombinedData MeasureSample, DeviceState State);
 
 #endif // __MEASURE_UTIL_H

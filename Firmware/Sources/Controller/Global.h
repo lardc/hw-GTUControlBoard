@@ -21,17 +21,16 @@
 #define DT_EPROM_ADDRESS				0
 #define EP_COUNT						12
 #define VALUES_x_SIZE					1000
-//
-#define CAL_COMPATIBILITY				FALSE			// Режим совместемости калибровки
 //--------------------------------------------------------
 
 // Regulator parameters
 //--------------------------------------------------------
-#define REGLTR_VG_SAT					_IQ(20000.0f)	// Насыщение выхода регулятора Vg (в мВ)
-#define REGLTR_IG_SAT					_IQ(1200.0f)	// Насыщение выхода регулятора Ig (в мА)
-#define REGLTR_VD_SAT					_IQ(20000.0f)	// Насыщение выхода регулятора Vd (в мВ)
-#define REGLTR_ID_SAT					_IQ(1200.0f)	// Насыщение выхода регулятора Id (в мА)
-#define REGLTR_ERROR_I_SAT_H			_IQ(20000.0f)	// Значение насыщения для интегральной составляющей регулятора
+#define REGLTR_I_MAX					1100
+// Защитные уровни насыщения переменных регулятора
+// должны быть больше максимальных допустимых выходных значений.
+#define REGLTR_Ix_SAT			_IQ(2 * REGLTR_I_MAX)	// Выхода регулятора тока (в мА)
+#define REGLTR_Vx_SAT					_IQ(20000)		// Выход регулятора напряжения (в мВ)
+#define REGLTR_ERROR_I_SAT_H			_IQ(20000)		// Интегральная составляющая
 //--------------------------------------------------------
 
 // Specific parameters
