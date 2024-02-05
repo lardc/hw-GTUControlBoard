@@ -244,7 +244,7 @@ void CALIBRATE_CacheVariables(RegulatorSelector Select)
 	}
 
 	if(DataTable[REG_OLD_GTU_COMPATIBLE] && (Select == SelectId || Select == SelectIg))
-		xLimit = DataTable[REG_CAL_CURRENT];
+		xLimit = _IQI(DataTable[REG_CAL_CURRENT]);
 
 	xSetpoint = 0;
 	Avg = AvgV = 0;
