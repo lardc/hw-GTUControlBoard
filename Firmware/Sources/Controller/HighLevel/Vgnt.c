@@ -181,24 +181,25 @@ Boolean VGNT_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 
 void VGNT_SaveToRingBuffer(_iq Voltage, _iq Current)
 {
+	RingBuffer[BufferPointer].Voltage = _IQint(Voltage);
+	RingBuffer[BufferPointer].Current = _IQint(Current);
+
 	BufferPointer++;
-	if(BufferPointer >= (VGNT_RING_BUFFER_SIZE - 1))
+	if(BufferPointer >= VGNT_RING_BUFFER_SIZE)
 	{
 		BufferPointer = 0;
 		BufferIsFull = TRUE;
 	}
-	RingBuffer[BufferPointer].Voltage = _IQint(Voltage);
-	RingBuffer[BufferPointer].Current = _IQint(Current);
 }
 // ----------------------------------------
 
 SamplePoint VGNT_RingBufferRead(Int16U Offset)
 {
-	Int16U index;
-	if(BufferPointer >= Offset)
-		index = BufferPointer - Offset;
+	Int16S index, LastElementPointer = BufferPointer - Offset - 1;
+	if(LastElementPointer >= 0)
+		index = LastElementPointer;
 	else
-		index = BufferIsFull ? (VGNT_RING_BUFFER_SIZE + BufferPointer - Offset) : 0;
+		index = BufferIsFull ? (LastElementPointer + VGNT_RING_BUFFER_SIZE) : 0;
 
 	return RingBuffer[index];
 }
@@ -218,6 +219,8 @@ void VGNT_CacheVariables()
 	Vg.ChangeStep = _IQmpy(_FPtoIQ2(TIMER0_PERIOD, 1000), VRate_mV_s);
 
 	BufferIsFull = FALSE;
-	BufferPointer = -1;
+	BufferPointer = 0;
+	RingBuffer[0].Voltage = 0;
+	RingBuffer[0].Current = 0;
 }
 // ----------------------------------------
