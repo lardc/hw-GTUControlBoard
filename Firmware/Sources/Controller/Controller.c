@@ -18,7 +18,7 @@
 #include "Holding.h"
 #include "Latching.h"
 #include "RGate.h"
-#include "VGNT.h"
+#include "Vgnt.h"
 #include "Calibrate.h"
 #include "IQmathLib.h"
 #include "Diagnostic.h"
