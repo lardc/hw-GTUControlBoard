@@ -424,22 +424,22 @@
 		<link>
 			<name>Sources/Platform/SaveToFlash.c</name>
 			<type>1</type>
-			<location>/home/pumukun/Avocado_Test/hw-TMS-libs/Firmware/SaveToFlash.c</location>
+			<locationURI>PARENT-2-PROJECT_LOC/hw-TMS-libs/Firmware/SaveToFlash.c</locationURI>
 		</link>
 		<link>
 			<name>Sources/Platform/SaveToFlash.h</name>
 			<type>1</type>
-			<location>/home/pumukun/Avocado_Test/hw-TMS-libs/Firmware/SaveToFlash.h</location>
+			<locationURI>PARENT-2-PROJECT_LOC/hw-TMS-libs/Firmware/SaveToFlash.h</locationURI>
 		</link>
 		<link>
 			<name>Sources/Platform/StorageDescription.c</name>
 			<type>1</type>
-			<location>/home/pumukun/Avocado_Test/hw-TMS-libs/Firmware/StorageDescription.c</location>
+			<locationURI>PARENT-2-PROJECT_LOC/hw-TMS-libs/Firmware/StorageDescription.c</locationURI>
 		</link>
 		<link>
 			<name>Sources/Platform/StorageDescription.h</name>
 			<type>1</type>
-			<location>/home/pumukun/Avocado_Test/hw-TMS-libs/Firmware/StorageDescription.h</location>
+			<locationURI>PARENT-2-PROJECT_LOC/hw-TMS-libs/Firmware/StorageDescription.h</locationURI>
 		</link>
 		<link>
 			<name>Sources/RTS/boot28.asm</name>
