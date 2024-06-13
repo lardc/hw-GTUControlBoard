@@ -55,6 +55,8 @@
 #define ACT_READ_SYMBOL				330	// Выполнить чтение символа из памяти
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
 
+#define ACT_WRITE_EEPROM			332	// Запись в EEPROM
+
 // REGISTERS
 //
 // Common settings
@@ -234,6 +236,8 @@
 #define REG_FWINFO_STR_BEGIN		261	// Begining of the information string record
 //
 #define REG_MEM_SYMBOL				299	// Считанный по адресу памяти символ
+
+#define REG_EEPROM_WRITE			300	// Отладочный регистр для записи
 
 // SCOPE TYPE
 // Выбор сохраняемой осциллограммы в режиме совместимости

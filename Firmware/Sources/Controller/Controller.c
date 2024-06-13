@@ -25,6 +25,7 @@
 #include "Regulator.h"
 #include "MeasureUtils.h"
 #include "Common.h"
+#include "SaveToFlash.h"
 
 
 // Variables
@@ -384,6 +385,12 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 
 		case ACT_CLR_WARNING:
 			DataTable[REG_WARNING] = WARNING_NONE;
+			break;
+
+		case ACT_WRITE_EEPROM:
+			pInt16U varPointer = DataTable[REG_EEPROM_WRITE];
+			STF_AssignPointer(0, varPointer);
+			STF_SaveUserData();
 			break;
 
 		default:
