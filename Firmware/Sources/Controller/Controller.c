@@ -387,10 +387,8 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 			DataTable[REG_WARNING] = WARNING_NONE;
 			break;
 
-		case ACT_WRITE_EEPROM:
-			pInt16U varPointer = DataTable[REG_EEPROM_WRITE];
-			STF_AssignPointer(0, varPointer);
-			STF_SaveUserData();
+		case ACT_WRITE_FLASH:
+			STF_SaveToFlash(1, DT_Int16S, 1982);
 			break;
 
 		default:
