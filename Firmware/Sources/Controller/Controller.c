@@ -387,8 +387,16 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 			DataTable[REG_WARNING] = WARNING_NONE;
 			break;
 
-		case ACT_WRITE_FLASH:
-			STF_SaveToFlash(1, DT_Int16S, 1982);
+		case ACT_FLASH_WRITE:
+			STF_SaveToFlash(
+				DataTable[REG_FLASH_WRITE_LEN], 
+				DT_Int16S, 
+				DataTable[REG_FLASH_WRITE_DATA]
+			);
+			break;
+
+		case ACT_FLASH_READ:
+			DataTable[REG_FLASH_READ] = STF_Read();
 			break;
 
 		default:

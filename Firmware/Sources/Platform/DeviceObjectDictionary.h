@@ -55,7 +55,8 @@
 #define ACT_READ_SYMBOL				330	// Выполнить чтение символа из памяти
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
 
-#define ACT_WRITE_FLASH				332	// Запись в EEPROM
+#define ACT_FLASH_WRITE				332	// Flash write
+#define ACT_FLASH_READ				333	// Flash read
 
 // REGISTERS
 //
@@ -237,7 +238,9 @@
 //
 #define REG_MEM_SYMBOL				299	// Считанный по адресу памяти символ
 
-#define REG_WRITE_FLASH				300	// Отладочный регистр для записи
+#define REG_FLASH_WRITE_LEN			184	// Отладочный регистр для записи
+#define REG_FLASH_WRITE_DATA		185
+#define REG_FLASH_READ				186
 
 // SCOPE TYPE
 // Выбор сохраняемой осциллограммы в режиме совместимости
