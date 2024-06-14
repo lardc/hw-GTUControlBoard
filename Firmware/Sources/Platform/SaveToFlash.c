@@ -13,6 +13,9 @@
 #define FLASH_WO_SECTOR				SECTORF
 #define FLASH_WO_START_ADDR			0x3E0000
 
+#define FLASH_SECTOR				SECTORH
+#define FLASH_START_ADDR			0x3D8000 
+
 // Forward functions
 Int16U STF_StartAddressShift(Int16U Index, Boolean Readable);
 Int16U STF_GetTypeLength(DataType CurrentType);
@@ -117,8 +120,32 @@ Int16U STF_StartAddressShift(Int16U Index, Boolean Readable)
 }
 // ----------------------------------------
 
-void STF_DeleteFromFlash(Int16U index)
+void STF_SaveToFlash(Int16U Length, DataType Type, Int16S Data)
 {
-	return;
+	Int16U DataLength = (Type == (DT_Int32U || DT_Int32S || DT_Float) ? 2 : 1) * Length;
+
+	DataSegment NewDataSegment = { Length, Type, Data };
+
+	pInt16U StoragePointer = (pInt16U)FLASH_START_ADDR;
+
+	while (*StoragePointer != 0xFF)
+		StoragePointer++;
+
+	Flash_Program(StoragePointer, (pInt16U)&NewDataSegment, 2 + DataLength, (FLASH_ST *)&FlashStatus);
+}
+// ----------------------------------------
+
+Int16S STF_Read()
+{
+	pInt16U StoragePointer = (pInt16U)FLASH_START_ADDR;
+	StoragePointer++;
+	StoragePointer++;
+	return *StoragePointer;
+}
+// ----------------------------------------
+
+void STF_EraseFlashDataSector()
+{
+	Flash_Erase(FLASH_SECTOR, (FLASH_ST *)&FlashStatus);
 }
 // ----------------------------------------

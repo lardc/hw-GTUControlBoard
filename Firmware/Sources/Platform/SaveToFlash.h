@@ -35,11 +35,21 @@ typedef struct __CycleRecordDescription
 	// Cycle record data is always 32bit unsigned value
 } CycleRecordDescription;
 
+typedef struct __DataSegment
+{
+	Int16U Length;
+	DataType Type;
+	Int16S Data;
+} DataSegment;
+
 // Functions
 void STF_AssignPointer(Int16U Index, Int32U Pointer);
 void STF_SaveUserData();
 void STF_SaveFaultData();
 void STF_LoadFromFlash();
-void STF_EraseFromFlash(Int16U index);
+
+void STF_SaveToFlash(Int16U Length, DataType Type, Int16S Data);
+Int16S STF_Read();
+void STF_EraseFlashDataSector();
 
 #endif // __SAVE_TO_FLASH_H
