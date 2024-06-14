@@ -56,7 +56,6 @@
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
 
 #define ACT_FLASH_WRITE				332	// Flash write
-#define ACT_FLASH_READ				333	// Flash read
 
 // REGISTERS
 //
@@ -240,7 +239,6 @@
 
 #define REG_FLASH_WRITE_LEN			184	// Отладочный регистр для записи
 #define REG_FLASH_WRITE_DATA		185
-#define REG_FLASH_READ				186
 
 // SCOPE TYPE
 // Выбор сохраняемой осциллограммы в режиме совместимости

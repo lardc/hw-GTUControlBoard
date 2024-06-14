@@ -395,10 +395,6 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 			);
 			break;
 
-		case ACT_FLASH_READ:
-			DataTable[REG_FLASH_READ] = STF_Read();
-			break;
-
 		default:
 			return DIAG_Process(ActionID);
 	}
