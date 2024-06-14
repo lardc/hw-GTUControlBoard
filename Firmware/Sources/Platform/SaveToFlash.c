@@ -131,7 +131,11 @@ void STF_SaveToFlash(Int16U Length, DataType Type, Int16S Data)
 	while (*StoragePointer != 0xFF)
 		StoragePointer++;
 
+	ZwSystem_DisableDog();
+	DINT;
 	Flash_Program(StoragePointer, (pInt16U)&NewDataSegment, 2 + DataLength, (FLASH_ST *)&FlashStatus);
+	EINT;
+	ZwSystem_EnableDog(SYS_WD_PRESCALER);
 }
 // ----------------------------------------
 
@@ -146,6 +150,10 @@ Int16S STF_Read()
 
 void STF_EraseFlashDataSector()
 {
+	ZwSystem_DisableDog();
+	DINT;
 	Flash_Erase(FLASH_SECTOR, (FLASH_ST *)&FlashStatus);
+	EINT;
+	ZwSystem_EnableDog(SYS_WD_PRESCALER);
 }
 // ----------------------------------------
