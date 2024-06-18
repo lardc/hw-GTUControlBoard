@@ -122,11 +122,20 @@ Int16U STF_StartAddressShift(Int16U Index, Boolean Readable)
 }
 // ----------------------------------------
 
+void STF_ShiftStorageEnd() {
+	while (*(pInt16U)StoragePointer != 0xFFFF) {
+		++StoragePointer;
+	}
+}
+// ----------------------------------------
+
 void STF_SaveToFlash(Int16U Length, DataType Type, void* Data)
 {
 	Int16U DataLength = (Type == (DT_Int32U || DT_Int32S || DT_Float) ? 2 : 1) * Length;
 
 	DataSegment NewDataSegment = { Length, Type, Data };
+
+	STF_ShiftStorageEnd();
 
 	ZwSystem_DisableDog();
 	DINT;
@@ -153,6 +162,24 @@ void STF_SaveToFlash(Int16U Length, DataType Type, void* Data)
 		(FLASH_ST *)&FlashStatus
 	);
 	StoragePointer += DataLength * Length;
+	EINT;
+	ZwSystem_EnableDog(SYS_WD_PRESCALER);
+}
+// ----------------------------------------
+
+void STF_SaveSymbol(Int32S Value)
+{
+	ZwSystem_DisableDog();
+	DINT;
+
+	Flash_Program(
+		(pInt16U)StoragePointer,
+		(pInt16U)&Value,
+		1,
+		(FLASH_ST *)&FlashStatus
+	);
+	++StoragePointer;
+
 	EINT;
 	ZwSystem_EnableDog(SYS_WD_PRESCALER);
 }

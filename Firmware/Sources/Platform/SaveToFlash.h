@@ -51,6 +51,7 @@ void STF_SaveFaultData();
 void STF_LoadFromFlash();
 
 void STF_SaveToFlash(Int16U Length, DataType Type, void* Data);
+void STF_SaveSymbol(Int32S Value);
 Int16S STF_Read();
 void STF_EraseFlashDataSector();
 

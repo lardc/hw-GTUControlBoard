@@ -395,6 +395,10 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 			);
 			break;
 
+		case ACT_FLASH_WRITE_SYMBOL:
+			STF_SaveSymbol(DataTable[REG_FLASH_SYMBOL]);
+			break;
+
 		default:
 			return DIAG_Process(ActionID);
 	}
