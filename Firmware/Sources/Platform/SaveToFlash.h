@@ -8,6 +8,8 @@
 #define MAX_DESCRIPTION_LEN			64
 #define MAX_CYCLE_DESCRIPTION_LEN	16
 
+extern Int32U StoragePointer;
+
 // Types
 typedef enum __DataType
 {
@@ -39,7 +41,7 @@ typedef struct __DataSegment
 {
 	Int16U Length;
 	DataType Type;
-	Int16S Data;
+	void* Data;
 } DataSegment;
 
 // Functions
@@ -48,7 +50,7 @@ void STF_SaveUserData();
 void STF_SaveFaultData();
 void STF_LoadFromFlash();
 
-void STF_SaveToFlash(Int16U Length, DataType Type, Int16S Data);
+void STF_SaveToFlash(Int16U Length, DataType Type, void* Data);
 Int16S STF_Read();
 void STF_EraseFlashDataSector();
 

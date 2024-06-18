@@ -14,7 +14,9 @@
 #define FLASH_WO_START_ADDR			0x3E0000
 
 #define FLASH_SECTOR				SECTORH
-#define FLASH_START_ADDR			0x3D8000 
+#define FLASH_START_ADDR			0x3D8000
+
+Int32U StoragePointer = FLASH_START_ADDR;
 
 // Forward functions
 Int16U STF_StartAddressShift(Int16U Index, Boolean Readable);
@@ -120,39 +122,37 @@ Int16U STF_StartAddressShift(Int16U Index, Boolean Readable)
 }
 // ----------------------------------------
 
-void STF_SaveToFlash(Int16U Length, DataType Type, Int16S Data)
+void STF_SaveToFlash(Int16U Length, DataType Type, void* Data)
 {
 	Int16U DataLength = (Type == (DT_Int32U || DT_Int32S || DT_Float) ? 2 : 1) * Length;
 
 	DataSegment NewDataSegment = { Length, Type, Data };
-
-	Int32U StoragePointer = FLASH_START_ADDR;
-
-	while (*(pInt16U)StoragePointer != 0xFF)
-		StoragePointer++;
 
 	ZwSystem_DisableDog();
 	DINT;
 	Flash_Program(
 		(pInt16U)StoragePointer,
 		(pInt16U)&NewDataSegment.Length,
-		1,
+		Length,
 		(FLASH_ST *)&FlashStatus
 	);
+	StoragePointer += Length;
 
 	Flash_Program(
-		(pInt16U)(++StoragePointer),
+		(pInt16U)(StoragePointer),
 		(pInt16U)&NewDataSegment.Type,
 		1,
 		(FLASH_ST *)&FlashStatus
 	);
+	++StoragePointer;
 
 	Flash_Program(
-		(pInt16U)(++StoragePointer),
-		(pInt16U)&NewDataSegment.Data,
-		1,
+		(pInt16U)(StoragePointer),
+		(pInt16U)NewDataSegment.Data,
+		DataLength * Length,
 		(FLASH_ST *)&FlashStatus
 	);
+	StoragePointer += DataLength * Length;
 	EINT;
 	ZwSystem_EnableDog(SYS_WD_PRESCALER);
 }
