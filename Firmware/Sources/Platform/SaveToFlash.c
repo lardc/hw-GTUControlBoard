@@ -157,7 +157,7 @@ void STF_SaveToFlash(Int16U Length, DataType Type, void* Data)
 
 	Flash_Program(
 		(pInt16U)(StoragePointer),
-		(pInt16U)NewDataSegment.Data,
+		(pInt16U)&NewDataSegment.Data,
 		DataLength * Length,
 		(FLASH_ST *)&FlashStatus
 	);

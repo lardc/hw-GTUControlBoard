@@ -399,6 +399,10 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 			STF_SaveSymbol(DataTable[REG_FLASH_SYMBOL]);
 			break;
 
+		case ACT_FLASH_ERASE:
+			STF_EraseFlashDataSector();
+			break;
+
 		default:
 			return DIAG_Process(ActionID);
 	}

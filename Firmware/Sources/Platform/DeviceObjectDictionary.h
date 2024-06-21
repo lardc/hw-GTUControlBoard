@@ -57,6 +57,7 @@
 
 #define ACT_FLASH_WRITE				332	// Flash write
 #define ACT_FLASH_WRITE_SYMBOL		333	// Flash symbol write
+#define ACT_FLASH_ERASE				334	// Flash erase data sector
 
 // REGISTERS
 //
