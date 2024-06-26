@@ -56,7 +56,6 @@
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
 
 #define ACT_FLASH_WRITE				332	// Flash write
-#define ACT_FLASH_WRITE_SYMBOL		333	// Flash symbol write
 #define ACT_FLASH_ERASE				334	// Flash erase data sector
 
 // REGISTERS
@@ -241,8 +240,7 @@
 
 #define REG_FLASH_WRITE_LEN			184	// Длина записываемых данных во флеш
 #define REG_FLASH_WRITE_DATA		185	// Отладочный регистр для записи
-#define REG_FLASH_SYMBOL			186	// Регистр для хранения значения для флеш записи
-#define REG_FLASH_WRITE_TYPE		187	// Тип данных перменной записывемой во флеш
+#define REG_FLASH_WRITE_TYPE		186	// Тип данных перменной записывемой во флеш
 
 // SCOPE TYPE
 // Выбор сохраняемой осциллограммы в режиме совместимости

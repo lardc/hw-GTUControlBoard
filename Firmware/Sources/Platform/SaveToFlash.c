@@ -123,24 +123,20 @@ Int16U STF_StartAddressShift(Int16U Index, Boolean Readable)
 // ----------------------------------------
 
 void STF_ShiftStorageEnd() {
-	StoragePointer = FLASH_SECTOR;
-	if (*(pInt16U)StoragePointer > DT_Float)
-	{
-		return;
-	}
+	StoragePointer = FLASH_START_ADDR;
 
 	while (*(pInt16U)StoragePointer != 0xFFFF)
 	{
-		DataType TypeLength = STF_GetTypeLength(*(pInt16U)StoragePointer);
+		Int16U CurrentType = *(pInt16U)StoragePointer;
+
+		if (CurrentType > DT_Float)
+			break;
+
+		Int16U TypeLength = STF_GetTypeLength(CurrentType);
 		++StoragePointer;
 
-		Int16U Length = *(pInt16U)StoragePointer * TypeLength;
-		++StoragePointer;
-
-		for (Int16U i = 0; i <= Length; ++i)
-		{
-			++StoragePointer;
-		}
+		Int16U Length = *(pInt16U)StoragePointer * (Int16U)TypeLength;
+		StoragePointer += Length + 1;
 	}
 }
 // ----------------------------------------
@@ -149,8 +145,6 @@ void STF_SaveToFlash(DataType Type, Int16U Length, void* Data)
 {
 	Int16U DataLength = STF_GetTypeLength(Type) * Length;
 
-	DataSegment NewDataSegment = { Length, Type, Data };
-
 	STF_ShiftStorageEnd();
 
 	ZwSystem_DisableDog();
@@ -158,7 +152,7 @@ void STF_SaveToFlash(DataType Type, Int16U Length, void* Data)
 
 	Flash_Program(
 		(pInt16U)StoragePointer,
-		(pInt16U)&NewDataSegment.Type,
+		(pInt16U)&Type,
 		1,
 		(FLASH_ST *)&FlashStatus
 	);
@@ -166,7 +160,7 @@ void STF_SaveToFlash(DataType Type, Int16U Length, void* Data)
 
 	Flash_Program(
 		(pInt16U)StoragePointer,
-		(pInt16U)&NewDataSegment.Length,
+		(pInt16U)&Length,
 		1,
 		(FLASH_ST *)&FlashStatus
 	);
@@ -174,29 +168,11 @@ void STF_SaveToFlash(DataType Type, Int16U Length, void* Data)
 
 	Flash_Program(
 		(pInt16U)StoragePointer,
-		(pInt16U)&NewDataSegment.Data,
+		(pInt16U)&Data,
 		DataLength * Length,
 		(FLASH_ST *)&FlashStatus
 	);
 	StoragePointer += DataLength * Length;
-	EINT;
-	ZwSystem_EnableDog(SYS_WD_PRESCALER);
-}
-// ----------------------------------------
-
-void STF_SaveSymbol(Int16U Length, void* Value)
-{
-	ZwSystem_DisableDog();
-	DINT;
-
-	Flash_Program(
-		(pInt16U)StoragePointer,
-		(pInt16U)&Value,
-		Length,
-		(FLASH_ST *)&FlashStatus
-	);
-	StoragePointer += Length;
-
 	EINT;
 	ZwSystem_EnableDog(SYS_WD_PRESCALER);
 }
@@ -207,6 +183,7 @@ void STF_EraseDataSector()
 	ZwSystem_DisableDog();
 	DINT;
 	Flash_Erase(FLASH_SECTOR, (FLASH_ST *)&FlashStatus);
+	StoragePointer = FLASH_START_ADDR;
 	EINT;
 	ZwSystem_EnableDog(SYS_WD_PRESCALER);
 }
