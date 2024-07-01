@@ -389,14 +389,14 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 
 		case ACT_FLASH_WRITE:
 			STF_SaveToFlash(
-				DataTable[REG_FLASH_WRITE_LEN], 
-				DT_Int16S, 
-				DataTable[REG_FLASH_WRITE_DATA]
+				DataTable[REG_FLASH_WRITE_TYPE],
+				DataTable[REG_FLASH_WRITE_LEN],
+				(pInt16U)DataTable[REG_FLASH_WRITE_DATA]
 			);
 			break;
 
-		case ACT_FLASH_READ:
-			DataTable[REG_FLASH_READ] = STF_Read();
+		case ACT_FLASH_ERASE:
+			STF_EraseDataSector();
 			break;
 
 		default:

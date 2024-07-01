@@ -8,6 +8,8 @@
 #define MAX_DESCRIPTION_LEN			64
 #define MAX_CYCLE_DESCRIPTION_LEN	16
 
+extern Int32U StoragePointer;
+
 // Types
 typedef enum __DataType
 {
@@ -35,11 +37,20 @@ typedef struct __CycleRecordDescription
 	// Cycle record data is always 32bit unsigned value
 } CycleRecordDescription;
 
+typedef struct __DataSegment
+{
+	DataType Type;
+	Int16U Length;
+	void* Data;
+} DataSegment;
+
 // Functions
 void STF_AssignPointer(Int16U Index, Int32U Pointer);
 void STF_SaveUserData();
 void STF_SaveFaultData();
 void STF_LoadFromFlash();
-void STF_EraseFromFlash(Int16U index);
+
+void STF_SaveToFlash(DataType Type, Int16U Length, void* Data);
+void STF_EraseDataSector();
 
 #endif // __SAVE_TO_FLASH_H

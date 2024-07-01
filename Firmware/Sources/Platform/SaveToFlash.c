@@ -13,6 +13,11 @@
 #define FLASH_WO_SECTOR				SECTORF
 #define FLASH_WO_START_ADDR			0x3E0000
 
+#define FLASH_SECTOR				SECTORH
+#define FLASH_START_ADDR			0x3D8000
+
+Int32U StoragePointer = FLASH_START_ADDR;
+
 // Forward functions
 Int16U STF_StartAddressShift(Int16U Index, Boolean Readable);
 Int16U STF_GetTypeLength(DataType CurrentType);
@@ -117,8 +122,69 @@ Int16U STF_StartAddressShift(Int16U Index, Boolean Readable)
 }
 // ----------------------------------------
 
-void STF_DeleteFromFlash(Int16U index)
+void STF_ShiftStorageEnd() {
+	StoragePointer = FLASH_START_ADDR;
+
+	while (*(pInt16U)StoragePointer != 0xFFFF)
+	{
+		Int16U CurrentType = *(pInt16U)StoragePointer;
+
+		if (CurrentType > DT_Float)
+			break;
+
+		Int16U TypeLength = STF_GetTypeLength(CurrentType);
+		++StoragePointer;
+
+		Int16U Length = *(pInt16U)StoragePointer * (Int16U)TypeLength;
+		StoragePointer += Length + 1;
+	}
+}
+// ----------------------------------------
+
+void STF_SaveToFlash(DataType Type, Int16U Length, void* Data)
 {
-	return;
+	Int16U DataLength = STF_GetTypeLength(Type) * Length;
+
+	STF_ShiftStorageEnd();
+
+	ZwSystem_DisableDog();
+	DINT;
+
+	Flash_Program(
+		(pInt16U)StoragePointer,
+		(pInt16U)&Type,
+		1,
+		(FLASH_ST *)&FlashStatus
+	);
+	++StoragePointer;
+
+	Flash_Program(
+		(pInt16U)StoragePointer,
+		(pInt16U)&Length,
+		1,
+		(FLASH_ST *)&FlashStatus
+	);
+	++StoragePointer;
+
+	Flash_Program(
+		(pInt16U)StoragePointer,
+		(pInt16U)&Data,
+		DataLength * Length,
+		(FLASH_ST *)&FlashStatus
+	);
+	StoragePointer += DataLength * Length;
+	EINT;
+	ZwSystem_EnableDog(SYS_WD_PRESCALER);
+}
+// ----------------------------------------
+
+void STF_EraseDataSector()
+{
+	ZwSystem_DisableDog();
+	DINT;
+	Flash_Erase(FLASH_SECTOR, (FLASH_ST *)&FlashStatus);
+	StoragePointer = FLASH_START_ADDR;
+	EINT;
+	ZwSystem_EnableDog(SYS_WD_PRESCALER);
 }
 // ----------------------------------------
