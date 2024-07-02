@@ -150,29 +150,13 @@ void STF_SaveToFlash(DataType Type, Int16U Length, void* Data)
 	ZwSystem_DisableDog();
 	DINT;
 
-	Flash_Program(
-		(pInt16U)StoragePointer,
-		(pInt16U)&Type,
-		1,
-		(FLASH_ST *)&FlashStatus
-	);
-	++StoragePointer;
+	Flash_Program((pInt16U)StoragePointer++, (pInt16U)&Type, 1, (FLASH_ST *)&FlashStatus);
 
-	Flash_Program(
-		(pInt16U)StoragePointer,
-		(pInt16U)&Length,
-		1,
-		(FLASH_ST *)&FlashStatus
-	);
-	++StoragePointer;
+	Flash_Program((pInt16U)StoragePointer++, (pInt16U)&Length, 1, (FLASH_ST *)&FlashStatus);
 
-	Flash_Program(
-		(pInt16U)StoragePointer,
-		(pInt16U)&Data,
-		DataLength * Length,
-		(FLASH_ST *)&FlashStatus
-	);
+	Flash_Program((pInt16U)StoragePointer, (pInt16U)Data, DataLength * Length, (FLASH_ST *)&FlashStatus);
 	StoragePointer += DataLength * Length;
+
 	EINT;
 	ZwSystem_EnableDog(SYS_WD_PRESCALER);
 }

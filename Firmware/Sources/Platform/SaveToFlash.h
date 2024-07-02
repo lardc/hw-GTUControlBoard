@@ -37,13 +37,6 @@ typedef struct __CycleRecordDescription
 	// Cycle record data is always 32bit unsigned value
 } CycleRecordDescription;
 
-typedef struct __DataSegment
-{
-	DataType Type;
-	Int16U Length;
-	void* Data;
-} DataSegment;
-
 // Functions
 void STF_AssignPointer(Int16U Index, Int32U Pointer);
 void STF_SaveUserData();
