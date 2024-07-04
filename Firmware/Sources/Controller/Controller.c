@@ -26,6 +26,7 @@
 #include "MeasureUtils.h"
 #include "Common.h"
 #include "SaveToFlash.h"
+#include "StorageDescription.h"
 
 
 // Variables
@@ -52,6 +53,7 @@ void CONTROL_SetDeviceState(DeviceState NewState);
 void CONTROL_FillWithDefaults();
 void CONTROL_HaltExecution();
 void CONTROL_Execute(Int16U ActionID, pInt16U UserError);
+void CONTROL_InitStoragePointers();
 Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError);
 
 
@@ -87,6 +89,8 @@ void CONTROL_Init(Boolean BadClockDetected)
 	// Fill state variables with default values
 	CONTROL_FillWithDefaults();
 	CONTROL_SetDeviceState(DS_None);
+
+	CONTROL_InitStoragePointers();
 
 	// Device profile initialization
 	DEVPROFILE_Init(&CONTROL_DispatchAction, &CycleActive);
@@ -351,6 +355,27 @@ void CONTROL_Execute(Int16U ActionID, pInt16U UserError)
 		*UserError = ERR_OPERATION_BLOCKED;
 }
 // ----------------------------------------
+
+void CONTROL_InitStoragePointers()
+{
+	Int16U i;
+	for (i = 0; i < 5; ++i)
+	{
+		STF_AssignPointer(i, (Int32U)&DataTable[i + 192]);
+	}
+	STF_AssignPointer(5, (Int32U)CONTROL_Values_Vg);
+	STF_AssignPointer(6, (Int32U)CONTROL_Values_Ig);
+	STF_AssignPointer(7, (Int32U)CONTROL_Values_Vd);
+	STF_AssignPointer(8, (Int32U)CONTROL_Values_Id);
+	STF_AssignPointer(9, (Int32U)CONTROL_Values_Ctrl_Vg);
+	STF_AssignPointer(10, (Int32U)CONTROL_Values_Ctrl_Ig);
+	STF_AssignPointer(11, (Int32U)CONTROL_Values_Ctrl_Vd);
+	STF_AssignPointer(12, (Int32U)CONTROL_Values_Ctrl_Id);
+	STF_AssignPointer(13, (Int32U)CONTROL_Values_Trgt_Vg);
+	STF_AssignPointer(14, (Int32U)CONTROL_Values_Trgt_Ig);
+	STF_AssignPointer(15, (Int32U)CONTROL_Values_Trgt_Vd);
+	STF_AssignPointer(16, (Int32U)CONTROL_Values_Trgt_Id);
+}
 
 Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 {

@@ -8,8 +8,6 @@
 #define MAX_DESCRIPTION_LEN			64
 #define MAX_CYCLE_DESCRIPTION_LEN	16
 
-extern Int32U StoragePointer;
-
 // Types
 typedef enum __DataType
 {
@@ -28,7 +26,6 @@ typedef struct __RecordDescription
 	char Description[MAX_DESCRIPTION_LEN];
 	DataType Type;
 	Int16U Length;
-	Boolean UseRead;
 } RecordDescription;
 
 typedef struct __CycleRecordDescription
