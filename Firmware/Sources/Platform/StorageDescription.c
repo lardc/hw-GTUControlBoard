@@ -3,7 +3,7 @@
 #include "Global.h"
 
 // Variables
-const RecordDescription StorageDescription[] =
+RecordDescription StorageDescription[] =
 {
 		{"REG 192 Device state",	DT_Int16U, 1},
 		{"REG 193 Fault reason",	DT_Int16U, 1},
@@ -22,7 +22,6 @@ const RecordDescription StorageDescription[] =
 		{"EP 10 Target gate current Ig (mA)",	DT_Int16U, VALUES_x_SIZE},
 		{"EP 11 Target direct voltage Vd (mV)",DT_Int16U, VALUES_x_SIZE},
 		{"EP 12 Target direct current Id (mA)",DT_Int16U, VALUES_x_SIZE},
-
 };
 Int32U TablePointers[sizeof(StorageDescription) / sizeof(StorageDescription[0])] = {0};
 const Int16U StorageSize = sizeof(StorageDescription) / sizeof(StorageDescription[0]);

@@ -424,7 +424,7 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 			break;
 
 		case ACT_FLASH_WRITE:
-			STF_SaveToFlash(DT_Int16U, FlashArrayCounter, FlashArray);
+			STF_SaveFaultData();
 			break;
 
 		case ACT_FLASH_ERASE:

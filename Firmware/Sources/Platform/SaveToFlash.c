@@ -65,26 +65,26 @@ void STF_Save()
 	ZwSystem_DisableDog();
 	DINT;
 
-	Int32U StartAddr = STF_ShiftStorageEnd();
+	Int32U StartAddr = FLASH_START_ADDR;
 
 	Int16U i;
 	for(i = 0; i < StorageSize; i++)
 	{
-		static const Int16U DescriptionHeader[2] = {DT_Char, MAX_DESCRIPTION_LEN};
+		static Int16U DescriptionHeader[2] = {DT_Char, MAX_DESCRIPTION_LEN};
 
 		// Запись заголовка описания
-		Status = Flash_Program((pInt16U)(StartAddr), (pInt16U)DescriptionHeader, 2,
+		Status = Flash_Program((pInt16U)StartAddr, (pInt16U)DescriptionHeader, 2,
 				(FLASH_ST *)&FlashStatus);
 		StartAddr += 2;
 
 		// Запись описания
-		Status = Flash_Program((pInt16U)(StartAddr), (pInt16U)StorageDescription[i].Description,
+		Status = Flash_Program((pInt16U)StartAddr, (pInt16U)StorageDescription[i].Description,
 				MAX_DESCRIPTION_LEN, (FLASH_ST *)&FlashStatus);
-		StartAddr += MAX_CYCLE_DESCRIPTION_LEN;
+		StartAddr += MAX_DESCRIPTION_LEN;
 
 		// Запись заголовка данных
 		Int16U DataHeader[2] = {StorageDescription[i].Type, StorageDescription[i].Length};
-		Status = Flash_Program((pInt16U)(StartAddr),
+		Status = Flash_Program((pInt16U)StartAddr,
 				(pInt16U)DataHeader, 2, (FLASH_ST *)&FlashStatus);
 		StartAddr += 2;
 
@@ -92,7 +92,7 @@ void STF_Save()
 		if(TablePointers[i])
 		{
 			Int16U DataWriteLength = StorageDescription[i].Length * STF_GetTypeLength(StorageDescription[i].Type);
-			Status = Flash_Program((pInt16U)(StartAddr),
+			Status = Flash_Program((pInt16U)StartAddr,
 					(pInt16U)TablePointers[i], DataWriteLength, (FLASH_ST *)&FlashStatus);
 			StartAddr += DataWriteLength;
 		}
