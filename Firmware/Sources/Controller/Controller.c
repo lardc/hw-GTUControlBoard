@@ -43,10 +43,6 @@ volatile Int16U CONTROL_Values_Counter = 0;
 #pragma DATA_SECTION(CONTROL_BootLoaderRequest, "bl_flag");
 volatile Int16U CONTROL_BootLoaderRequest = 0;
 
-// Flash buffer array
-Int16U FlashArray[100];
-Int16U FlashArrayCounter = 0;
-
 // Forward functions
 //
 void CONTROL_SetDeviceState(DeviceState NewState);
@@ -415,15 +411,7 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 			DataTable[REG_WARNING] = WARNING_NONE;
 			break;
 
-		case ACT_FLASH_ARRAY_PUSH:
-			FlashArray[FlashArrayCounter++] = DataTable[REG_FLASH_WRITE_DATA];
-			break;
-
-		case ACT_FLASH_ARRAY_CLEAR:
-			FlashArrayCounter = 0;
-			break;
-
-		case ACT_FLASH_WRITE:
+		case ACT_FLASH_SAVE:
 			STF_SaveFaultData();
 			break;
 

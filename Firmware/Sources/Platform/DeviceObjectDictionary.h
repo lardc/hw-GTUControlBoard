@@ -55,10 +55,8 @@
 #define ACT_READ_SYMBOL				330	// Выполнить чтение символа из памяти
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
 
-#define ACT_FLASH_WRITE				332	// Flash write
+#define ACT_FLASH_SAVE				332	// Flash save fault data
 #define ACT_FLASH_ERASE				334	// Flash erase data sector
-#define ACT_FLASH_ARRAY_PUSH		335	// Add value from REG_FLASH_WRITE_DATA to array
-#define ACT_FLASH_ARRAY_CLEAR		336	// Clear flash write buffer
 
 // REGISTERS
 //

@@ -40,7 +40,6 @@ void STF_SaveUserData();
 void STF_SaveFaultData();
 void STF_LoadFromFlash();
 
-void STF_SaveToFlash(DataType Type, Int16U Length, void* Data);
 void STF_EraseDataSector();
 
 #endif // __SAVE_TO_FLASH_H

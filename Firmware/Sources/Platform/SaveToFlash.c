@@ -143,27 +143,6 @@ Int32U STF_ShiftStorageEnd() {
 }
 // ----------------------------------------
 
-void STF_SaveToFlash(DataType Type, Int16U Length, void* Data)
-{
-	Int16U DataLength = STF_GetTypeLength(Type) * Length;
-
-	Int32U StoragePointer = STF_ShiftStorageEnd();
-
-	ZwSystem_DisableDog();
-	DINT;
-
-	Flash_Program((pInt16U)StoragePointer++, (pInt16U)&Type, 1, (FLASH_ST *)&FlashStatus);
-
-	Flash_Program((pInt16U)StoragePointer++, (pInt16U)&Length, 1, (FLASH_ST *)&FlashStatus);
-
-	Flash_Program((pInt16U)StoragePointer, (pInt16U)Data, DataLength, (FLASH_ST *)&FlashStatus);
-	StoragePointer += DataLength;
-
-	EINT;
-	ZwSystem_EnableDog(SYS_WD_PRESCALER);
-}
-// ----------------------------------------
-
 void STF_EraseDataSector()
 {
 	ZwSystem_DisableDog();
