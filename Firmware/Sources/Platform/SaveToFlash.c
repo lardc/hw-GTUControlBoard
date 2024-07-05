@@ -65,7 +65,7 @@ void STF_Save()
 	ZwSystem_DisableDog();
 	DINT;
 
-	Int32U StartAddr = FLASH_START_ADDR;
+	Int32U StartAddr = STF_ShiftStorageEnd();
 
 	Int16U i;
 	for(i = 0; i < StorageSize; i++)
