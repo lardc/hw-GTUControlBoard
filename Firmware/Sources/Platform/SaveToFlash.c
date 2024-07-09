@@ -21,6 +21,7 @@ Int16U STF_StartAddressShift(Int16U Index);
 Int16U STF_GetTypeLength(DataType CurrentType);
 void STF_Save();
 Int32U STF_ShiftStorageEnd();
+Int32U strlen(const char* string);
 
 // Functions
 //
@@ -70,7 +71,8 @@ void STF_Save()
 	Int16U i;
 	for(i = 0; i < StorageSize; i++)
 	{
-		static Int16U DescriptionHeader[2] = {DT_Char, MAX_DESCRIPTION_LEN};
+		Int16U DescriptionLength = (Int16U)strlen(StorageDescription[i].Description);
+		static Int16U DescriptionHeader[2] = {DT_Char ,DescriptionLength};
 
 		// Запись заголовка описания
 		Status = Flash_Program((pInt16U)StartAddr, (pInt16U)DescriptionHeader, 2,
@@ -79,8 +81,8 @@ void STF_Save()
 
 		// Запись описания
 		Status = Flash_Program((pInt16U)StartAddr, (pInt16U)StorageDescription[i].Description,
-				MAX_DESCRIPTION_LEN, (FLASH_ST *)&FlashStatus);
-		StartAddr += MAX_DESCRIPTION_LEN;
+				DescriptionLength, (FLASH_ST *)&FlashStatus);
+		StartAddr += DescriptionLength;
 
 		// Запись заголовка данных
 		Int16U DataHeader[2] = {StorageDescription[i].Type, StorageDescription[i].Length};
@@ -152,3 +154,11 @@ void STF_EraseDataSector()
 	ZwSystem_EnableDog(SYS_WD_PRESCALER);
 }
 // ----------------------------------------
+
+Int32U strlen(const char* string)
+{
+	Int32U n = (Int32U)-1;
+	const char* s = string;
+	do n++; while (*s++);
+	return n;
+}
