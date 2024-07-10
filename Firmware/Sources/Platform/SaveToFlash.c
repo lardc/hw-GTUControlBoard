@@ -7,24 +7,18 @@
 #include "SysConfig.h"
 #include "StorageDescription.h"
 
-// Definitions
-#define FLASH_RW_SECTOR				SECTORE
-#define FLASH_RW_START_ADDR			0x3E4000
-#define FLASH_WO_SECTOR				SECTORF
-#define FLASH_WO_START_ADDR			0x3E0000
-
-#define FLASH_SECTOR_MASK			SECTORH|SECTORG|SECTORF|SECTORE
+#define FLASH_SECTOR_MASK	SECTORH|SECTORG|SECTORF|SECTORE
 // Sector H start
-#define FLASH_START_ADDR			0x3D8000
+#define FLASH_START_ADDR	0x3D8000
 // Sector E end
-#define FLASH_END_ADDR				0x3E7FFF
+#define FLASH_END_ADDR		0x3E7FFF
 
 // Forward functions
 Int16U STF_StartAddressShift(Int16U Index);
 Int16U STF_GetTypeLength(DataType CurrentType);
 void STF_Save();
 Int32U STF_ShiftStorageEnd();
-Int32U strlen(const char* string);
+Int16U strlen(const char* string);
 
 // Functions
 //
@@ -32,29 +26,6 @@ void STF_AssignPointer(Int16U Index, Int32U Pointer)
 {
 	if(Index < StorageSize)
 		TablePointers[Index] = Pointer;
-}
-// ----------------------------------------
-
-/*
-void STF_LoadFromFlash()
-{
-	Int16U i, j;
-	for(i = 0; i < StorageSize; i++)
-	{
-		if(TablePointers[i] && StorageDescription[i].UseRead)
-		{
-			Int32U ReadStartAddress = STF_StartAddressShift(i, TRUE) + MAX_DESCRIPTION_LEN + 4;
-			for(j = 0; j < StorageDescription[i].Length * STF_GetTypeLength(StorageDescription[i].Type); j++)
-				*(pInt16U)(TablePointers[i] + j) = *(pInt16U)(ReadStartAddress + j);
-		}
-	}
-}
-// ----------------------------------------
-*/
-
-void STF_SaveUserData()
-{
-	STF_Save();
 }
 // ----------------------------------------
 
@@ -69,9 +40,9 @@ void STF_Save()
 	ZwSystem_DisableDog();
 	DINT;
 
-	Int32U StartAddr = STF_ShiftStorageEnd();
+	Int32U ShiftedAddress = STF_ShiftStorageEnd();
 
-	if (StartAddr + MAX_DESCRIPTION_LEN + 4 > FLASH_END_ADDR)
+	if (ShiftedAddress + MAX_DESCRIPTION_LEN + 4 > FLASH_END_ADDR)
 		return;
 
 	Int16U i;
@@ -82,32 +53,32 @@ void STF_Save()
 		DescriptionHeader[1] = DescriptionLength;
 
 		// Запись заголовка описания
-		Status = Flash_Program((pInt16U)StartAddr, (pInt16U)DescriptionHeader, 2,
+		Status = Flash_Program((pInt16U)ShiftedAddress, (pInt16U)DescriptionHeader, 2,
 				(FLASH_ST *)&FlashStatus);
-		StartAddr += 2;
+		ShiftedAddress += 2;
 
 		// Запись описания
-		Status = Flash_Program((pInt16U)StartAddr, (pInt16U)StorageDescription[i].Description,
+		Status = Flash_Program((pInt16U)ShiftedAddress, (pInt16U)StorageDescription[i].Description,
 				DescriptionLength, (FLASH_ST *)&FlashStatus);
-		StartAddr += DescriptionLength;
+		ShiftedAddress += DescriptionLength;
 
 		// Запись заголовка данных
 		Int16U DataHeader[2] = {StorageDescription[i].Type, StorageDescription[i].Length};
-		Status = Flash_Program((pInt16U)StartAddr,
+		Status = Flash_Program((pInt16U)ShiftedAddress,
 				(pInt16U)DataHeader, 2, (FLASH_ST *)&FlashStatus);
-		StartAddr += 2;
+		ShiftedAddress += 2;
 
 		// Запись данных при наличии указателя
 		if(TablePointers[i])
 		{
 			Int16U DataWriteLength = StorageDescription[i].Length * STF_GetTypeLength(StorageDescription[i].Type);
 
-			if (StartAddr + DataWriteLength > FLASH_END_ADDR)
+			if (ShiftedAddress + DataWriteLength > FLASH_END_ADDR)
 				return;
 
-			Status = Flash_Program((pInt16U)StartAddr,
+			Status = Flash_Program((pInt16U)ShiftedAddress,
 					(pInt16U)TablePointers[i], DataWriteLength, (FLASH_ST *)&FlashStatus);
-			StartAddr += DataWriteLength;
+			ShiftedAddress += DataWriteLength;
 		}
 	}
 
@@ -122,21 +93,8 @@ Int16U STF_GetTypeLength(DataType CurrentType)
 }
 // ----------------------------------------
 
-Int16U STF_StartAddressShift(Int16U Index)
+Int32U STF_ShiftStorageEnd()
 {
-	Int16U i, Shift = 0;
-	for(i = 0; i < Index; i++)
-	{
-		// На каждую запись выделяется дополнительно:
-		// 2 поля для хранения типа и длины описания
-		// 2 поля для хранения типа и длины самих данных
-		Shift += STF_GetTypeLength(StorageDescription[i].Type) * StorageDescription[i].Length + MAX_DESCRIPTION_LEN + 4;
-	}
-	return Shift;
-}
-// ----------------------------------------
-
-Int32U STF_ShiftStorageEnd() {
 	Int32U StoragePointer = FLASH_START_ADDR;
 
 	while (*(pInt16U)StoragePointer != 0xFFFF)
@@ -166,9 +124,9 @@ void STF_EraseDataSector()
 }
 // ----------------------------------------
 
-Int32U strlen(const char* string)
+Int16U strlen(const char* string)
 {
-	Int32U n = (Int32U)-1;
+	Int16U n = -1;
 	const char* s = string;
 	do n++; while (*s++);
 	return n;

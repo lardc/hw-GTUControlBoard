@@ -161,7 +161,7 @@
 
 #define REG_OLD_GTU_COMPATIBLE		120	// Режим совместимости с блоками GTU на базе ЭМ GateTester
 
-#define REG_PROBLEM_MASK			121	//
+#define REG_PROBLEM_MASK			121	// Битовая маска для выбора Problem сохраняемых во флэш
 
 // ----------------------------------------
 //
@@ -240,9 +240,6 @@
 #define REG_FWINFO_STR_BEGIN		261	// Begining of the information string record
 //
 #define REG_MEM_SYMBOL				299	// Считанный по адресу памяти символ
-
-#define REG_FLASH_WRITE_DATA		184	// Flash temporary data register
-#define REG_FLASH_WRITE_TYPE		185	// Flash data type
 
 // SCOPE TYPE
 // Выбор сохраняемой осциллограммы в режиме совместимости
