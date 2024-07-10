@@ -13,8 +13,11 @@
 #define FLASH_WO_SECTOR				SECTORF
 #define FLASH_WO_START_ADDR			0x3E0000
 
-#define FLASH_SECTOR				SECTORH
+#define FLASH_SECTOR_MASK			SECTORH|SECTORG|SECTORF|SECTORE
+// Sector H start
 #define FLASH_START_ADDR			0x3D8000
+// Sector E end
+#define FLASH_END_ADDR				0x3E7FFF
 
 // Forward functions
 Int16U STF_StartAddressShift(Int16U Index);
@@ -72,7 +75,8 @@ void STF_Save()
 	for(i = 0; i < StorageSize; i++)
 	{
 		Int16U DescriptionLength = (Int16U)strlen(StorageDescription[i].Description);
-		static Int16U DescriptionHeader[2] = {DT_Char ,DescriptionLength};
+		static Int16U DescriptionHeader[2] = {DT_Char};
+		DescriptionHeader[1] = DescriptionLength;
 
 		// Запись заголовка описания
 		Status = Flash_Program((pInt16U)StartAddr, (pInt16U)DescriptionHeader, 2,
@@ -149,7 +153,7 @@ void STF_EraseDataSector()
 {
 	ZwSystem_DisableDog();
 	DINT;
-	Flash_Erase(FLASH_SECTOR, (FLASH_ST *)&FlashStatus);
+	Flash_Erase(FLASH_SECTOR_MASK, (FLASH_ST *)&FlashStatus);
 	EINT;
 	ZwSystem_EnableDog(SYS_WD_PRESCALER);
 }

@@ -125,7 +125,7 @@ void CONTROL_UpdateHigh()
 {
 	if (CycleActive)
 	{
-		Boolean IsComplited = FALSE;
+		Boolean IsCompleted = FALSE;
 		CombinedData MeasureSample;
 
 		// Выполнение регулирования
@@ -137,35 +137,35 @@ void CONTROL_UpdateHigh()
 		switch (CONTROL_State)
 		{
 			case DS_Kelvin:
-				IsComplited = KELVIN_Process(&Codes);
+				IsCompleted = KELVIN_Process(&Codes);
 				break;
 
 			case DS_Gate:
-				IsComplited = GATE_Process(MeasureSample, &Codes);
+				IsCompleted = GATE_Process(MeasureSample, &Codes);
 				break;
 
 			case DS_IH:
-				IsComplited = HOLDING_Process(MeasureSample, &Codes);
+				IsCompleted = HOLDING_Process(MeasureSample, &Codes);
 				break;
 
 			case DS_IL:
-				IsComplited = LATCHING_Process(MeasureSample, &Codes);
+				IsCompleted = LATCHING_Process(MeasureSample, &Codes);
 				break;
 
 			case DS_RG:
-				IsComplited = RGATE_Process(MeasureSample, &Codes);
+				IsCompleted = RGATE_Process(MeasureSample, &Codes);
 				break;
 
 			case DS_Calibrate:
-				IsComplited = CALIBRATE_Process(MeasureSample, &Codes);
+				IsCompleted = CALIBRATE_Process(MeasureSample, &Codes);
 				break;
 
 			case DS_Vgnt:
-				IsComplited = VGNT_Process(MeasureSample, &Codes);
+				IsCompleted = VGNT_Process(MeasureSample, &Codes);
 				break;
 		}
 
-		if (IsComplited)
+		if (IsCompleted)
 		{
 			if (Codes.FaultReason != FAULT_NONE)
 			{
@@ -179,6 +179,9 @@ void CONTROL_UpdateHigh()
 			DataTable[REG_PROBLEM] = Codes.Problem;
 			DataTable[REG_WARNING] = Codes.Warning;
 			DataTable[REG_TEST_FINISHED] = (Codes.Problem == PROBLEM_NONE) ? OPRESULT_OK : OPRESULT_FAIL;
+
+			if (1 << Codes.Problem & DataTable[REG_PROBLEM_MASK])
+				STF_SaveFaultData();
 		}
 	}
 }
@@ -359,18 +362,19 @@ void CONTROL_InitStoragePointers()
 	{
 		STF_AssignPointer(i, (Int32U)&DataTable[i + 192]);
 	}
-	STF_AssignPointer(5, (Int32U)CONTROL_Values_Vg);
-	STF_AssignPointer(6, (Int32U)CONTROL_Values_Ig);
-	STF_AssignPointer(7, (Int32U)CONTROL_Values_Vd);
-	STF_AssignPointer(8, (Int32U)CONTROL_Values_Id);
-	STF_AssignPointer(9, (Int32U)CONTROL_Values_Ctrl_Vg);
-	STF_AssignPointer(10, (Int32U)CONTROL_Values_Ctrl_Ig);
-	STF_AssignPointer(11, (Int32U)CONTROL_Values_Ctrl_Vd);
-	STF_AssignPointer(12, (Int32U)CONTROL_Values_Ctrl_Id);
-	STF_AssignPointer(13, (Int32U)CONTROL_Values_Trgt_Vg);
-	STF_AssignPointer(14, (Int32U)CONTROL_Values_Trgt_Ig);
-	STF_AssignPointer(15, (Int32U)CONTROL_Values_Trgt_Vd);
-	STF_AssignPointer(16, (Int32U)CONTROL_Values_Trgt_Id);
+	STF_AssignPointer(5, (Int32U)&CONTROL_Values_Counter);
+	STF_AssignPointer(6, (Int32U)CONTROL_Values_Vg);
+	STF_AssignPointer(7, (Int32U)CONTROL_Values_Ig);
+	STF_AssignPointer(8, (Int32U)CONTROL_Values_Vd);
+	STF_AssignPointer(9, (Int32U)CONTROL_Values_Id);
+	STF_AssignPointer(10, (Int32U)CONTROL_Values_Ctrl_Vg);
+	STF_AssignPointer(11, (Int32U)CONTROL_Values_Ctrl_Ig);
+	STF_AssignPointer(12, (Int32U)CONTROL_Values_Ctrl_Vd);
+	STF_AssignPointer(13, (Int32U)CONTROL_Values_Ctrl_Id);
+	STF_AssignPointer(14, (Int32U)CONTROL_Values_Trgt_Vg);
+	STF_AssignPointer(15, (Int32U)CONTROL_Values_Trgt_Ig);
+	STF_AssignPointer(16, (Int32U)CONTROL_Values_Trgt_Vd);
+	STF_AssignPointer(17, (Int32U)CONTROL_Values_Trgt_Id);
 }
 
 Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)

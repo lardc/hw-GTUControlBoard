@@ -160,6 +160,9 @@
 #define REG_ADC_LOW_IG_CONV_B		119	// Conversion offset for low gate current (in mA)
 
 #define REG_OLD_GTU_COMPATIBLE		120	// Режим совместимости с блоками GTU на базе ЭМ GateTester
+
+#define REG_PROBLEM_MASK			121	//
+
 // ----------------------------------------
 //
 #define REG_GATE_VGT_PURE			128	// Sample VGT after terminating main current
