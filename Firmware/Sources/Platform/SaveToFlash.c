@@ -42,7 +42,7 @@ void STF_Save()
 
 	Int32U ShiftedAddress = STF_ShiftStorageEnd();
 
-	if (ShiftedAddress + MAX_DESCRIPTION_LEN + 4 > FLASH_END_ADDR)
+	if (ShiftedAddress + StorageSize >= FLASH_END_ADDR)
 		return;
 
 	Int16U i;
@@ -72,9 +72,6 @@ void STF_Save()
 		if(TablePointers[i])
 		{
 			Int16U DataWriteLength = StorageDescription[i].Length * STF_GetTypeLength(StorageDescription[i].Type);
-
-			if (ShiftedAddress + DataWriteLength > FLASH_END_ADDR)
-				return;
 
 			Status = Flash_Program((pInt16U)ShiftedAddress,
 					(pInt16U)TablePointers[i], DataWriteLength, (FLASH_ST *)&FlashStatus);
