@@ -42,7 +42,7 @@ void STF_Save()
 	DINT;
 
 	Int32U ShiftedAddress = STF_ShiftStorageEnd();
-	Int16U MaxDataLength = 0;
+	Int32U MaxDataLength = 0;
 
 	Int16U i;
 	for (i = 0; i < StorageSize; ++i)
