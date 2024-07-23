@@ -56,7 +56,7 @@
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
 
 #define ACT_FLASH_SAVE				332	// Flash save fault data
-#define ACT_FLASH_ERASE				334	// Flash erase data sector
+#define ACT_FLASH_ERASE				333	// Flash erase data sector
 
 // REGISTERS
 //
