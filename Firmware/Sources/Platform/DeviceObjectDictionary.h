@@ -49,11 +49,14 @@
 #define ACT_RESET_TO_DEFAULT		202	// Reset parameters to default values (only in controller memory)
 #define ACT_LOCK_NV_AREA			203	// Lock modifications of parameters area
 #define ACT_UNLOCK_NV_AREA			204	// Unlock modifications of parameters area (password-protected)
-//
+
 #define ACT_BOOT_LOADER_REQUEST		320	// Request reboot to bootloader
-#define ACT_WRITE_LABEL1			321	// Записать первую метку: GTUControlBoard v.1.2 [BVT 5V Sync, Vg 5V]
+
 #define ACT_READ_SYMBOL				330	// Выполнить чтение символа из памяти
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
+
+#define ACT_FLASH_SAVE				332	// Flash save fault data
+#define ACT_FLASH_ERASE				333	// Flash erase data sector
 
 // REGISTERS
 //
@@ -157,6 +160,9 @@
 #define REG_ADC_LOW_IG_CONV_B		119	// Conversion offset for low gate current (in mA)
 
 #define REG_OLD_GTU_COMPATIBLE		120	// Режим совместимости с блоками GTU на базе ЭМ GateTester
+
+#define REG_PROBLEM_MASK			121	// Битовая маска для выбора Problem сохраняемых во флэш
+
 // ----------------------------------------
 //
 #define REG_GATE_VGT_PURE			128	// Sample VGT after terminating main current
