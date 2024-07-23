@@ -17,12 +17,12 @@ RecordDescription StorageDescription[] =
 		{"EP 4 Sampled direct current Id (mA)",		DT_Int16U, VALUES_x_SIZE},
 		{"EP 5 Control gate voltage Vg (mV)",		DT_Int16U, VALUES_x_SIZE},
 		{"EP 6 Control gate current Ig (mA)",		DT_Int16U, VALUES_x_SIZE},
-		{"EP 7 Control direct voltage Vd (mV)",	DT_Int16U, VALUES_x_SIZE},
-		{"EP 8 Control direct current Id (mA)",	DT_Int16U, VALUES_x_SIZE},
+		{"EP 7 Control direct voltage Vd (mV)",		DT_Int16U, VALUES_x_SIZE},
+		{"EP 8 Control direct current Id (mA)",		DT_Int16U, VALUES_x_SIZE},
 		{"EP 9 Target gate voltage Vg (mV)",		DT_Int16U, VALUES_x_SIZE},
 		{"EP 10 Target gate current Ig (mA)",		DT_Int16U, VALUES_x_SIZE},
-		{"EP 11 Target direct voltage Vd (mV)",	DT_Int16U, VALUES_x_SIZE},
-		{"EP 12 Target direct current Id (mA)",	DT_Int16U, VALUES_x_SIZE},
+		{"EP 11 Target direct voltage Vd (mV)",		DT_Int16U, VALUES_x_SIZE},
+		{"EP 12 Target direct current Id (mA)",		DT_Int16U, VALUES_x_SIZE},
 };
 Int32U TablePointers[sizeof(StorageDescription) / sizeof(StorageDescription[0])] = {0};
 const Int16U StorageSize = sizeof(StorageDescription) / sizeof(StorageDescription[0]);
