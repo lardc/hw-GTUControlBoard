@@ -49,9 +49,9 @@
 #define ACT_RESET_TO_DEFAULT		202	// Reset parameters to default values (only in controller memory)
 #define ACT_LOCK_NV_AREA			203	// Lock modifications of parameters area
 #define ACT_UNLOCK_NV_AREA			204	// Unlock modifications of parameters area (password-protected)
-//
+
 #define ACT_BOOT_LOADER_REQUEST		320	// Request reboot to bootloader
-#define ACT_WRITE_LABEL1			321	// Записать первую метку: GTUControlBoard v.1.2 [BVT 5V Sync, Vg 5V]
+
 #define ACT_READ_SYMBOL				330	// Выполнить чтение символа из памяти
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
 
