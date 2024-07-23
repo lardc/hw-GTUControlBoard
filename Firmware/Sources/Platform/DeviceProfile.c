@@ -312,7 +312,7 @@ static Boolean DEVPROFILE_DispatchAction(Int16U ActionID, pInt16U UserError)
 			break;
 
 		case ACT_SELECT_MEM_LABEL:
-			MemoryPointer = 0x3D8000;
+			MemoryPointer = FLASH_START_ADDR;
 			break;
 
 		default:
