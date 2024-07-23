@@ -181,7 +181,7 @@ void CONTROL_UpdateHigh()
 			DataTable[REG_TEST_FINISHED] = (Codes.Problem == PROBLEM_NONE) ? OPRESULT_OK : OPRESULT_FAIL;
 
 			if (1 << Codes.Problem & DataTable[REG_PROBLEM_MASK])
-				STF_SaveFaultData();
+				STF_SaveDiagData();
 		}
 	}
 }
@@ -416,7 +416,7 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 			break;
 
 		case ACT_FLASH_SAVE:
-			STF_SaveFaultData();
+			STF_SaveDiagData();
 			break;
 
 		case ACT_FLASH_ERASE:
