@@ -6,22 +6,20 @@
 #include "ZwSysCtrl.h"
 #include "SysConfig.h"
 #include "StorageDescription.h"
+#include "Global.h"
 
-// Definitions
-#define FLASH_RW_SECTOR				SECTORE
-#define FLASH_RW_START_ADDR			0x3E4000
-#define FLASH_WO_SECTOR				SECTORF
-#define FLASH_WO_START_ADDR			0x3E0000
-
-#define FLASH_SECTOR				SECTORH
-#define FLASH_START_ADDR			0x3D8000
-
-Int32U StoragePointer = FLASH_START_ADDR;
+#define FLASH_SECTOR_MASK	SECTORH|SECTORG|SECTORF|SECTORE
+// Sector H start
+#define FLASH_START_ADDR	0x3D8000
+// Sector E end
+#define FLASH_END_ADDR		0x3E7FFF
 
 // Forward functions
-Int16U STF_StartAddressShift(Int16U Index, Boolean Readable);
+Int16U STF_StartAddressShift(Int16U Index);
 Int16U STF_GetTypeLength(DataType CurrentType);
-void STF_Save(Boolean Readable);
+void STF_Save();
+Int32U STF_ShiftStorageEnd();
+Int16U strlen(const char* string);
 
 // Functions
 //
@@ -32,65 +30,57 @@ void STF_AssignPointer(Int16U Index, Int32U Pointer)
 }
 // ----------------------------------------
 
-void STF_LoadFromFlash()
-{
-	Int16U i, j;
-	for(i = 0; i < StorageSize; i++)
-	{
-		if(TablePointers[i] && StorageDescription[i].UseRead)
-		{
-			Int32U ReadStartAddress = STF_StartAddressShift(i, TRUE) + MAX_DESCRIPTION_LEN + 4;
-			for(j = 0; j < StorageDescription[i].Length * STF_GetTypeLength(StorageDescription[i].Type); j++)
-				*(pInt16U)(TablePointers[i] + j) = *(pInt16U)(ReadStartAddress + j);
-		}
-	}
-}
-// ----------------------------------------
-
-void STF_SaveUserData()
-{
-	STF_Save(TRUE);
-}
-// ----------------------------------------
-
 void STF_SaveFaultData()
 {
-	STF_Save(FALSE);
+	STF_Save();
 }
 // ----------------------------------------
 
-void STF_Save(Boolean Readable)
+void STF_Save()
 {
 	ZwSystem_DisableDog();
 	DINT;
-	Status = Flash_Erase(Readable ? FLASH_RW_SECTOR : FLASH_WO_SECTOR, (FLASH_ST *)&FlashStatus);
+
+	Int32U ShiftedAddress = STF_ShiftStorageEnd();
+	Int16U MaxDataLength = 0;
 
 	Int16U i;
+	for (i = 0; i < StorageSize; ++i)
+		MaxDataLength += StorageDescription[i].Length * STF_GetTypeLength(StorageDescription[i].Type) + 4 + strlen(StorageDescription[i].Description);
+
+	if (ShiftedAddress + MaxDataLength >= FLASH_END_ADDR)
+		return;
+
 	for(i = 0; i < StorageSize; i++)
 	{
-		Int16U AddressShift = STF_StartAddressShift(i, Readable);
-		static const Int16U DescriptionHeader[2] = {DT_Char, MAX_DESCRIPTION_LEN};
+		Int16U DescriptionLength = strlen(StorageDescription[i].Description);
+		static Int16U DescriptionHeader[2] = {DT_Char};
+		DescriptionHeader[1] = DescriptionLength;
 
 		// Запись заголовка описания
-		Int32U StartAddr = Readable ? FLASH_RW_START_ADDR : FLASH_WO_START_ADDR;
-		Status = Flash_Program((pInt16U)(StartAddr + AddressShift), (pInt16U)DescriptionHeader, 2,
+		Status = Flash_Program((pInt16U)ShiftedAddress, (pInt16U)DescriptionHeader, 2,
 				(FLASH_ST *)&FlashStatus);
+		ShiftedAddress += 2;
 
 		// Запись описания
-		Status = Flash_Program((pInt16U)(StartAddr + AddressShift + 2), (pInt16U)StorageDescription[i].Description,
-				MAX_DESCRIPTION_LEN, (FLASH_ST *)&FlashStatus);
+		Status = Flash_Program((pInt16U)ShiftedAddress, (pInt16U)StorageDescription[i].Description,
+				DescriptionLength, (FLASH_ST *)&FlashStatus);
+		ShiftedAddress += DescriptionLength;
 
 		// Запись заголовка данных
 		Int16U DataHeader[2] = {StorageDescription[i].Type, StorageDescription[i].Length};
-		Status = Flash_Program((pInt16U)(StartAddr + AddressShift + 2 + MAX_DESCRIPTION_LEN),
+		Status = Flash_Program((pInt16U)ShiftedAddress,
 				(pInt16U)DataHeader, 2, (FLASH_ST *)&FlashStatus);
+		ShiftedAddress += 2;
 
 		// Запись данных при наличии указателя
 		if(TablePointers[i])
 		{
 			Int16U DataWriteLength = StorageDescription[i].Length * STF_GetTypeLength(StorageDescription[i].Type);
-			Status = Flash_Program((pInt16U)(StartAddr + AddressShift + 2 + MAX_DESCRIPTION_LEN + DataWriteLength),
+
+			Status = Flash_Program((pInt16U)ShiftedAddress,
 					(pInt16U)TablePointers[i], DataWriteLength, (FLASH_ST *)&FlashStatus);
+			ShiftedAddress += DataWriteLength;
 		}
 	}
 
@@ -105,25 +95,9 @@ Int16U STF_GetTypeLength(DataType CurrentType)
 }
 // ----------------------------------------
 
-Int16U STF_StartAddressShift(Int16U Index, Boolean Readable)
+Int32U STF_ShiftStorageEnd()
 {
-	Int16U i, Shift = 0;
-	for(i = 0; i < Index; i++)
-	{
-		if((Readable && StorageDescription[i].UseRead) || (!Readable && !StorageDescription[i].UseRead))
-		{
-			// На каждую запись выделяется дополнительно:
-			// 2 поля для хранения типа и длины описания
-			// 2 поля для хранения типа и длины самих данных
-			Shift += STF_GetTypeLength(StorageDescription[i].Type) * StorageDescription[i].Length + MAX_DESCRIPTION_LEN + 4;
-		}
-	}
-	return Shift;
-}
-// ----------------------------------------
-
-void STF_ShiftStorageEnd() {
-	StoragePointer = FLASH_START_ADDR;
+	Int32U StoragePointer = FLASH_START_ADDR;
 
 	while (*(pInt16U)StoragePointer != 0xFFFF)
 	{
@@ -138,43 +112,7 @@ void STF_ShiftStorageEnd() {
 		Int16U Length = *(pInt16U)StoragePointer * (Int16U)TypeLength;
 		StoragePointer += Length + 1;
 	}
-}
-// ----------------------------------------
-
-void STF_SaveToFlash(DataType Type, Int16U Length, void* Data)
-{
-	Int16U DataLength = STF_GetTypeLength(Type) * Length;
-
-	STF_ShiftStorageEnd();
-
-	ZwSystem_DisableDog();
-	DINT;
-
-	Flash_Program(
-		(pInt16U)StoragePointer,
-		(pInt16U)&Type,
-		1,
-		(FLASH_ST *)&FlashStatus
-	);
-	++StoragePointer;
-
-	Flash_Program(
-		(pInt16U)StoragePointer,
-		(pInt16U)&Length,
-		1,
-		(FLASH_ST *)&FlashStatus
-	);
-	++StoragePointer;
-
-	Flash_Program(
-		(pInt16U)StoragePointer,
-		(pInt16U)&Data,
-		DataLength * Length,
-		(FLASH_ST *)&FlashStatus
-	);
-	StoragePointer += DataLength * Length;
-	EINT;
-	ZwSystem_EnableDog(SYS_WD_PRESCALER);
+	return StoragePointer;
 }
 // ----------------------------------------
 
@@ -182,9 +120,16 @@ void STF_EraseDataSector()
 {
 	ZwSystem_DisableDog();
 	DINT;
-	Flash_Erase(FLASH_SECTOR, (FLASH_ST *)&FlashStatus);
-	StoragePointer = FLASH_START_ADDR;
+	Flash_Erase(FLASH_SECTOR_MASK, (FLASH_ST *)&FlashStatus);
 	EINT;
 	ZwSystem_EnableDog(SYS_WD_PRESCALER);
 }
 // ----------------------------------------
+
+Int16U strlen(const char* string)
+{
+	Int16U n = -1;
+	const char* s = string;
+	do n++; while (*s++);
+	return n;
+}

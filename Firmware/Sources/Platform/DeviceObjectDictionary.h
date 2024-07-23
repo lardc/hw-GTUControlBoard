@@ -55,7 +55,7 @@
 #define ACT_READ_SYMBOL				330	// Выполнить чтение символа из памяти
 #define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
 
-#define ACT_FLASH_WRITE				332	// Flash write
+#define ACT_FLASH_SAVE				332	// Flash save fault data
 #define ACT_FLASH_ERASE				334	// Flash erase data sector
 
 // REGISTERS
@@ -160,6 +160,9 @@
 #define REG_ADC_LOW_IG_CONV_B		119	// Conversion offset for low gate current (in mA)
 
 #define REG_OLD_GTU_COMPATIBLE		120	// Режим совместимости с блоками GTU на базе ЭМ GateTester
+
+#define REG_PROBLEM_MASK			121	// Битовая маска для выбора Problem сохраняемых во флэш
+
 // ----------------------------------------
 //
 #define REG_GATE_VGT_PURE			128	// Sample VGT after terminating main current
@@ -237,10 +240,6 @@
 #define REG_FWINFO_STR_BEGIN		261	// Begining of the information string record
 //
 #define REG_MEM_SYMBOL				299	// Считанный по адресу памяти символ
-
-#define REG_FLASH_WRITE_LEN			184	// Длина записываемых данных во флеш
-#define REG_FLASH_WRITE_DATA		185	// Отладочный регистр для записи
-#define REG_FLASH_WRITE_TYPE		186	// Тип данных перменной записывемой во флеш
 
 // SCOPE TYPE
 // Выбор сохраняемой осциллограммы в режиме совместимости
