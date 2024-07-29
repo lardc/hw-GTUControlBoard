@@ -18,13 +18,15 @@
 #include "Holding.h"
 #include "Latching.h"
 #include "RGate.h"
-#include "VGNT.h"
+#include "Vgnt.h"
 #include "Calibrate.h"
 #include "IQmathLib.h"
 #include "Diagnostic.h"
 #include "Regulator.h"
 #include "MeasureUtils.h"
 #include "Common.h"
+#include "SaveToFlash.h"
+#include "StorageDescription.h"
 
 
 // Variables
@@ -41,13 +43,13 @@ volatile Int16U CONTROL_Values_Counter = 0;
 #pragma DATA_SECTION(CONTROL_BootLoaderRequest, "bl_flag");
 volatile Int16U CONTROL_BootLoaderRequest = 0;
 
-
 // Forward functions
 //
 void CONTROL_SetDeviceState(DeviceState NewState);
 void CONTROL_FillWithDefaults();
 void CONTROL_HaltExecution();
 void CONTROL_Execute(Int16U ActionID, pInt16U UserError);
+void CONTROL_InitStoragePointers();
 Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError);
 
 
@@ -83,6 +85,8 @@ void CONTROL_Init(Boolean BadClockDetected)
 	// Fill state variables with default values
 	CONTROL_FillWithDefaults();
 	CONTROL_SetDeviceState(DS_None);
+
+	CONTROL_InitStoragePointers();
 
 	// Device profile initialization
 	DEVPROFILE_Init(&CONTROL_DispatchAction, &CycleActive);
@@ -121,7 +125,7 @@ void CONTROL_UpdateHigh()
 {
 	if (CycleActive)
 	{
-		Boolean IsComplited = FALSE;
+		Boolean IsCompleted = FALSE;
 		CombinedData MeasureSample;
 
 		// Выполнение регулирования
@@ -133,35 +137,35 @@ void CONTROL_UpdateHigh()
 		switch (CONTROL_State)
 		{
 			case DS_Kelvin:
-				IsComplited = KELVIN_Process(&Codes);
+				IsCompleted = KELVIN_Process(&Codes);
 				break;
 
 			case DS_Gate:
-				IsComplited = GATE_Process(MeasureSample, &Codes);
+				IsCompleted = GATE_Process(MeasureSample, &Codes);
 				break;
 
 			case DS_IH:
-				IsComplited = HOLDING_Process(MeasureSample, &Codes);
+				IsCompleted = HOLDING_Process(MeasureSample, &Codes);
 				break;
 
 			case DS_IL:
-				IsComplited = LATCHING_Process(MeasureSample, &Codes);
+				IsCompleted = LATCHING_Process(MeasureSample, &Codes);
 				break;
 
 			case DS_RG:
-				IsComplited = RGATE_Process(MeasureSample, &Codes);
+				IsCompleted = RGATE_Process(MeasureSample, &Codes);
 				break;
 
 			case DS_Calibrate:
-				IsComplited = CALIBRATE_Process(MeasureSample, &Codes);
+				IsCompleted = CALIBRATE_Process(MeasureSample, &Codes);
 				break;
 
 			case DS_Vgnt:
-				IsComplited = VGNT_Process(MeasureSample, &Codes);
+				IsCompleted = VGNT_Process(MeasureSample, &Codes);
 				break;
 		}
 
-		if (IsComplited)
+		if (IsCompleted)
 		{
 			if (Codes.FaultReason != FAULT_NONE)
 			{
@@ -175,6 +179,9 @@ void CONTROL_UpdateHigh()
 			DataTable[REG_PROBLEM] = Codes.Problem;
 			DataTable[REG_WARNING] = Codes.Warning;
 			DataTable[REG_TEST_FINISHED] = (Codes.Problem == PROBLEM_NONE) ? OPRESULT_OK : OPRESULT_FAIL;
+
+			if (1 << Codes.Problem & DataTable[REG_PROBLEM_MASK])
+				STF_SaveDiagData();
 		}
 	}
 }
@@ -348,6 +355,28 @@ void CONTROL_Execute(Int16U ActionID, pInt16U UserError)
 }
 // ----------------------------------------
 
+void CONTROL_InitStoragePointers()
+{
+	Int16U i;
+	for (i = 0; i < 5; ++i)
+	{
+		STF_AssignPointer(i, (Int32U)&DataTable[i + 192]);
+	}
+	STF_AssignPointer(5, (Int32U)&CONTROL_Values_Counter);
+	STF_AssignPointer(6, (Int32U)CONTROL_Values_Vg);
+	STF_AssignPointer(7, (Int32U)CONTROL_Values_Ig);
+	STF_AssignPointer(8, (Int32U)CONTROL_Values_Vd);
+	STF_AssignPointer(9, (Int32U)CONTROL_Values_Id);
+	STF_AssignPointer(10, (Int32U)CONTROL_Values_Ctrl_Vg);
+	STF_AssignPointer(11, (Int32U)CONTROL_Values_Ctrl_Ig);
+	STF_AssignPointer(12, (Int32U)CONTROL_Values_Ctrl_Vd);
+	STF_AssignPointer(13, (Int32U)CONTROL_Values_Ctrl_Id);
+	STF_AssignPointer(14, (Int32U)CONTROL_Values_Trgt_Vg);
+	STF_AssignPointer(15, (Int32U)CONTROL_Values_Trgt_Ig);
+	STF_AssignPointer(16, (Int32U)CONTROL_Values_Trgt_Vd);
+	STF_AssignPointer(17, (Int32U)CONTROL_Values_Trgt_Id);
+}
+
 Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 {
 	switch (ActionID)
@@ -384,6 +413,14 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 
 		case ACT_CLR_WARNING:
 			DataTable[REG_WARNING] = WARNING_NONE;
+			break;
+
+		case ACT_FLASH_SAVE:
+			STF_SaveDiagData();
+			break;
+
+		case ACT_FLASH_ERASE:
+			STF_EraseDataSector();
 			break;
 
 		default:
