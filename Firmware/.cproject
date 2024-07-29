@@ -14,7 +14,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="out" artifactName="GTUControlBoard" buildProperties="" description="" id="com.ti.ccstudio.buildDefinitions.C2000.Release.810663381" name="Release" parent="com.ti.ccstudio.buildDefinitions.C2000.Release" prebuildStep="${PROJECT_LOC}/gen_git_info.bat &amp; ${PROJECT_LOC}/copy_git_info.bat">
+				<configuration artifactExtension="out" artifactName="GTUControlBoard" buildProperties="" description="" id="com.ti.ccstudio.buildDefinitions.C2000.Release.810663381" name="Release" parent="com.ti.ccstudio.buildDefinitions.C2000.Release" prebuildStep="${PROJECT_LOC}/gen_git_info.bat &amp; ${PROJECT_LOC}/copy_git_info.bat" postbuildStep="${PROJECT_LOC}/gen_fw_name.bat">
 					<folderInfo id="com.ti.ccstudio.buildDefinitions.C2000.Release.810663381.1118973791" name="/" resourcePath="">
 						<toolChain id="com.ti.ccstudio.buildDefinitions.C2000_6.4.exe.ReleaseToolchain.2030193976" name="TI Build Tools" secondaryOutputs="com.ti.ccstudio.buildDefinitions.C2000_6.4.hex.outputType__BIN" superClass="com.ti.ccstudio.buildDefinitions.C2000_6.4.exe.ReleaseToolchain" targetTool="com.ti.ccstudio.buildDefinitions.C2000_6.4.exe.linkerRelease.1189741700">
 							<option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.1168657445" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
