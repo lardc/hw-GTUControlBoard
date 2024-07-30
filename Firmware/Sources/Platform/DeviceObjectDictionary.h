@@ -52,11 +52,11 @@
 
 #define ACT_BOOT_LOADER_REQUEST		320	// Request reboot to bootloader
 
-#define ACT_READ_SYMBOL				330	// Выполнить чтение символа из памяти
-#define ACT_SELECT_MEM_LABEL		331	// Переместить указатель считывания в область метки
+#define ACT_FLASH_DIAG_READ_SYMBOL	330	// Выполнить чтение символа из памяти отладочной информации
+#define ACT_FLASH_DIAG_INIT_READ	331	// Инициализировать начало считывания отладочной информации
 
-#define ACT_FLASH_SAVE				332	// Flash save fault data
-#define ACT_FLASH_ERASE				333	// Flash erase data sector
+#define ACT_FLASH_DIAG_SAVE			332	// Сохранение блока отладочной информации во флэш
+#define ACT_FLASH_DIAG_ERASE		333	// Стирание области отладочной информации
 
 // REGISTERS
 //
