@@ -415,11 +415,11 @@ Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 			DataTable[REG_WARNING] = WARNING_NONE;
 			break;
 
-		case ACT_FLASH_SAVE:
+		case ACT_FLASH_DIAG_SAVE:
 			STF_SaveDiagData();
 			break;
 
-		case ACT_FLASH_ERASE:
+		case ACT_FLASH_DIAG_ERASE:
 			STF_EraseDataSector();
 			break;
 
