@@ -115,18 +115,18 @@ const TableItemConstraint NVConstraint[DATA_TABLE_NV_SIZE] =
 											{0, 0, 0},																// 99
 											{RISE_FALL_RATE_MIN, RISE_FALL_RATE_MAX, RISE_FALL_RATE_DEF},			// 100
 											{RISE_FALL_RATE_MIN, RISE_FALL_RATE_MAX, RISE_FALL_RATE_DEF},			// 101
-											{0, 0, 0},																// 102
-											{0, 0, 0},																// 103
-											{0, 0, 0},																// 104
+											{0, INT16U_MAX, 0},														// 102
+											{PROPORTIONAL_MIN, INT16U_MAX, PROPORTIONAL_DEF},						// 103
+											{0, INT16U_MAX, 0},														// 104
 											{0, INT16U_MAX, 0},														// 105
 											{PROPORTIONAL_MIN, INT16U_MAX, PROPORTIONAL_DEF},						// 106
 											{0, INT16U_MAX, 0},														// 107
 											{PROPORTIONAL_MIN, INT16U_MAX, PROPORTIONAL_DEF},						// 108
 											{0, INT16U_MAX, 0},														// 109
 											{0, INT16U_MAX, 50},													// 110
-											{0, 0, 0},																// 111
-											{0, 0, 0},																// 112
-											{0, 0, 0},																// 113
+											{PROPORTIONAL_MIN, INT16U_MAX, PROPORTIONAL_DEF},						// 111
+											{0, INT16U_MAX, 0},														// 112
+											{0, VGT_LOW_RANGE_MAX, 0},												// 113
 											{0, 0, 0},																// 114
 											{0, INT16U_MAX, 0},														// 115
 											{PROPORTIONAL_MIN, INT16U_MAX, PROPORTIONAL_DEF},						// 116
