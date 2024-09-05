@@ -33,10 +33,8 @@
 #define ACT_START_VGNT				106	// Start Vgnt measurement
 
 // Номера команд калибровки в режиме совместимости
-#define ACT_CMP_START_CAL_IG		110 // Start Vg calibration
-#define ACT_CMP_START_CAL_ID		111 // Start Ig calibration
-#define ACT_CMP_START_CAL_VG		112 // Start Vg calibration
-#define ACT_CMP_START_CAL_VD		113 // Start Vd calibration
+#define ACT_CMP_START_CAL_IG_VG		110 // Start Igt/Vgt calibration
+#define ACT_CMP_START_CAL_ID		111 // Start Ih calibration
 
 // Номера команд калибровки в основном режиме
 #define ACT_START_CAL_VG			110 // Start Vg calibration

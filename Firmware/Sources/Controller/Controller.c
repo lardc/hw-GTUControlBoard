@@ -301,24 +301,18 @@ void CONTROL_Execute(Int16U ActionID, pInt16U UserError)
 				{
 					switch(ActionID)
 					{
-						case ACT_CMP_START_CAL_VG:
-							CONTROL_SetDeviceState(DS_Calibrate);
-							CALIBRATE_Prepare(SelectVg);
-							break;
-
-						case ACT_CMP_START_CAL_IG:
+						case ACT_CMP_START_CAL_IG_VG:
 							CONTROL_SetDeviceState(DS_Calibrate);
 							CALIBRATE_Prepare(SelectIg);
-							break;
-
-						case ACT_CMP_START_CAL_VD:
-							CONTROL_SetDeviceState(DS_Calibrate);
-							CALIBRATE_Prepare(SelectVd);
 							break;
 
 						case ACT_CMP_START_CAL_ID:
 							CONTROL_SetDeviceState(DS_Calibrate);
 							CALIBRATE_Prepare(SelectId);
+							break;
+
+						default:
+							*UserError = ERR_OPERATION_BLOCKED;
 							break;
 					}
 				}
