@@ -25,8 +25,8 @@ typedef struct __ADCConvParameters
 
 
 // Variables
-static ADCConvParameters ParamsGateV, ParamsGateI, ParamsGateILow, ParamsDirectV, ParamsDirectI;
-static _iq IgLowLimit;
+static ADCConvParameters ParamsGateV, ParamsGateVLow, ParamsGateI, ParamsGateILow, ParamsDirectV, ParamsDirectI;
+static _iq IgLowLimit, VgLowLimit;
 
 // Forward functions
 _iq MU_ADCtoX(Int16U ADCInput, ADCConvParameters Parameters);
@@ -44,38 +44,45 @@ _iq MU_DirectI(Int16U ADCInput);
 void MU_Cache()
 {
 	IgLowLimit = _IQI(DataTable[REG_LOW_IG_LIMIT]);
+	VgLowLimit = _IQI(DataTable[REG_LOW_VG_LIMIT]);
+
 	// Цепь управления - напряжение
-	ParamsGateV  = MU_LoadParams(REG_ADC_VG_CONV_K,  REG_ADC_VG_CONV_B,
-								 REG_ADC_VG_FINE_P2, REG_ADC_VG_FINE_P1, REG_ADC_VG_FINE_P0);
+	ParamsGateV = MU_LoadParams(REG_ADC_LOW_VG_CONV_K,  REG_ADC_LOW_VG_CONV_B,
+								REG_ADC_LOW_VG_FINE_P2, REG_ADC_LOW_VG_FINE_P1, REG_ADC_LOW_VG_FINE_P0);
+
+	// Цепь управления - напряжение младший диапазон
+	ParamsGateVLow = MU_LoadParams(REG_ADC_VG_CONV_K,  REG_ADC_VG_CONV_B,
+								   REG_ADC_VG_FINE_P2, REG_ADC_VG_FINE_P1, REG_ADC_VG_FINE_P0);
 
 	// Цепь управления - ток
-	ParamsGateI  = MU_LoadParams(REG_ADC_IG_CONV_K,  REG_ADC_IG_CONV_B,
-								 REG_ADC_IG_FINE_P2, REG_ADC_IG_FINE_P1, REG_ADC_IG_FINE_P0);
+	ParamsGateI = MU_LoadParams(REG_ADC_IG_CONV_K,  REG_ADC_IG_CONV_B,
+								REG_ADC_IG_FINE_P2, REG_ADC_IG_FINE_P1, REG_ADC_IG_FINE_P0);
 
-	// Цепь управления - младший ток до 50мА
+	// Цепь управления - ток младший диапазон
 	ParamsGateILow = MU_LoadParams(REG_ADC_LOW_IG_CONV_K,  REG_ADC_LOW_IG_CONV_B,
 								   REG_ADC_LOW_IG_FINE_P2, REG_ADC_LOW_IG_FINE_P1, REG_ADC_LOW_IG_FINE_P0);
 
 	// Силовая цепь - напряжение
 	ParamsDirectV = MU_LoadParams(REG_ADC_VD_CONV_K, REG_ADC_VD_CONV_B,
-								 REG_ADC_VD_FINE_P2, REG_ADC_VD_FINE_P1, REG_ADC_VD_FINE_P0);
+								  REG_ADC_VD_FINE_P2, REG_ADC_VD_FINE_P1, REG_ADC_VD_FINE_P0);
 
 	// Силовая цепь - ток
 	ParamsDirectI = MU_LoadParams(REG_ADC_ID_CONV_K, REG_ADC_ID_CONV_B,
-								 REG_ADC_ID_FINE_P2, REG_ADC_ID_FINE_P1, REG_ADC_ID_FINE_P0);
+								  REG_ADC_ID_FINE_P2, REG_ADC_ID_FINE_P1, REG_ADC_ID_FINE_P0);
 }
 // ----------------------------------------
 
 _iq MU_GateV(Int16U ADCInput)
 {
-	return MU_ADCtoX(ADCInput, ParamsGateV);
+	_iq VgtLow = MU_ADCtoX(ADCInput, ParamsGateVLow);
+	return (DataTable[REG_LOW_VG_LIMIT] && VgtLow < VgLowLimit) ? VgtLow : MU_ADCtoX(ADCInput, ParamsGateV);
 }
 // ----------------------------------------
 
 _iq MU_GateI(Int16U ADCInput)
 {
 	_iq IgtLow = MU_ADCtoX(ADCInput, ParamsGateILow);
-	return (IgtLow < IgLowLimit) ? IgtLow : MU_ADCtoX(ADCInput, ParamsGateI);
+	return (DataTable[REG_LOW_IG_LIMIT] && IgtLow < IgLowLimit) ? IgtLow : MU_ADCtoX(ADCInput, ParamsGateI);
 }
 // ----------------------------------------
 

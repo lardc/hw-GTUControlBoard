@@ -33,10 +33,8 @@
 #define ACT_START_VGNT				106	// Start Vgnt measurement
 
 // Номера команд калибровки в режиме совместимости
-#define ACT_CMP_START_CAL_IG		110 // Start Vg calibration
-#define ACT_CMP_START_CAL_ID		111 // Start Ig calibration
-#define ACT_CMP_START_CAL_VG		112 // Start Vg calibration
-#define ACT_CMP_START_CAL_VD		113 // Start Vd calibration
+#define ACT_CMP_START_CAL_IG_VG		110 // Start Igt/Vgt calibration
+#define ACT_CMP_START_CAL_ID		111 // Start Ih calibration
 
 // Номера команд калибровки в основном режиме
 #define ACT_START_CAL_VG			110 // Start Vg calibration
@@ -145,14 +143,22 @@
 // 92 - 99
 #define REG_CAL_V_RISE_RATE			100	// Calibration voltage rise rate (in mV / ms)
 #define REG_CAL_I_RISE_RATE			101	// Calibration current rise rate (in mA / ms)
-// 102 - 104
+//
+#define REG_ADC_LOW_VG_FINE_P2		102	// Коэффициент тонкой подстройки Vg нижнего диапазона P2 x1e6
+#define REG_ADC_LOW_VG_FINE_P1		103	// Коэффициент тонкой подстройки Vg нижнего диапазона P1 x1000
+#define REG_ADC_LOW_VG_FINE_P0		104	// Коэффициент тонкой подстройки Vg нижнего диапазона P0 (in mV)
+//
 #define REG_DAC_LOW_IG_FINE_P2		105	// Fine coefficient for low Ig quadratic correction P2 x1e6
 #define REG_DAC_LOW_IG_FINE_P1		106	// Fine coefficient for low Ig quadratic correction P1 x1000
 #define REG_DAC_LOW_IG_FINE_P0		107	// Fine coefficient for low Ig quadratic correction P0 (in mA)
 #define REG_DAC_LOW_IG_CONV_K		108	// Conversion coefficient K for low gate current x1000
 #define REG_DAC_LOW_IG_CONV_B		109	// Conversion offset for low gate current (in mA)
 #define REG_LOW_IG_LIMIT			110 // Верхняя граница для младшего диапазона (в мА)
-// 111 - 114
+//
+#define REG_ADC_LOW_VG_CONV_K		111	// Conversion coefficient K for low Vg x1000
+#define REG_ADC_LOW_VG_CONV_B		112	// Conversion offset for low Vg (in mV)
+#define REG_LOW_VG_LIMIT			113	// Верхняя граница нижнего диапазона по Vg (в мВ)
+// 114
 #define REG_ADC_LOW_IG_FINE_P2		115	// Fine coefficient for low Ig quadratic correction P2 x1e6
 #define REG_ADC_LOW_IG_FINE_P1		116	// Fine coefficient for low Ig quadratic correction P1 x1000
 #define REG_ADC_LOW_IG_FINE_P0		117	// Fine coefficient for low Ig quadratic correction P0 (in mA)
@@ -160,7 +166,6 @@
 #define REG_ADC_LOW_IG_CONV_B		119	// Conversion offset for low gate current (in mA)
 
 #define REG_OLD_GTU_COMPATIBLE		120	// Режим совместимости с блоками GTU на базе ЭМ GateTester
-
 #define REG_PROBLEM_MASK			121	// Битовая маска для выбора Problem сохраняемых во флэш
 
 // ----------------------------------------
