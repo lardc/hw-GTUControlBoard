@@ -46,21 +46,21 @@ void MU_Cache()
 	IgLowLimit = _IQI(DataTable[REG_LOW_IG_LIMIT]);
 	VgLowLimit = _IQI(DataTable[REG_LOW_VG_LIMIT]);
 
-	// Цепь управления - напряжение
-	ParamsGateV = MU_LoadParams(REG_ADC_LOW_VG_CONV_K,  REG_ADC_LOW_VG_CONV_B,
-								REG_ADC_LOW_VG_FINE_P2, REG_ADC_LOW_VG_FINE_P1, REG_ADC_LOW_VG_FINE_P0);
-
 	// Цепь управления - напряжение младший диапазон
-	ParamsGateVLow = MU_LoadParams(REG_ADC_VG_CONV_K,  REG_ADC_VG_CONV_B,
-								   REG_ADC_VG_FINE_P2, REG_ADC_VG_FINE_P1, REG_ADC_VG_FINE_P0);
+	ParamsGateVLow = MU_LoadParams(REG_ADC_LOW_VG_CONV_K,  REG_ADC_LOW_VG_CONV_B,
+								   REG_ADC_LOW_VG_FINE_P2, REG_ADC_LOW_VG_FINE_P1, REG_ADC_LOW_VG_FINE_P0);
 
-	// Цепь управления - ток
-	ParamsGateI = MU_LoadParams(REG_ADC_IG_CONV_K,  REG_ADC_IG_CONV_B,
-								REG_ADC_IG_FINE_P2, REG_ADC_IG_FINE_P1, REG_ADC_IG_FINE_P0);
+	// Цепь управления - напряжение
+	ParamsGateV = MU_LoadParams(REG_ADC_VG_CONV_K,  REG_ADC_VG_CONV_B,
+								REG_ADC_VG_FINE_P2, REG_ADC_VG_FINE_P1, REG_ADC_VG_FINE_P0);
 
 	// Цепь управления - ток младший диапазон
 	ParamsGateILow = MU_LoadParams(REG_ADC_LOW_IG_CONV_K,  REG_ADC_LOW_IG_CONV_B,
 								   REG_ADC_LOW_IG_FINE_P2, REG_ADC_LOW_IG_FINE_P1, REG_ADC_LOW_IG_FINE_P0);
+
+	// Цепь управления - ток
+	ParamsGateI = MU_LoadParams(REG_ADC_IG_CONV_K,  REG_ADC_IG_CONV_B,
+								REG_ADC_IG_FINE_P2, REG_ADC_IG_FINE_P1, REG_ADC_IG_FINE_P0);
 
 	// Силовая цепь - напряжение
 	ParamsDirectV = MU_LoadParams(REG_ADC_VD_CONV_K, REG_ADC_VD_CONV_B,
