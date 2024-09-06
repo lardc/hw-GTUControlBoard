@@ -19,7 +19,7 @@
 
 // Definitions
 //
-#define RG_SAMPLES_COUNT		16
+#define RG_SAMPLES_COUNT		32
 
 
 // Types
@@ -149,7 +149,14 @@ Boolean RGATE_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 			{
 				if (Delay == 0)
 				{
-					DataTable[REG_RESULT_RG] = _IQint(_IQdiv(_IQmpy(RgAvg, _IQ(10.0f)), _IQI(RG_SAMPLES_COUNT)));
+					_iq Rg = _IQdiv(RgAvg, _IQI(RG_SAMPLES_COUNT));
+					if(Rg > RG_MAX_VAL)
+						Codes->Problem = PROBLEM_RG_OUT_OF_RANGE;
+					else
+					{
+						DataTable[REG_RESULT_RG] = _IQmpyI32int(Rg, 10);
+						DataTable[REG_RESULT_RG_MILLI] = _IQmpyI32int(Rg, 1000);
+					}
 					State = RGATE_STATE_FINISH_PREPARE;
 				}
 				else

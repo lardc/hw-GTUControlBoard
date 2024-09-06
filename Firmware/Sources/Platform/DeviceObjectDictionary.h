@@ -214,6 +214,7 @@
 #define REG_RESULT_CAL_V			205	// В режиме совместимости - напряжение Vgt во время калибровки, мВ
 #define REG_RESULT_VGNT				205	// Vgnt (in mV)
 #define REG_RESULT_IGNT				206	// Ignt (in mA)
+#define REG_RESULT_RG_MILLI			207	// R    (in mOhm)
 //
 #define REG_KELVIN_1_2				211	// MUST BE 1
 #define REG_KELVIN_4_1				212	// MUST BE 0
@@ -296,6 +297,7 @@
 #define PROBLEM_DUT_NO_LATCHING		9	// DUT not latched
 #define PROBLEM_DUT_NO_VG_SENSING	10	// No potential signal from DUT Vg
 #define PROBLEM_VGNT_CONF_TRIG		11	// DUT trigged during Vgnt confirmation
+#define PROBLEM_RG_OUT_OF_RANGE		12	// Rg вне допустимого диапазона
 
 // FAULT CODES
 //
