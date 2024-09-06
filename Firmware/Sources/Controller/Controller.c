@@ -35,7 +35,7 @@ DeviceStateCodes Codes = { WARNING_NONE, PROBLEM_NONE, FAULT_NONE };
 volatile Int64U CONTROL_TimeCounter = 0;
 volatile Int64U FanTurnOff_Counter = 0;
 volatile DeviceState CONTROL_State = DS_None;
-Boolean CycleActive = FALSE;
+Boolean CycleActive = FALSE, RequestSaveToFlash = FALSE;
 //
 volatile Int16U CONTROL_Values_Counter = 0;
 
@@ -118,6 +118,11 @@ void CONTROL_Idle()
 {
 	DEVPROFILE_ProcessRequests();
 	DEVPROFILE_UpdateCANDiagStatus();
+	if(RequestSaveToFlash)
+	{
+		RequestSaveToFlash = FALSE;
+		STF_SaveDiagData();
+	}
 }
 // ----------------------------------------
 
@@ -180,8 +185,8 @@ void CONTROL_UpdateHigh()
 			DataTable[REG_WARNING] = Codes.Warning;
 			DataTable[REG_TEST_FINISHED] = (Codes.Problem == PROBLEM_NONE) ? OPRESULT_OK : OPRESULT_FAIL;
 
-			if (1 << Codes.Problem & DataTable[REG_PROBLEM_MASK])
-				STF_SaveDiagData();
+			if (Codes.Problem && ((1 << Codes.Problem) & DataTable[REG_PROBLEM_MASK]))
+				RequestSaveToFlash = TRUE;
 		}
 	}
 }
