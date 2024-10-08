@@ -28,6 +28,12 @@ void COMMON_PrepareStart()
 {
 	// Кэширование коэффициентов пересчёта
 	MU_Cache();
+
+	// Синхросигнал для осциллографа
+	// Предположительно, из-за особенностей оптимизатора без вызова функции в этом месте
+	// блок зависает
+	ZbGPIO_SyncOSC(TRUE);
+
 	CU_Cache();
 
 	// Инициализация регуляторов
@@ -37,9 +43,6 @@ void COMMON_PrepareStart()
 	// Активация системы
 	ZbGPIO_GateEnableOutput(TRUE);
 	ZbGPIO_DirectEnableOutput(TRUE);
-
-	// Синхросигнал для осциллографа
-	ZbGPIO_SyncOSC(TRUE);
 }
 // ----------------------------------------
 
