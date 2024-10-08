@@ -72,17 +72,27 @@ void MU_Cache()
 }
 // ----------------------------------------
 
+_iq MU_TwoRangeWrapper(Int16U ADCInput, _iq LowLimit, ADCConvParameters SettingsLow, ADCConvParameters SettingsNormal)
+{
+	if(LowLimit == 0 || SettingsLow.K == 0)
+		return MU_ADCtoX(ADCInput, SettingsNormal);
+	else
+	{
+		_iq Low = MU_ADCtoX(ADCInput, SettingsLow);
+		return (Low < LowLimit) ? Low : MU_ADCtoX(ADCInput, SettingsNormal);
+	}
+}
+// ----------------------------------------
+
 _iq MU_GateV(Int16U ADCInput)
 {
-	_iq VgtLow = MU_ADCtoX(ADCInput, ParamsGateVLow);
-	return (DataTable[REG_LOW_VG_LIMIT] && VgtLow < VgLowLimit) ? VgtLow : MU_ADCtoX(ADCInput, ParamsGateV);
+	return MU_TwoRangeWrapper(ADCInput, VgLowLimit, ParamsGateVLow, ParamsGateV);
 }
 // ----------------------------------------
 
 _iq MU_GateI(Int16U ADCInput)
 {
-	_iq IgtLow = MU_ADCtoX(ADCInput, ParamsGateILow);
-	return (DataTable[REG_LOW_IG_LIMIT] && IgtLow < IgLowLimit) ? IgtLow : MU_ADCtoX(ADCInput, ParamsGateI);
+	return MU_TwoRangeWrapper(ADCInput, IgLowLimit, ParamsGateILow, ParamsGateI);
 }
 // ----------------------------------------
 
