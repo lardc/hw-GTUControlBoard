@@ -23,6 +23,7 @@ RecordDescription StorageDescription[] =
 		{"EP 10 Target gate current Ig (mA)",		DT_Int16U, VALUES_x_SIZE},
 		{"EP 11 Target direct voltage Vd (mV)",		DT_Int16U, VALUES_x_SIZE},
 		{"EP 12 Target direct current Id (mA)",		DT_Int16U, VALUES_x_SIZE},
+		{"Last executed test command",				DT_Int16U, 1}
 };
 Int32U TablePointers[sizeof(StorageDescription) / sizeof(StorageDescription[0])] = {0};
 const Int16U StorageSize = sizeof(StorageDescription) / sizeof(StorageDescription[0]);
