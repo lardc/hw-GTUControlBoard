@@ -36,6 +36,7 @@ volatile Int64U CONTROL_TimeCounter = 0;
 volatile Int64U FanTurnOff_Counter = 0;
 volatile DeviceState CONTROL_State = DS_None;
 Boolean CycleActive = FALSE, RequestSaveToFlash = FALSE;
+Int16U LastExecCommand = 0;
 //
 volatile Int16U CONTROL_Values_Counter = 0;
 
@@ -235,6 +236,8 @@ void CONTROL_FillWithDefaults()
 	DataTable[REG_RESULT_IGNT] = 0;
 	DataTable[REG_RESULT_RG_MILLI] = 0;
 	//
+	DataTable[REG_IH_SL_READY] = 0;
+	//
 	DataTable[REG_RESULT_IH_UA] = 0;
 	DataTable[REG_RESULT_IGT_UA] = 0;
 	DataTable[REG_RESULT_CAL_FRAC] = 0;
@@ -266,6 +269,7 @@ void CONTROL_Execute(Int16U ActionID, pInt16U UserError)
 {
 	if(CONTROL_State == DS_None)
 	{
+		LastExecCommand = ActionID;
 		CONTROL_FillWithDefaults();
 		CycleActive = TRUE;
 		ZbGPIO_LED1(TRUE);
@@ -375,6 +379,7 @@ void CONTROL_InitStoragePointers()
 	STF_AssignPointer(15, (Int32U)CONTROL_Values_Trgt_Ig);
 	STF_AssignPointer(16, (Int32U)CONTROL_Values_Trgt_Vd);
 	STF_AssignPointer(17, (Int32U)CONTROL_Values_Trgt_Id);
+	STF_AssignPointer(18, (Int32U)&LastExecCommand);
 }
 
 Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)

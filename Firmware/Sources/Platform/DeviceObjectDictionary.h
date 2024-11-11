@@ -216,6 +216,8 @@
 #define REG_RESULT_IGNT				206	// Ignt (in mA)
 #define REG_RESULT_RG_MILLI			207	// R    (in mOhm)
 //
+#define REG_IH_SL_READY				210	// Флаг о готовности к запуску SL при совместном формировании
+//
 #define REG_KELVIN_1_2				211	// MUST BE 1
 #define REG_KELVIN_4_1				212	// MUST BE 0
 #define REG_KELVIN_1_4				213	// MUST BE 0
