@@ -124,6 +124,7 @@ Boolean HOLDING_Process(CombinedData MeasureSample, pDeviceStateCodes Codes)
 					// Готовность к отпиранию прибора
 					Delay = TrigWaitGOST;
 					State = HOLDING_STATE_TRIG_CHECK;
+					DataTable[REG_IH_SL_READY] = 1;
 				}
 				else
 				{

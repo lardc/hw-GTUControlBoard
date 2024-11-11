@@ -236,6 +236,8 @@ void CONTROL_FillWithDefaults()
 	DataTable[REG_RESULT_IGNT] = 0;
 	DataTable[REG_RESULT_RG_MILLI] = 0;
 	//
+	DataTable[REG_IH_SL_READY] = 0;
+	//
 	DataTable[REG_RESULT_IH_UA] = 0;
 	DataTable[REG_RESULT_IGT_UA] = 0;
 	DataTable[REG_RESULT_CAL_FRAC] = 0;
