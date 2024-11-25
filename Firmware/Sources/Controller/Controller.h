@@ -48,6 +48,9 @@ extern volatile DeviceState CONTROL_State;
 extern volatile Int16U CONTROL_Values_Counter;
 extern volatile Int16U CONTROL_BootLoaderRequest;
 extern volatile Int64U FanTurnOff_Counter;
+extern Int16U CONTROL_DiagCounter;
+
+
 // Functions
 //
 // Initialize controller
@@ -58,7 +61,6 @@ void CONTROL_Idle();
 void CONTROL_UpdateHigh();
 // Notify that CAN system fault occurs
 void CONTROL_NotifyCANFault(ZwCAN_SysFlags Flag);
-//
 void FAN_Control();
 
 

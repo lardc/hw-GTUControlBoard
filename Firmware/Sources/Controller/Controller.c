@@ -39,6 +39,7 @@ Boolean CycleActive = FALSE, RequestSaveToFlash = FALSE;
 Int16U LastExecCommand = 0;
 //
 volatile Int16U CONTROL_Values_Counter = 0;
+Int16U CONTROL_DiagCounter = 0;
 
 // Boot-loader flag
 #pragma DATA_SECTION(CONTROL_BootLoaderRequest, "bl_flag");
@@ -63,19 +64,22 @@ void CONTROL_Init(Boolean BadClockDetected)
 	// Variables for endpoint configuration
 	Int16U EPIndexes[EP_COUNT] = { EP16_Data_Vg, EP16_Data_Ig, EP16_Data_Vd, EP16_Data_Id,
 								   EP16_Control_Vg, EP16_Control_Ig, EP16_Control_Vd, EP16_Control_Id,
-								   EP16_Target_Vg, EP16_Target_Ig, EP16_Target_Vd, EP16_Target_Id };
+								   EP16_Target_Vg, EP16_Target_Ig, EP16_Target_Vd, EP16_Target_Id,
+								   EP16_DiagData};
 
 	Int16U EPSized[EP_COUNT] = { VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE,
 								 VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE,
-								 VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE };
+								 VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE,
+								 VALUES_DIAG_SIZE };
 
 	pInt16U EPCounters[EP_COUNT] = { cnt, cnt, cnt, cnt,
 									 cnt, cnt, cnt, cnt,
-									 cnt, cnt, cnt, cnt };
+									 cnt, cnt, cnt, cnt, &CONTROL_DiagCounter };
 
 	pInt16U EPDatas[EP_COUNT] = { CONTROL_Values_Vg, CONTROL_Values_Ig, CONTROL_Values_Vd, CONTROL_Values_Id,
 								  CONTROL_Values_Ctrl_Vg, CONTROL_Values_Ctrl_Ig, CONTROL_Values_Ctrl_Vd, CONTROL_Values_Ctrl_Id,
-								  CONTROL_Values_Trgt_Vg, CONTROL_Values_Trgt_Ig, CONTROL_Values_Trgt_Vd, CONTROL_Values_Trgt_Id };
+								  CONTROL_Values_Trgt_Vg, CONTROL_Values_Trgt_Ig, CONTROL_Values_Trgt_Vd, CONTROL_Values_Trgt_Id,
+								  CONTROL_DiagData };
 
 	// Data-table EPROM service configuration
 	EPROMServiceConfig EPROMService = { &ZbMEM_WriteValuesEPROM, &ZbMEM_ReadValuesEPROM };

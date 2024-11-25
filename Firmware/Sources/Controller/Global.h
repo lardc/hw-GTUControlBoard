@@ -19,8 +19,9 @@
 //
 #define	SCCI_TIMEOUT_TICKS				1000
 #define DT_EPROM_ADDRESS				0
-#define EP_COUNT						12
+#define EP_COUNT						13
 #define VALUES_x_SIZE					800
+#define VALUES_DIAG_SIZE				300
 //--------------------------------------------------------
 
 // Regulator parameters

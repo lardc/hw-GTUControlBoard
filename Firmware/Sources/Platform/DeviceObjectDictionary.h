@@ -52,6 +52,7 @@
 
 #define ACT_FLASH_DIAG_READ_SYMBOL	330	// Выполнить чтение символа из памяти отладочной информации
 #define ACT_FLASH_DIAG_INIT_READ	331	// Инициализировать начало считывания отладочной информации
+#define ACT_FLASH_DIAG_TO_EP		340	// Выполнить чтение массива из памяти отладочной информации в EP
 
 #define ACT_FLASH_DIAG_SAVE			332	// Сохранение блока отладочной информации во флэш
 #define ACT_FLASH_DIAG_ERASE		333	// Стирание области отладочной информации
@@ -273,6 +274,8 @@
 #define EP16_Target_Ig				10	// Target gate current Ig (mA)
 #define EP16_Target_Vd				11	// Target direct voltage Vd (mV)
 #define EP16_Target_Id				12	// Target direct current Id (mA)
+//
+#define EP16_DiagData				20	// Diag data drom flash
 
 // ENDPOINTS
 // В режиме совместимости
