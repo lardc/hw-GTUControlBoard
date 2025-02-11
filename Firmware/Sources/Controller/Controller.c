@@ -27,6 +27,7 @@
 #include "Common.h"
 #include "SaveToFlash.h"
 #include "StorageDescription.h"
+#include "FormatOutputJSON.h"
 
 
 // Variables
@@ -385,6 +386,7 @@ void CONTROL_InitStoragePointers()
 	STF_AssignPointer(17, (Int32U)CONTROL_Values_Trgt_Id);
 	STF_AssignPointer(18, (Int32U)&LastExecCommand);
 }
+// ----------------------------------------
 
 Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 {

@@ -62,6 +62,8 @@ void CONTROL_UpdateHigh();
 // Notify that CAN system fault occurs
 void CONTROL_NotifyCANFault(ZwCAN_SysFlags Flag);
 void FAN_Control();
+//
+void CONTROL_InitJSONPointers();
 
 
 #endif // __CONTROLLER_H

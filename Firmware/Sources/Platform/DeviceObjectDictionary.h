@@ -56,6 +56,8 @@
 
 #define ACT_FLASH_DIAG_SAVE			332	// Сохранение блока отладочной информации во флэш
 #define ACT_FLASH_DIAG_ERASE		333	// Стирание области отладочной информации
+#define ACT_JSON_INIT_READ			341	// Инициализация начала считывания JSON
+#define ACT_JSON_TO_EP				342	// Выполнить чтение шаблона JSON в EP
 
 // REGISTERS
 //
@@ -133,7 +135,8 @@
 #define REG_HOLD_VCLOSE_LEVEL		72	// Порог напряжения Vd для определения запирания прибора (в В)
 #define REG_HOLD_TRIG_WAIT_GOST		73	// Время ожидания отпирания прибора блоком стат. потерь по ГОСТ (в мс)
 #define REG_HOLD_BACK_SHIFT			74	// Сдвиг назад при измерении Ih (в тиках)
-// 75 - 79
+#define REG_HOLD_MAX_CURRENT		75	// Максимальный ток по Ih (в мА)
+// 76 - 79
 #define REG_LATCH_RATE_LARGE		80	// Large step of increasing Id for latching test (in mA / ms)
 #define REG_LATCH_RATE_SMALL		81	// Small step of increasing Id for latching test (in mA / ms)
 #define REG_LATCH_START_CURRENT		82	// Test start current (in mA)
@@ -159,7 +162,7 @@
 #define REG_ADC_LOW_VG_CONV_K		111	// Conversion coefficient K for low Vg x1000
 #define REG_ADC_LOW_VG_CONV_B		112	// Conversion offset for low Vg (in mV)
 #define REG_LOW_VG_LIMIT			113	// Верхняя граница нижнего диапазона по Vg (в мВ)
-// 114
+#define REG_HIGH_IG_LIMIT			114	// Верхняя границф нижнего диапазона по Ig (в мА)
 #define REG_ADC_LOW_IG_FINE_P2		115	// Fine coefficient for low Ig quadratic correction P2 x1e6
 #define REG_ADC_LOW_IG_FINE_P1		116	// Fine coefficient for low Ig quadratic correction P1 x1000
 #define REG_ADC_LOW_IG_FINE_P0		117	// Fine coefficient for low Ig quadratic correction P0 (in mA)

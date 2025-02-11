@@ -14,6 +14,7 @@
 #include "Controller.h"
 #include "Constraints.h"
 #include "SaveToFlash.h"
+#include "FormatOutputJSON.h"
 
 // Types
 //
@@ -309,6 +310,11 @@ static Boolean DEVPROFILE_DispatchAction(Int16U ActionID, pInt16U UserError)
 
 		case ACT_FLASH_DIAG_READ_SYMBOL:
 			DataTable[REG_MEM_SYMBOL] = *(pInt16U)(MemoryPointer++);
+			break;
+
+		case ACT_JSON_INIT_READ:
+			CONTROL_InitJSONPointers();
+			JSON_ResetStateMachine();
 			break;
 
 		case ACT_FLASH_DIAG_INIT_READ:
