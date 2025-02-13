@@ -8,7 +8,7 @@ const char TemplateJSON[] = "[{\n"
 "		{\n"
 "			'rangeId' : '1',\n"
 "			'unitsMultiply' : '1'\n"
-"			'active' : '1',\n"
+"			'active' : '$',\n"
 "			'min': '100',\n"
 "			'max': '$'\n"
 "		},\n"
@@ -27,7 +27,7 @@ const char TemplateJSON[] = "[{\n"
 "		{\n"
 "			'rangeId' : '3',\n"
 "			'unitsMultiply' : '1',\n"
-"			'active' : '1',\n"
+"			'active' : '$',\n"
 "			'min': '10',\n"
 "			'max': '$'\n"
 "		},\n"
@@ -81,6 +81,7 @@ Int16U Igt1Max, Igt2Max;
 Int16U Ih1Min, Ih1Max;
 Int16U IL1Max;
 
+Boolean Vgt1Active, Igt1Active;
 
 Int16U JSONPointers[JSON_POINTERS_SIZE] = {0};
 

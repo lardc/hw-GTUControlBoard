@@ -28,6 +28,7 @@
 #include "SaveToFlash.h"
 #include "StorageDescription.h"
 #include "FormatOutputJSON.h"
+#include "JSONDescription.h"
 
 
 // Variables
@@ -385,6 +386,31 @@ void CONTROL_InitStoragePointers()
 	STF_AssignPointer(16, (Int32U)CONTROL_Values_Trgt_Vd);
 	STF_AssignPointer(17, (Int32U)CONTROL_Values_Trgt_Id);
 	STF_AssignPointer(18, (Int32U)&LastExecCommand);
+}
+// ----------------------------------------
+
+void CONTROL_InitJSONPointers()
+{
+	Vgt1Max = DataTable[REG_LOW_VG_LIMIT] ? DataTable[REG_LOW_VG_LIMIT] : _IQint(VG_1_MAX_VAL);
+	Igt1Max = DataTable[REG_LOW_IG_LIMIT] ? DataTable[REG_LOW_IG_LIMIT] : _IQint(IG_1_MAX_VAL);
+	Igt2Max = DataTable[REG_HIGH_IG_LIMIT] ? DataTable[REG_HIGH_IG_LIMIT] : _IQint(IG_2_MAX_VAL);
+	Ih1Min = DataTable[REG_HOLD_END_CURRENT];
+	Ih1Max = DataTable[REG_HOLD_MAX_CURRENT] ? DataTable[REG_HOLD_MAX_CURRENT] : _IQint(IH_MAX_VAL);
+	IL1Max = DataTable[REG_HOLD_MAX_CURRENT] ? DataTable[REG_HOLD_MAX_CURRENT] : _IQint(IL_MAX_VAL);
+
+	Vgt1Active = DataTable[REG_LOW_VG_LIMIT] ? 1 : 0;
+	Igt1Active = DataTable[REG_LOW_IG_LIMIT] ? 1 : 0;
+
+	JSON_AssignPointer(0, (Int32U)&Vgt1Active);
+	JSON_AssignPointer(1, (Int32U)&Vgt1Max);
+	JSON_AssignPointer(2, (Int32U)&Vgt1Max);
+	JSON_AssignPointer(3, (Int32U)&Igt1Active);
+	JSON_AssignPointer(4, (Int32U)&Igt1Max);
+	JSON_AssignPointer(5, (Int32U)&Igt1Max);
+	JSON_AssignPointer(6, (Int32U)&Igt2Max);
+	JSON_AssignPointer(7, (Int32U)&Ih1Min);
+	JSON_AssignPointer(8, (Int32U)&Ih1Max);
+	JSON_AssignPointer(9, (Int32U)&IL1Max);
 }
 // ----------------------------------------
 
