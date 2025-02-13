@@ -41,7 +41,7 @@ Boolean CycleActive = FALSE, RequestSaveToFlash = FALSE;
 Int16U LastExecCommand = 0;
 //
 volatile Int16U CONTROL_Values_Counter = 0;
-Int16U CONTROL_DiagCounter = 0;
+Int16U CONTROL_ExtInfoCounter = 0;
 
 // Boot-loader flag
 #pragma DATA_SECTION(CONTROL_BootLoaderRequest, "bl_flag");
@@ -72,16 +72,16 @@ void CONTROL_Init(Boolean BadClockDetected)
 	Int16U EPSized[EP_COUNT] = { VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE,
 								 VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE,
 								 VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE,
-								 VALUES_DIAG_SIZE };
+								 VALUES_EXT_INFO_SIZE };
 
 	pInt16U EPCounters[EP_COUNT] = { cnt, cnt, cnt, cnt,
 									 cnt, cnt, cnt, cnt,
-									 cnt, cnt, cnt, cnt, &CONTROL_DiagCounter };
+									 cnt, cnt, cnt, cnt, &CONTROL_ExtInfoCounter };
 
 	pInt16U EPDatas[EP_COUNT] = { CONTROL_Values_Vg, CONTROL_Values_Ig, CONTROL_Values_Vd, CONTROL_Values_Id,
 								  CONTROL_Values_Ctrl_Vg, CONTROL_Values_Ctrl_Ig, CONTROL_Values_Ctrl_Vd, CONTROL_Values_Ctrl_Id,
 								  CONTROL_Values_Trgt_Vg, CONTROL_Values_Trgt_Ig, CONTROL_Values_Trgt_Vd, CONTROL_Values_Trgt_Id,
-								  CONTROL_DiagData };
+								  CONTROL_ExtInfoData };
 
 	// Data-table EPROM service configuration
 	EPROMServiceConfig EPROMService = { &ZbMEM_WriteValuesEPROM, &ZbMEM_ReadValuesEPROM };

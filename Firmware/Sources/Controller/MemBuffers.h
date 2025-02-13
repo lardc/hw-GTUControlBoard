@@ -25,6 +25,6 @@ extern Int16U CONTROL_Values_Trgt_Ig[];
 extern Int16U CONTROL_Values_Trgt_Vd[];
 extern Int16U CONTROL_Values_Trgt_Id[];
 
-extern Int16U CONTROL_DiagData[];
+extern Int16U CONTROL_ExtInfoData[];
 
 #endif // __MEMBUFFERS_H

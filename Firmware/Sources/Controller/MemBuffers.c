@@ -24,5 +24,5 @@ Int16U CONTROL_Values_Trgt_Ig[VALUES_x_SIZE];
 Int16U CONTROL_Values_Trgt_Vd[VALUES_x_SIZE];
 Int16U CONTROL_Values_Trgt_Id[VALUES_x_SIZE];
 
-Int16U CONTROL_DiagData[VALUES_DIAG_SIZE];
+Int16U CONTROL_ExtInfoData[VALUES_EXT_INFO_SIZE];
 // ----------------------------------------
