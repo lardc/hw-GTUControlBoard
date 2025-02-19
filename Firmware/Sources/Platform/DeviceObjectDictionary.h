@@ -50,12 +50,12 @@
 
 #define ACT_BOOT_LOADER_REQUEST		320	// Request reboot to bootloader
 
-#define ACT_FLASH_DIAG_READ_SYMBOL	330	// Выполнить чтение символа из памяти отладочной информации
 #define ACT_FLASH_DIAG_INIT_READ	331	// Инициализировать начало считывания отладочной информации
-#define ACT_FLASH_DIAG_TO_EP		340	// Выполнить чтение массива из памяти отладочной информации в EP
-
 #define ACT_FLASH_DIAG_SAVE			332	// Сохранение блока отладочной информации во флэш
 #define ACT_FLASH_DIAG_ERASE		333	// Стирание области отладочной информации
+
+#define ACT_FLASH_DIAG_TO_EP		340	// Выполнить чтение массива из памяти отладочной информации в EP
+
 #define ACT_JSON_INIT_READ			341	// Инициализация начала считывания JSON
 #define ACT_JSON_TO_EP				342	// Выполнить чтение шаблона JSON в EP
 
@@ -250,8 +250,6 @@
 // 258 - 259
 #define REG_FWINFO_STR_LEN			260	// Length of the information string record
 #define REG_FWINFO_STR_BEGIN		261	// Begining of the information string record
-//
-#define REG_MEM_SYMBOL				299	// Считанный по адресу памяти символ
 
 // SCOPE TYPE
 // Выбор сохраняемой осциллограммы в режиме совместимости
