@@ -401,16 +401,16 @@ void CONTROL_InitJSONPointers()
 	Vgt1Active = DataTable[REG_LOW_VG_LIMIT] ? 1 : 0;
 	Igt1Active = DataTable[REG_LOW_IG_LIMIT] ? 1 : 0;
 
-	JSON_AssignPointer(0, (Int32U)&Vgt1Active);
-	JSON_AssignPointer(1, (Int32U)&Vgt1Max);
-	JSON_AssignPointer(2, (Int32U)&Vgt1Max);
-	JSON_AssignPointer(3, (Int32U)&Igt1Active);
-	JSON_AssignPointer(4, (Int32U)&Igt1Max);
-	JSON_AssignPointer(5, (Int32U)&Igt1Max);
-	JSON_AssignPointer(6, (Int32U)&Igt2Max);
-	JSON_AssignPointer(7, (Int32U)&Ih1Min);
-	JSON_AssignPointer(8, (Int32U)&Ih1Max);
-	JSON_AssignPointer(9, (Int32U)&IL1Max);
+	JSON_AssignPointer(0, &Vgt1Active);
+	JSON_AssignPointer(1, &Vgt1Max);
+	JSON_AssignPointer(2, &Vgt1Max);
+	JSON_AssignPointer(3, &Igt1Active);
+	JSON_AssignPointer(4, &Igt1Max);
+	JSON_AssignPointer(5, &Igt1Max);
+	JSON_AssignPointer(6, &Igt2Max);
+	JSON_AssignPointer(7, &Ih1Min);
+	JSON_AssignPointer(8, &Ih1Max);
+	JSON_AssignPointer(9, &IL1Max);
 }
 // ----------------------------------------
 

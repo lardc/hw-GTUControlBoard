@@ -1,5 +1,4 @@
 #include "JSONDescription.h"
-#include "FormatOutputJSON.h"
 
 const char TemplateJSON[] = "[{\n"
 "	'param' : 'Vgt',\n"
@@ -82,12 +81,3 @@ Int16U Ih1Min, Ih1Max;
 Int16U IL1Max;
 
 Boolean Vgt1Active, Igt1Active;
-
-Int16U JSONPointers[JSON_POINTERS_SIZE] = {0};
-
-void JSON_AssignPointer(Int16U Index, Int32U Pointer)
-{
-	if (Index < JSON_POINTERS_SIZE)
-		JSONPointers[Index] = Pointer;
-}
-
