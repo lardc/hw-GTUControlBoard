@@ -27,6 +27,8 @@
 #include "Common.h"
 #include "SaveToFlash.h"
 #include "StorageDescription.h"
+#include "FormatOutputJSON.h"
+#include "JSONDescription.h"
 
 
 // Variables
@@ -39,6 +41,7 @@ Boolean CycleActive = FALSE, RequestSaveToFlash = FALSE;
 Int16U LastExecCommand = 0;
 //
 volatile Int16U CONTROL_Values_Counter = 0;
+Int16U CONTROL_ExtInfoCounter = 0;
 
 // Boot-loader flag
 #pragma DATA_SECTION(CONTROL_BootLoaderRequest, "bl_flag");
@@ -63,19 +66,22 @@ void CONTROL_Init(Boolean BadClockDetected)
 	// Variables for endpoint configuration
 	Int16U EPIndexes[EP_COUNT] = { EP16_Data_Vg, EP16_Data_Ig, EP16_Data_Vd, EP16_Data_Id,
 								   EP16_Control_Vg, EP16_Control_Ig, EP16_Control_Vd, EP16_Control_Id,
-								   EP16_Target_Vg, EP16_Target_Ig, EP16_Target_Vd, EP16_Target_Id };
+								   EP16_Target_Vg, EP16_Target_Ig, EP16_Target_Vd, EP16_Target_Id,
+								   EP16_DiagData};
 
 	Int16U EPSized[EP_COUNT] = { VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE,
 								 VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE,
-								 VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE };
+								 VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE, VALUES_x_SIZE,
+								 VALUES_EXT_INFO_SIZE };
 
 	pInt16U EPCounters[EP_COUNT] = { cnt, cnt, cnt, cnt,
 									 cnt, cnt, cnt, cnt,
-									 cnt, cnt, cnt, cnt };
+									 cnt, cnt, cnt, cnt, &CONTROL_ExtInfoCounter };
 
 	pInt16U EPDatas[EP_COUNT] = { CONTROL_Values_Vg, CONTROL_Values_Ig, CONTROL_Values_Vd, CONTROL_Values_Id,
 								  CONTROL_Values_Ctrl_Vg, CONTROL_Values_Ctrl_Ig, CONTROL_Values_Ctrl_Vd, CONTROL_Values_Ctrl_Id,
-								  CONTROL_Values_Trgt_Vg, CONTROL_Values_Trgt_Ig, CONTROL_Values_Trgt_Vd, CONTROL_Values_Trgt_Id };
+								  CONTROL_Values_Trgt_Vg, CONTROL_Values_Trgt_Ig, CONTROL_Values_Trgt_Vd, CONTROL_Values_Trgt_Id,
+								  CONTROL_ExtInfoData };
 
 	// Data-table EPROM service configuration
 	EPROMServiceConfig EPROMService = { &ZbMEM_WriteValuesEPROM, &ZbMEM_ReadValuesEPROM };
@@ -381,6 +387,32 @@ void CONTROL_InitStoragePointers()
 	STF_AssignPointer(17, (Int32U)CONTROL_Values_Trgt_Id);
 	STF_AssignPointer(18, (Int32U)&LastExecCommand);
 }
+// ----------------------------------------
+
+void CONTROL_InitJSONPointers()
+{
+	Vgt1Max = DataTable[REG_LOW_VG_LIMIT] ? DataTable[REG_LOW_VG_LIMIT] : _IQint(VG_1_MAX_VAL);
+	Igt1Max = DataTable[REG_LOW_IG_LIMIT] ? DataTable[REG_LOW_IG_LIMIT] : _IQint(IG_1_MAX_VAL);
+	Igt2Max = DataTable[REG_HIGH_IG_LIMIT] ? DataTable[REG_HIGH_IG_LIMIT] : _IQint(IG_2_MAX_VAL);
+	Ih1Min = DataTable[REG_HOLD_END_CURRENT];
+	Ih1Max = DataTable[REG_HOLD_MAX_CURRENT] ? DataTable[REG_HOLD_MAX_CURRENT] : _IQint(IH_MAX_VAL);
+	IL1Max = DataTable[REG_HOLD_MAX_CURRENT] ? DataTable[REG_HOLD_MAX_CURRENT] : _IQint(IL_MAX_VAL);
+
+	Vgt1Active = DataTable[REG_LOW_VG_LIMIT] ? 1 : 0;
+	Igt1Active = DataTable[REG_LOW_IG_LIMIT] ? 1 : 0;
+
+	JSON_AssignPointer(0, &Vgt1Active);
+	JSON_AssignPointer(1, &Vgt1Max);
+	JSON_AssignPointer(2, &Vgt1Max);
+	JSON_AssignPointer(3, &Igt1Active);
+	JSON_AssignPointer(4, &Igt1Max);
+	JSON_AssignPointer(5, &Igt1Max);
+	JSON_AssignPointer(6, &Igt2Max);
+	JSON_AssignPointer(7, &Ih1Min);
+	JSON_AssignPointer(8, &Ih1Max);
+	JSON_AssignPointer(9, &IL1Max);
+}
+// ----------------------------------------
 
 Boolean CONTROL_DispatchAction(Int16U ActionID, pInt16U UserError)
 {

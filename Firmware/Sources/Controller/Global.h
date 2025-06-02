@@ -19,8 +19,9 @@
 //
 #define	SCCI_TIMEOUT_TICKS				1000
 #define DT_EPROM_ADDRESS				0
-#define EP_COUNT						12
+#define EP_COUNT						13
 #define VALUES_x_SIZE					800
+#define VALUES_EXT_INFO_SIZE			300
 //--------------------------------------------------------
 
 // Regulator parameters
@@ -38,6 +39,11 @@
 #define VGNT_RING_BUFFER_SIZE			50				// Размер кольцевого буфера Vgnt для сдвига точки измерения
 #define IH_RING_BUFFER_SIZE				50				// Размер кольцевого буфера Ih для сдвига точки измерения
 #define RG_MAX_VAL						_IQ(40)			// Максимально допустимое сопротивление, Ом
+#define VG_1_MAX_VAL					_IQ(500)		//
+#define IG_1_MAX_VAL					_IQ(50)			//
+#define IG_2_MAX_VAL					_IQ(600)		//
+#define IH_MAX_VAL						_IQ(600)		//
+#define IL_MAX_VAL						_IQ(600)		//
 //--------------------------------------------------------
 
 #endif // __GLOBAL_H

@@ -14,6 +14,7 @@
 #include "Controller.h"
 #include "Constraints.h"
 #include "SaveToFlash.h"
+#include "FormatOutputJSON.h"
 
 // Types
 //
@@ -307,12 +308,33 @@ static Boolean DEVPROFILE_DispatchAction(Int16U ActionID, pInt16U UserError)
 			CONTROL_BootLoaderRequest = BOOT_LOADER_REQUEST;
 			break;
 
-		case ACT_FLASH_DIAG_READ_SYMBOL:
-			DataTable[REG_MEM_SYMBOL] = *(pInt16U)(MemoryPointer++);
+		case ACT_JSON_INIT_READ:
+			CONTROL_InitJSONPointers();
+			JSON_ResetStateMachine();
 			break;
 
 		case ACT_FLASH_DIAG_INIT_READ:
-			MemoryPointer = FLASH_START_ADDR;
+			MemoryPointer = FLASH_DIAG_START_ADDR;
+			break;
+
+		case ACT_FLASH_DIAG_TO_EP:
+			{
+				DEVPROFILE_ResetEPReadState();
+				DEVPROFILE_ResetScopes(0);
+
+				for(CONTROL_ExtInfoCounter = 0;
+						CONTROL_ExtInfoCounter < VALUES_EXT_INFO_SIZE && MemoryPointer <= FLASH_DIAG_END_ADDR;)
+					CONTROL_ExtInfoData[CONTROL_ExtInfoCounter++] = *(pInt16U)(MemoryPointer++);
+			}
+			break;
+
+		case ACT_JSON_TO_EP:
+			{
+				DEVPROFILE_ResetEPReadState();
+				DEVPROFILE_ResetScopes(0);
+				for(CONTROL_ExtInfoCounter = 0; CONTROL_ExtInfoCounter < VALUES_EXT_INFO_SIZE;)
+					CONTROL_ExtInfoData[CONTROL_ExtInfoCounter++] = JSON_ReadSymbol();
+			}
 			break;
 
 		default:
